@@ -1,13 +1,19 @@
 <template>
     <nav class="navbar">
-        <a href="index.html" class="logo">TechPulse</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Início</a></li>
-            <li><a href="#">Artigos</a></li>
-            <li><a href="#">Categorias</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Contato</a></li>
-            <li><a href="login.html">Login</a></li>
+        <a href="/" class="logo">TechPulse</a>
+        <div class="menu-toggle" id="mobile-menu" @click="toggleMenu" :class="{ active: isMenuActive }">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links" :class="{ active: isMenuActive }">
+            <li><a href="/" @click.prevent="closeMenu">Início</a></li>
+            <li><a href="#" @click.prevent="closeMenu">Artigos</a></li>
+            <li><a href="#" @click.prevent="closeMenu">Categorias</a></li>
+            <li><a href="#" @click.prevent="closeMenu">Sobre</a></li>
+            <li><a href="#" @click.prevent="closeMenu">Contato</a></li>
+            <li><a href="/login" @click.prevent="closeMenu">Login</a></li>
         </ul>
     </nav>
 
@@ -63,20 +69,41 @@
 </template>
 
 <script setup>
-import $ from "jquery";
-import { defineProps } from 'vue';
-import { InertiaLink } from '@inertiajs/inertia-vue3'; //Importe o InertiaLink
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { InertiaLink } from '@inertiajs/inertia-vue3'; // Importe o InertiaLink
+import "../../css/home.css"; // Certifique-se de que o caminho está correto
+
 const props = defineProps({
-    posts: Array
+    posts: Array,
 });
 
+// Use ref() para criar variáveis reativas
+const isMenuActive = ref(false);
+
+const toggleMenu = () => {
+    isMenuActive.value = !isMenuActive.value;
+};
+
+const closeMenu = () => {
+    isMenuActive.value = false;
+};
+
+const handleClickOutside = (event) => {
+    const navbar = document.querySelector('.navbar'); // Usar querySelector, já que $el não está disponível diretamente no setup.
+    if (!navbar.contains(event.target) && isMenuActive.value) {
+        closeMenu();
+    }
+};
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <style scoped>
-/* Estilos específicos desta página */
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
+
 </style>
