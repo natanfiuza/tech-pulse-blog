@@ -4,7 +4,7 @@ import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"; //Importe isso!
 import "../css/app.css"; // Se você tiver CSS global
-import $ from "jquery";
+
 
 createInertiaApp({
     resolve: (name) =>
