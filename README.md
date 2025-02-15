@@ -1,66 +1,121 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Tech Pulse Blog
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descrição
 
-## About Laravel
+O Tech Pulse Blog é um projeto de blog pessoal desenvolvido com o objetivo de demonstrar a integração entre Laravel, Inertia.js e Vue.js. Ele oferece funcionalidades básicas de um blog, como criação e visualização de posts, e serve como um ponto de partida para projetos mais complexos utilizando essa stack. O blog é responsivo e tem um design simples e limpo.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Dependências Utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Este projeto utiliza as seguintes dependências principais:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+*   **Backend:**
+    *   [Laravel](https://laravel.com/) (v10 ou superior): Framework PHP robusto e elegante.
+    *   [Inertia.js (Servidor)](https://inertiajs.com/):  Permite construir SPAs (Single Page Applications) com roteamento e controllers do lado do servidor.
+    *   [spatie/laravel-medialibrary](https://spatie.be/docs/laravel-medialibrary/v10/introduction) (Opcional, mas recomendado para gestão de uploads).
 
-## Learning Laravel
+*   **Frontend:**
+    *   [Vue.js](https://vuejs.org/) (v3): Framework JavaScript progressivo para construir interfaces de usuário.
+    *   [Inertia.js (Cliente)](https://inertiajs.com/):  Adapta o Vue.js para funcionar com o Inertia.js.
+    *   [Vite](https://vitejs.dev/): Ferramenta de build extremamente rápida para o frontend.
+    *   [`@vitejs/plugin-vue`](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue): Plugin do Vite para suporte ao Vue.js.
+    *   [`laravel-vite-plugin`](https://laravel.com/docs/10.x/vite): Plugin do Vite para integração com Laravel.
+    *  [Tailwind CSS](https://tailwindcss.com/):  (Opcional) Framework CSS utilitário para estilização rápida (altamente recomendado).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Outros:**
+    * PHP >= 8.1
+    * Composer
+    * Node.js >= 16.x (LTS)
+    * npm >= 8.x
+    * Um banco de dados (MySQL, PostgreSQL, SQLite, etc.)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Instalação
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Siga os passos abaixo para instalar e configurar o projeto em seu ambiente de desenvolvimento:
 
-## Laravel Sponsors
+1.  **Clone o repositório:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    git clone <URL_DO_REPOSITORIO>
+    cd tech-pulse-blog
+    ```
 
-### Premium Partners
+2.  **Instale as dependências do PHP (Composer):**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    composer install
+    ```
 
-## Contributing
+3.  **Instale as dependências do JavaScript (npm):**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    npm install
+    ```
 
-## Code of Conduct
+4.  **Configure o ambiente:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    *   Copie o arquivo `.env.example` para `.env`:
 
-## Security Vulnerabilities
+        ```bash
+        cp .env.example .env
+        ```
+    *   Edite o arquivo `.env` e configure as variáveis de ambiente, principalmente as relacionadas ao banco de dados (DB_DATABASE, DB_USERNAME, DB_PASSWORD, etc.).
+    *   Gere a chave da aplicação:
+        ```bash
+        php artisan key:generate
+        ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. **Crie o banco de dados:**
+    * Crie um banco de dados vazio no seu sistema gerenciador (ex. MySQL).
 
-## License
+6.  **Execute as migrações (migrations):**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    php artisan migrate
+    ```
+    Isso criará as tabelas necessárias no banco de dados.
+
+7.  **(Opcional) Execute os seeders:**
+     Se você quiser popular o seu banco de dados com dados iniciais rode:
+     ```bash
+     php artisan db:seed
+     ```
+
+8.  **Compile os assets do frontend:**
+
+    ```bash
+    npm run dev
+    ```
+    Para desenvolvimento, use `npm run dev` para *hot reloading*.  Para produção, use `npm run build`.
+
+9. **Inicie o servidor de desenvolvimento:**
+
+   ```bash
+    php artisan serve
+   ```
+
+10. **Acesse o blog no navegador:**
+
+   O blog estará disponível em `http://localhost:8000` (ou na porta que você configurar).
+
+## Utilização
+
+*   **Criação de Posts:**  Após o login, navegue até a rota `/posts/create` para acessar o formulário de criação de posts. Preencha o título e o conteúdo e clique em "Criar Post".
+*   **Visualização de Posts:**  Na página inicial (`/`), você verá uma lista dos posts mais recentes.  Clique em um título para ver a página de detalhes do post.
+*   **Login/Logout:** Use a rota `/login` para fazer login. A rota de logout é `/logout`.
+*   **Usuários:** Para criar posts, é preciso ter usuários. O projeto não implementa o registro de usuários por padrão para simplificar. Você pode adicionar usuários manualmente através do `php artisan tinker`, ou criar uma rota de registro, seguindo os passos para criação de um blog completo.
+
+## Considerações Finais e Agradecimentos
+
+Este projeto foi desenvolvido como um exemplo prático da integração entre Laravel, Inertia.js e Vue.js.  Ele é um ponto de partida e pode ser expandido com diversas funcionalidades, como registro de usuários, edição de posts, comentários, categorias, tags, upload de imagens, etc.
+
+Agradeço a todos que contribuírem para o meu aprendizado e desenvolvimento profissional.
+
+## Contribuições e Contato
+
+Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões de melhoria, sinta-se à vontade para abrir uma *issue* ou enviar um *pull request*.
+
+**Contato:**
+
+*   **Nome:** Natan Fiuza
+*   **Email:** [contato@natanfiuza.dev.br](mailto:contato@natanfiuza.dev.br)
+
