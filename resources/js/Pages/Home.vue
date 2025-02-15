@@ -29,16 +29,14 @@
             </div>
 
             <div v-if="featuredPost" class="hero-featured">
-                <InertiaLink :href="`${featuredPost.image}`">
+                <!-- route('post.show', { slug: featuredPost.slug }) -->
+                <InertiaLink :href="featuredPost.slug" class="featured-link">
                     <img :src="featuredPost.image" :alt="featuredPost.title" class="featured-image" />
-                </InertiaLink>
-                <div class="featured-details">
-                    <InertiaLink :href="`${featuredPost.image}`">
+                    <div class="featured-details">
                         <h2 class="featured-title">{{ featuredPost.title }}</h2>
-                    </InertiaLink>
-                    <p class="featured-excerpt">{{ featuredPost.excerpt }}</p>
-                    <InertiaLink :href="`${featuredPost.image}`" class="featured-link">Leia Mais</InertiaLink>
-                </div>
+                        <p class="featured-excerpt">{{ featuredPost.excerpt }}</p>
+                    </div>
+                </InertiaLink>
             </div>
         </div>
     </section>

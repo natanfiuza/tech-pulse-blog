@@ -212,6 +212,7 @@ body {
 
 /* Secao hero com feature post */
 .hero {
+    /* ... (seus estilos existentes para .hero) ... */
     display: flex;
     justify-content: center;
     /* Centraliza horizontalmente */
@@ -227,115 +228,97 @@ body {
 .hero-content {
     display: flex;
     flex-direction: column;
-    /* Empilha texto e destaque verticalmente */
     align-items: center;
-    /* Centraliza os itens */
     gap: 30px;
-    /* Espaço entre texto e destaque */
     max-width: 1200px;
-    /* Largura máxima do conteúdo */
     width: 100%;
 }
 
 .hero-text {
     text-align: center;
-    /* Centraliza o texto */
     max-width: 800px;
-    /* Largura máxima do texto */
-}
-
-.hero-text h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.hero-text p {
-    font-size: 1.1rem;
-    color: #666;
-    line-height: 1.6;
 }
 
 .hero-featured {
-    display: flex;
-    flex-direction: column;
-    /* Empilha imagem e detalhes verticalmente */
-    align-items: center;
-    /* Centraliza os itens */
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    /* Importante para bordas arredondadas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    max-width: 100%;
-    /* Garante que não ultrapasse o container */
+    position: relative;
     width: 100%;
-}
+    max-width: 800px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-.hero-featured:hover {
-    transform: scale(1.03);
 }
 
 .featured-image {
     width: 100%;
     height: auto;
-    max-height: 300px;
-    /* Altura máxima da imagem (ajuste conforme necessário) */
+    display: block;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
-    /* A imagem cobre o espaço, mantendo a proporção */
+}
+
+.featured-link {
+    display: block;
+    position: relative;
+    z-index: 1;
+    color: #cecece;
+    text-decoration: none;
 }
 
 .featured-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     padding: 20px;
-    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    box-sizing: border-box;
+    z-index: 2;
+    transition: transform 0.3s ease;
 }
 
 .featured-title {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #333;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-decoration: none;
 }
 
 .featured-excerpt {
     font-size: 1rem;
-    color: #666;
-    margin-bottom: 15px;
+    color: #dadde6;
+    margin: 0;
 }
 
-.featured-link {
-    display: inline-block;
-    /* Permite padding e margem */
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.featured-link:hover {
-    background-color: #0056b3;
-}
-
-/* Media query para telas menores */
+/* Media query */
 @media (max-width: 768px) {
-    .hero {
-        padding: 30px 10px;
-        /* Reduz o padding em telas menores */
+    .hero-featured {
+        /* Remove o posicionamento absoluto */
+        /*position: static; /*Não precisa, pois o padrão já é static */
+
+        display: flex;
+        /* Usa Flexbox */
+        flex-direction: column;
+        /* Empilha imagem e detalhes verticalmente */
     }
 
-    .hero-content {
-        flex-direction: column;
-        /* Sempre coluna em telas menores */
+    .featured-details {
+        position: static;
+        width: auto;
+        background-color: #f8f9fa;
+        color: #212529;
+        padding: 15px;
+        text-align: center;
+        transform: none;
+    }
+
+    .featured-title {
+        font-size: 1.5rem;
+        color: black;
     }
 
     .featured-image {
         max-height: 200px;
-    }
-
-    .hero-text h1 {
-        font-size: 2rem;
-        /* Reduz o tamanho da fonte */
     }
 }
