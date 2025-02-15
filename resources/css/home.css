@@ -83,32 +83,6 @@ body {
 }
 
 
-
-.hero {
-    margin-top: 80px;
-    text-align: center;
-    padding: 2rem;
-    background-color: #fff;
-}
-
-.hero h1 {
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.hero p {
-    color: #666;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.featured-posts {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 2rem;
-}
-
 .post-card {
     background-color: #fff;
     border-radius: 8px;
@@ -232,5 +206,119 @@ body {
         grid-template-columns: 1fr;
         /* Uma coluna em telas menores */
         /* Outros ajustes para mobile, se necessário */
+    }
+}
+
+
+/* Secao hero com feature post */
+.hero {
+    /* ... (seus estilos existentes para .hero) ... */
+    display: flex;
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente */
+    padding: 50px 20px;
+    /* Espaçamento interno */
+    background-color: #f5f5f5;
+    /* Cor de fundo leve */
+    min-height: 40vh;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.hero-text {
+    text-align: center;
+    max-width: 800px;
+}
+
+.hero-featured {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.featured-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.featured-link {
+    display: block;
+    position: relative;
+    z-index: 1;
+    color: #cecece;
+    text-decoration: none;
+}
+
+.featured-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    box-sizing: border-box;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.featured-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-decoration: none;
+}
+
+.featured-excerpt {
+    font-size: 1rem;
+    color: #dadde6;
+    margin: 0;
+}
+
+/* Media query */
+@media (max-width: 768px) {
+    .hero-featured {
+        /* Remove o posicionamento absoluto */
+        /*position: static; /*Não precisa, pois o padrão já é static */
+
+        display: flex;
+        /* Usa Flexbox */
+        flex-direction: column;
+        /* Empilha imagem e detalhes verticalmente */
+    }
+
+    .featured-details {
+        position: static;
+        width: auto;
+        background-color: #f8f9fa;
+        color: #212529;
+        padding: 15px;
+        text-align: center;
+        transform: none;
+    }
+
+    .featured-title {
+        font-size: 1.5rem;
+        color: black;
+    }
+
+    .featured-image {
+        max-height: 200px;
     }
 }
