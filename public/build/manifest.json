@@ -6,7 +6,7 @@
     "isEntry": true
   },
   "resources/js/Pages/Create.vue": {
-    "file": "assets/Create-BHmbcvwJ.js",
+    "file": "assets/Create-BXSSXW-D.js",
     "name": "Create",
     "src": "resources/js/Pages/Create.vue",
     "isDynamicEntry": true,
@@ -15,7 +15,7 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-vJsX6r_2.js",
+    "file": "assets/Home-DDnRR-_o.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
@@ -23,11 +23,11 @@
       "resources/js/app.js"
     ],
     "css": [
-      "assets/Home-CMwBNYOw.css"
+      "assets/Home-CD07oU6R.css"
     ]
   },
   "resources/js/Pages/Login.vue": {
-    "file": "assets/Login-B500RATv.js",
+    "file": "assets/Login-CmPat2nW.js",
     "name": "Login",
     "src": "resources/js/Pages/Login.vue",
     "isDynamicEntry": true,
@@ -36,7 +36,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-ChVse5d8.js",
+    "file": "assets/app-B2DLqrEF.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
