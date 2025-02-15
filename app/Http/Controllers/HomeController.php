@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -12,8 +13,10 @@ class HomeController extends Controller
     public function index()
     {
 
+        $posts = json_decode(Storage::get('data\posts.json'),true);
+      
         return Inertia::render('Home', [
-            //'posts' => $posts, // Passa os posts para a view
+            'posts' => $posts, // Passa os posts para a view
         ]);
 
     }

@@ -83,32 +83,6 @@ body {
 }
 
 
-
-.hero {
-    margin-top: 80px;
-    text-align: center;
-    padding: 2rem;
-    background-color: #fff;
-}
-
-.hero h1 {
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.hero p {
-    color: #666;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.featured-posts {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 2rem;
-}
-
 .post-card {
     background-color: #fff;
     border-radius: 8px;
@@ -232,5 +206,136 @@ body {
         grid-template-columns: 1fr;
         /* Uma coluna em telas menores */
         /* Outros ajustes para mobile, se necessário */
+    }
+}
+
+
+/* Secao hero com feature post */
+.hero {
+    display: flex;
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente */
+    padding: 50px 20px;
+    /* Espaçamento interno */
+    background-color: #f5f5f5;
+    /* Cor de fundo leve */
+    min-height: 40vh;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    /* Empilha texto e destaque verticalmente */
+    align-items: center;
+    /* Centraliza os itens */
+    gap: 30px;
+    /* Espaço entre texto e destaque */
+    max-width: 1200px;
+    /* Largura máxima do conteúdo */
+    width: 100%;
+}
+
+.hero-text {
+    text-align: center;
+    /* Centraliza o texto */
+    max-width: 800px;
+    /* Largura máxima do texto */
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.hero-featured {
+    display: flex;
+    flex-direction: column;
+    /* Empilha imagem e detalhes verticalmente */
+    align-items: center;
+    /* Centraliza os itens */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    /* Importante para bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    /* Garante que não ultrapasse o container */
+    width: 100%;
+}
+
+.hero-featured:hover {
+    transform: scale(1.03);
+}
+
+.featured-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    /* Altura máxima da imagem (ajuste conforme necessário) */
+    object-fit: cover;
+    /* A imagem cobre o espaço, mantendo a proporção */
+}
+
+.featured-details {
+    padding: 20px;
+    text-align: center;
+}
+
+.featured-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.featured-excerpt {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.featured-link {
+    display: inline-block;
+    /* Permite padding e margem */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.featured-link:hover {
+    background-color: #0056b3;
+}
+
+/* Media query para telas menores */
+@media (max-width: 768px) {
+    .hero {
+        padding: 30px 10px;
+        /* Reduz o padding em telas menores */
+    }
+
+    .hero-content {
+        flex-direction: column;
+        /* Sempre coluna em telas menores */
+    }
+
+    .featured-image {
+        max-height: 200px;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+        /* Reduz o tamanho da fonte */
     }
 }
