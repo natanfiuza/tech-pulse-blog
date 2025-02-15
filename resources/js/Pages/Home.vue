@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar">
-        <a href="index.html" class="logo">NatanFiuza.dev</a>
+        <a href="index.html" class="logo">TechPulse</a>
         <ul class="nav-links">
             <li><a href="index.html">Início</a></li>
             <li><a href="#">Artigos</a></li>
@@ -20,7 +20,7 @@
         </p>
     </section>
 
-    <section class="featured-posts">
+    <section class="featured-posts" id="cards_home">
         <div class="post-card">
             <img src="/assets/img/artigo_card_1.jpeg" alt="Artigo em Destaque" />
             <h3>Inteligência Artificial: Revolução Tecnológica</h3>
@@ -63,6 +63,7 @@
 </template>
 
 <script setup>
+import $ from "jquery";
 import { defineProps } from 'vue';
 import { InertiaLink } from '@inertiajs/inertia-vue3'; //Importe o InertiaLink
 const props = defineProps({
@@ -70,6 +71,7 @@ const props = defineProps({
 });
 
 </script>
+
 <style scoped>
 /* Estilos específicos desta página */
 .container {
