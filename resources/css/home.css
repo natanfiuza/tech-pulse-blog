@@ -254,7 +254,8 @@ body {
     height: auto;
     display: block;
     aspect-ratio: 16 / 9;
-    object-fit: cover;
+    margin-top: -40px;
+    object-fit: initial;
 }
 
 .featured-link {
@@ -286,8 +287,8 @@ body {
 }
 
 .featured-excerpt {
-    font-size: 1rem;
-    color: #dadde6;
+    font-size: .7rem;
+    color: rgb(207, 204, 204);
     margin: 0;
 }
 
