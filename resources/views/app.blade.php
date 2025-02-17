@@ -8,7 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
 
     <title>TechPulse - Blog de Tecnologia</title>
-    @vite('resources/js/app.js')  @inertiaHead
+    @vite('resources/js/app.js')
+    @inertiaHead
+
   </head>
 <body>
     @inertia

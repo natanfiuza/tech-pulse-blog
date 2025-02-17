@@ -1,4 +1,18 @@
 {
+  "_Navbar-!~{007}~.js": {
+    "file": "assets/Navbar-B402Zzjo.css",
+    "src": "_Navbar-!~{007}~.js"
+  },
+  "_Navbar-UzsBc7SH.js": {
+    "file": "assets/Navbar-UzsBc7SH.js",
+    "name": "Navbar",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "css": [
+      "assets/Navbar-B402Zzjo.css"
+    ]
+  },
   "resources/css/app.css": {
     "file": "assets/app-l0sNRNKZ.js",
     "name": "app",
@@ -6,7 +20,7 @@
     "isEntry": true
   },
   "resources/js/Pages/Create.vue": {
-    "file": "assets/Create-D0zv7_SK.js",
+    "file": "assets/Create-DDN7_tbg.js",
     "name": "Create",
     "src": "resources/js/Pages/Create.vue",
     "isDynamicEntry": true,
@@ -15,19 +29,17 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-BknK7O6D.js",
+    "file": "assets/Home-COResIom.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/app.js"
-    ],
-    "css": [
-      "assets/Home-Mf7VeY3n.css"
+      "resources/js/app.js",
+      "_Navbar-UzsBc7SH.js"
     ]
   },
   "resources/js/Pages/Login.vue": {
-    "file": "assets/Login-NBA9cmm2.js",
+    "file": "assets/Login-BNJIo_Fn.js",
     "name": "Login",
     "src": "resources/js/Pages/Login.vue",
     "isDynamicEntry": true,
@@ -35,15 +47,29 @@
       "resources/js/app.js"
     ]
   },
+  "resources/js/Pages/Post.vue": {
+    "file": "assets/Post-CoT1UtL6.js",
+    "name": "Post",
+    "src": "resources/js/Pages/Post.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Navbar-UzsBc7SH.js"
+    ],
+    "css": [
+      "assets/Post-CFofsxLc.css"
+    ]
+  },
   "resources/js/app.js": {
-    "file": "assets/app-BNh0YUas.js",
+    "file": "assets/app-MDX816C8.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
       "resources/js/Pages/Create.vue",
       "resources/js/Pages/Home.vue",
-      "resources/js/Pages/Login.vue"
+      "resources/js/Pages/Login.vue",
+      "resources/js/Pages/Post.vue"
     ]
   }
 }

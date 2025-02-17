@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -37,7 +38,16 @@ class PostController extends Controller
      */
     public function show($slug) // Recebe o slug como parâmetro
     {
-        $post = Post::where('slug', $slug)->firstOrFail(); // Busca o post
+        // $post = Post::where('slug', $slug)->firstOrFail(); // Busca o post
+        $posts = json_decode(Storage::get('data\posts.json'), true);
+
+        foreach ($posts as $value) {
+            if ($value['slug'] == $slug) {
+                $post = $value;
+                break;
+            }
+        }
+
 
         return Inertia::render('Post', [ // Renderiza o componente Vue 'Post'
             'post' => $post,

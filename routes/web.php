@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +25,4 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // // Rotas de posts (precisamos criar o PostController)
 // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth'); //Protege com Middleware
 // Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
-// Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
+Route::get('/post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
