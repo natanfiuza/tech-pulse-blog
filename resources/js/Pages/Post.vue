@@ -1,5 +1,6 @@
 <template>
     <Navbar />
+
     <div class="post-container">
 
         <Head>
@@ -10,13 +11,27 @@
         <h1 class="post-title">{{ post.title }}</h1>
         <img :src="`${post.image}`" :alt="post.title" class="post-image" />
 
-        <div class="post-meta">
-            <span>Publicado em: {{ formattedDate }}</span>
-            <span>Autor: NatanFiuza</span>
+        <div class="article-meta">
+            <span>Por <span id="article-author">NatanFiuza</span> | <span id="article-date">{{ formattedDate }}</span></span>
+            <span>Tempo de leitura: <span id="reader-time">{{ read_time }}</span> min</span>
         </div>
 
         <div class="post-content article-content" v-html="renderedMarkdown"></div>
     </div>
+    <section class="author-bio">
+        <img src="/assets/img/natanfiuza.jpeg" alt="Maria Silva" class="author-avatar" />
+        <div>
+            <h3>Nataniel Fiuza</h3>
+            <p>
+                Desenvolvedor sênior com vasta experiência em PHP, Laravel,
+                JavaScript e Python. Especialista em banco de dados, com domínio de
+                MariaDB e Microsoft SQL Server, ele é conhecido por sua habilidade
+                em otimizar sistemas de alto desempenho e implementar boas práticas
+                de programação, como Código Limpo e arquitetura SOLID.
+            </p>
+        </div>
+    </section>
+
 </template>
 
 <script setup>
@@ -27,10 +42,14 @@ import Navbar from '@/Components/Navbar.vue'; // Ajuste o caminho, se necessári
 import "../../css/home.css";
 import "../../css/article.css";
 import { marked } from 'marked';
+import {tempo_leitura} from "../helpers";
 
 const props = defineProps({
     post: Object,
 });
+
+const read_time =  tempo_leitura(props.post.content);
+
 
 // Formatação de data (usando Luxon)
 const formattedDate = computed(() => {
