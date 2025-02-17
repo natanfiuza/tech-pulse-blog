@@ -15,7 +15,7 @@
             <span>Autor: NatanFiuza</span>
         </div>
 
-        <div class="post-content" v-html="post.content"></div>
+        <div class="post-content article-content" v-html="renderedMarkdown"></div>
     </div>
 </template>
 
@@ -25,6 +25,8 @@ import { Head } from '@inertiajs/inertia-vue3'; // Importa o componente Head
 import { DateTime } from 'luxon'; // Formatação de datas
 import Navbar from '@/Components/Navbar.vue'; // Ajuste o caminho, se necessário
 import "../../css/home.css";
+import "../../css/article.css";
+import { marked } from 'marked';
 
 const props = defineProps({
     post: Object,
@@ -37,37 +39,37 @@ const formattedDate = computed(() => {
     }
     return DateTime.fromISO(props.post.created_at).toLocaleString(DateTime.DATE_FULL);
 });
-
+// Computed property para renderizar o Markdown em HTML
+const renderedMarkdown = computed(() => {
+    return marked(props.post.content);
+});
 </script>
 
 <style scoped>
 .post-container {
-    max-width: 800px;
+    max-width: 90%;
     margin: 0 auto;
-    margin-top: 2.1rem;
-    /* Centraliza o conteúdo */
+    margin-top: 5.1rem;
+
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 2rem;
 }
 
 .post-title {
     font-size: 2.5rem;
-    /* Aumenta o tamanho do título */
     margin-bottom: 1rem;
     color: #333;
     text-align: center;
-    /* Centraliza o título */
 }
 
 .post-image {
     width: 100%;
-    height: auto;
+    height: 35rem;
     margin-bottom: 1.5rem;
-    /* Espaço abaixo da imagem */
     border-radius: 8px;
-    /* Bordas arredondadas */
     aspect-ratio: 16 / 9;
     object-fit: cover;
 }
@@ -75,7 +77,6 @@ const formattedDate = computed(() => {
 .post-meta {
     display: flex;
     justify-content: space-between;
-    /* Espaço entre data e autor */
     margin-bottom: 1rem;
     color: #666;
     font-size: 0.9rem;
@@ -84,6 +85,8 @@ const formattedDate = computed(() => {
 .post-content {
     line-height: 1.6;
     color: #444;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* Estilos adicionais para elementos dentro do conteúdo (opcional) */
@@ -121,7 +124,6 @@ const formattedDate = computed(() => {
 }
 
 .post-content pre {
-    /* Para código */
     background: #f4f4f4;
     padding: 1rem;
     overflow-x: auto;
@@ -136,12 +138,35 @@ const formattedDate = computed(() => {
 @media (max-width: 768px) {
     .post-container {
 
-        margin-top: 3.8rem;
-
+        max-width: 100%;
+        margin: 0 auto;
+        padding-top: 5.7rem;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 1.2rem;
     }
 
     .post-title {
         font-size: 1.3rem;
+    }
+
+    .post-image {
+        width: 100%;
+        height: 16rem;
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+
+    p {
+        margin-top: .5rem;
+        margin-bottom: .2rem;
+    }
+
+    li {
+        margin-left: .1rem;
     }
 }
 </style>
