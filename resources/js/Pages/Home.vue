@@ -1,22 +1,5 @@
 <template>
-    <nav class="navbar">
-        <a href="/" class="logo">TechPulse</a>
-        <div class="menu-toggle" id="mobile-menu" @click="toggleMenu" :class="{ active: isMenuActive }">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <ul class="nav-links" :class="{ active: isMenuActive }">
-            <li><a href="/" @click.prevent="closeMenu">Início</a></li>
-            <li><a href="#" @click.prevent="closeMenu">Artigos</a></li>
-            <li><a href="#" @click.prevent="closeMenu">Categorias</a></li>
-            <li><a href="#" @click.prevent="closeMenu">Sobre</a></li>
-            <li><a href="#" @click.prevent="closeMenu">Contato</a></li>
-            <li><a href="/login" @click.prevent="closeMenu">Login</a></li>
-        </ul>
-    </nav>
-
+    <Navbar />
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
@@ -29,8 +12,7 @@
             </div>
 
             <div v-if="featuredPost" class="hero-featured">
-                <!-- route('post.show', { slug: featuredPost.slug }) -->
-                <InertiaLink :href="featuredPost.slug" class="featured-link">
+                <InertiaLink :href="'/post/show/'+ featuredPost.slug" class="featured-link">
                     <img :src="featuredPost.image" :alt="featuredPost.title" class="featured-image" />
                     <div class="featured-details">
                         <h2 class="featured-title">{{ featuredPost.title }}</h2>
@@ -86,7 +68,8 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { InertiaLink } from '@inertiajs/inertia-vue3'; // Importe o InertiaLink
-import "../../css/home.css"; // Certifique-se de que o caminho está correto
+import "../../css/home.css"; 
+import Navbar from '@/Components/Navbar.vue'; // Ajuste o caminho, se necessário
 
 const props = defineProps({
     posts: Array,
@@ -95,7 +78,6 @@ const props = defineProps({
 
 // Pega o primeiro post como destaque.
 const featuredPost = computed(() => {
-    console.log('posts',props.posts);
     let featured_post = null;
     props.posts.map((r) => {
         if (r.featured_post) {
@@ -105,31 +87,7 @@ const featuredPost = computed(() => {
 
     return featured_post;
 });
-// Use ref() para criar variáveis reativas
-const isMenuActive = ref(false);
 
-const toggleMenu = () => {
-    isMenuActive.value = !isMenuActive.value;
-};
-
-const closeMenu = () => {
-    isMenuActive.value = false;
-};
-
-const handleClickOutside = (event) => {
-    const navbar = document.querySelector('.navbar'); // Usar querySelector, já que $el não está disponível diretamente no setup.
-    if (!navbar.contains(event.target) && isMenuActive.value) {
-        closeMenu();
-    }
-};
-
-onMounted(() => {
-    document.addEventListener('click', handleClickOutside);
-});
-
-onBeforeUnmount(() => {
-    document.removeEventListener('click', handleClickOutside);
-});
 </script>
 
 <style scoped>
