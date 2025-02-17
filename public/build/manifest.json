@@ -3,8 +3,8 @@
     "file": "assets/Navbar-B402Zzjo.css",
     "src": "_Navbar-!~{008}~.js"
   },
-  "_Navbar-Bs5rtirO.js": {
-    "file": "assets/Navbar-Bs5rtirO.js",
+  "_Navbar-L5EBttwa.js": {
+    "file": "assets/Navbar-L5EBttwa.js",
     "name": "Navbar",
     "imports": [
       "resources/js/app.js",
@@ -25,7 +25,7 @@
     "isEntry": true
   },
   "resources/js/Pages/Create.vue": {
-    "file": "assets/Create-BVeiXDHB.js",
+    "file": "assets/Create-mjKOcJ40.js",
     "name": "Create",
     "src": "resources/js/Pages/Create.vue",
     "isDynamicEntry": true,
@@ -34,19 +34,19 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-C9Z9znoG.js",
+    "file": "assets/Home-BlfWLnyM.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-Bs5rtirO.js",
+      "_Navbar-L5EBttwa.js",
       "resources/js/Pages/PostCard.vue",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ]
   },
   "resources/js/Pages/Login.vue": {
-    "file": "assets/Login-CXr12lJ1.js",
+    "file": "assets/Login-CqigkE-6.js",
     "name": "Login",
     "src": "resources/js/Pages/Login.vue",
     "isDynamicEntry": true,
@@ -55,21 +55,21 @@
     ]
   },
   "resources/js/Pages/Post.vue": {
-    "file": "assets/Post-Bqgh0M2P.js",
+    "file": "assets/Post-BYn9xQeC.js",
     "name": "Post",
     "src": "resources/js/Pages/Post.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-Bs5rtirO.js",
+      "_Navbar-L5EBttwa.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/Post-CnE2-WYc.css"
+      "assets/Post-BQHyukYG.css"
     ]
   },
   "resources/js/Pages/PostCard.vue": {
-    "file": "assets/PostCard-HkyPDgR5.js",
+    "file": "assets/PostCard-WUQPn31Q.js",
     "name": "PostCard",
     "src": "resources/js/Pages/PostCard.vue",
     "isDynamicEntry": true,
@@ -82,7 +82,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BK9Y1R2X.js",
+    "file": "assets/app-BM4KQG-8.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
