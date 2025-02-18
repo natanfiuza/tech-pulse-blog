@@ -33,7 +33,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { InertiaLink } from '@inertiajs/inertia-vue3'; // Importe o InertiaLink
 import "../../css/home.css";
 import Navbar from '@/Components/Navbar.vue'; // Ajuste o caminho, se necessário
-import PostCard from './PostCard.vue'; // Importa o componente PostCard
+import PostCard from '@/Components/PostCard.vue'; // Importa o componente PostCard
 
 const props = defineProps({
     posts: Array,
