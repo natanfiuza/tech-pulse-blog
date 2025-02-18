@@ -48,7 +48,8 @@ class Post extends Model
         // Se o slug não for fornecido (ex: ao criar um novo post),
         // gera um slug a partir do título.
         if (empty($value)) {
-            $this->attributes['slug'] = Str::slug($this->title, '-', 'pt-br', ['@' => 'at']);
+            //$this->attributes['slug'] = Str::slug($this->title, '-', 'pt-br', ['@' => 'at']);
+            $this->attributes['slug'] = criar_slug($this->title);
         } else {
             // Se um valor for fornecido, usa ele mesmo
             $this->attributes['slug'] = $value;
@@ -98,7 +99,8 @@ class Post extends Model
     public function save(array $options = [])
     {
         if (empty($this->slug) || $this->isDirty('title')) { //Slug vazio ou título foi alterado
-            $this->slug = Str::slug($this->title, '-', 'pt-br', ['@' => 'at']);
+            //$this->slug = Str::slug($this->title, '-', 'pt-br', ['@' => 'at']);
+            $this->slug = criar_slug($this->title);
         }
 
         //Garantir que o slug seja único
