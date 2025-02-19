@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 class PostController extends Controller
 {
@@ -44,6 +45,7 @@ class PostController extends Controller
         foreach ($posts as $value) {
             if ($value['slug'] == $slug) {
                 $post = $value;
+                $post['content'] = app(MarkdownRenderer::class)->toHtml($post['content']);
                 break;
             }
         }
