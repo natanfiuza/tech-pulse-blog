@@ -12,11 +12,15 @@
         <img :src="`${post.image}`" :alt="post.title" class="post-image" />
 
         <div class="article-meta">
-            <span>Por <span id="article-author">NatanFiuza</span> | <span id="article-date">{{ formattedDate }}</span></span>
+            <span>Por <span id="article-author">NatanFiuza</span> | <span id="article-date">{{ formattedDate
+                    }}</span></span>
             <span>Tempo de leitura: <span id="reader-time">{{ read_time }}</span> min</span>
         </div>
 
-        <div class="post-content article-content" v-html="renderedMarkdown"></div>
+        <div class="post-content article-content" v-html="post.content" v-copy-code>
+
+
+        </div>
     </div>
     <section class="author-bio">
         <img src="/assets/img/natanfiuza.jpeg" alt="Maria Silva" class="author-avatar" />
@@ -41,14 +45,19 @@ import { DateTime } from 'luxon'; // Formatação de datas
 import Navbar from '@/Components/Navbar.vue'; // Ajuste o caminho, se necessário
 import "../../css/home.css";
 import "../../css/article.css";
-import { marked } from 'marked';
-import {tempo_leitura} from "../helpers";
+import { tempo_leitura } from "../helpers";
+
+// Prism highlighting
+// import { marked } from 'marked';
+// import '../../css/themes/prism.css';
+// import Prism from 'prismjs';
+
 
 const props = defineProps({
     post: Object,
 });
 
-const read_time =  tempo_leitura(props.post.content);
+const read_time = tempo_leitura(props.post.content);
 
 
 // Formatação de data (usando Luxon)
@@ -58,10 +67,36 @@ const formattedDate = computed(() => {
     }
     return DateTime.fromISO(props.post.created_at).toLocaleString(DateTime.DATE_FULL);
 });
-// Computed property para renderizar o Markdown em HTML
-const renderedMarkdown = computed(() => {
-    return marked(props.post.content);
-});
+// Diretiva customizada v-copy-code
+const copyCode = {
+    mounted(el) { // Usa 'mounted' em vez de 'bind' (Vue 3)
+        el.querySelectorAll('pre').forEach((preElement) => {
+            const code = preElement.innerText; //Pega o texto de dentro do pre
+
+            // Cria o botão
+            const copyButton = document.createElement('button');
+            copyButton.textContent = 'Copiar';
+            copyButton.classList.add('copy-button'); // Adiciona uma classe para estilização
+
+            // Adiciona o botão *antes* do <pre>
+            preElement.parentNode.insertBefore(copyButton, preElement);
+
+            // Adiciona o event listener ao botão
+            copyButton.addEventListener('click', () => {
+                navigator.clipboard.writeText(code).then(() => {
+                    // Feedback visual (opcional)
+                    copyButton.textContent = 'Copiado!';
+                    setTimeout(() => {
+                        copyButton.textContent = 'Copiar';
+                    }, 2000); // Volta para "Copiar" depois de 2 segundos
+                }).catch(err => {
+                    console.error('Erro ao copiar: ', err);
+                    // Mostrar mensagem de erro (opcional)
+                });
+            });
+        });
+    }
+};
 </script>
 
 <style scoped>
@@ -74,7 +109,7 @@ const renderedMarkdown = computed(() => {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 2rem;
+    font-size: 1.1rem;
 }
 
 .post-title {
@@ -187,5 +222,56 @@ const renderedMarkdown = computed(() => {
     li {
         margin-left: .1rem;
     }
+}
+</style>
+
+<style>
+/* Estilos para a tag <pre> (SEM scoped!) */
+pre {
+    position: relative;
+    overflow-x: auto;
+    padding: .6rem;
+    border-radius: 5px;
+    background-color: #d6d3d3;
+    margin-bottom: 1rem;
+}
+code {
+    font-family: "Fira Code", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+pre code.hljs {
+    padding: 10px;
+    display: block;
+}
+
+.copy-button {
+    position: absolute;
+    /* Posiciona o botão */
+    top: 0.5rem;
+    /* Distância do topo */
+    right: 0.5rem;
+    /* Distância da direita */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    /* Começa invisível */
+    transition: opacity 0.2s ease;
+    z-index: 50;
+}
+
+/* Mostra o botão no hover do <pre> */
+pre:hover .copy-button {
+    opacity: 1;
+}
+
+.post-content {
+    line-height: 1.6;
+    color: #444;
 }
 </style>
