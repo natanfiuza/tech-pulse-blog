@@ -16,6 +16,11 @@ export default defineConfig({
             },
         }),
     ],
+    // define: {
+    //     // Adicione esta seção!
+    //     "process.env": {}, // Define process.env como um objeto vazio
+    //     "process.cwd": () => "", // Adicione esta linha!
+    // },
     build: {
         rollupOptions: {
             external: ["prismjs"],

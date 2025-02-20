@@ -45,7 +45,7 @@ class PostController extends Controller
         foreach ($posts as $value) {
             if ($value['slug'] == $slug) {
                 $post = $value;
-                $post['content'] = app(MarkdownRenderer::class)->toHtml($post['content']);
+                //$post['content'] = app(MarkdownRenderer::class)->toHtml($post['content']);
                 break;
             }
         }
