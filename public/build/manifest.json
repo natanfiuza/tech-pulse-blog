@@ -3,8 +3,8 @@
     "file": "assets/Navbar-BdPZSObV.css",
     "src": "_Navbar-!~{007}~.js"
   },
-  "_Navbar-nhl9CBwq.js": {
-    "file": "assets/Navbar-nhl9CBwq.js",
+  "_Navbar-CpWqIJza.js": {
+    "file": "assets/Navbar-CpWqIJza.js",
     "name": "Navbar",
     "imports": [
       "resources/js/app.js"
@@ -20,7 +20,7 @@
     "isEntry": true
   },
   "resources/js/Pages/Create.vue": {
-    "file": "assets/Create-CXvY78I_.js",
+    "file": "assets/Create-CLBsIj5b.js",
     "name": "Create",
     "src": "resources/js/Pages/Create.vue",
     "isDynamicEntry": true,
@@ -29,20 +29,20 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-DkLLtnBC.js",
+    "file": "assets/Home-DeflS8vk.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-nhl9CBwq.js"
+      "_Navbar-CpWqIJza.js"
     ],
     "css": [
       "assets/Home-Cyt5YMbI.css"
     ]
   },
   "resources/js/Pages/Login.vue": {
-    "file": "assets/Login-CoebxW1i.js",
+    "file": "assets/Login-CTyxSRxN.js",
     "name": "Login",
     "src": "resources/js/Pages/Login.vue",
     "isDynamicEntry": true,
@@ -51,20 +51,20 @@
     ]
   },
   "resources/js/Pages/Post.vue": {
-    "file": "assets/Post-dFeX5azk.js",
+    "file": "assets/Post-_kh4v7Ho.js",
     "name": "Post",
     "src": "resources/js/Pages/Post.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-nhl9CBwq.js"
+      "_Navbar-CpWqIJza.js"
     ],
     "css": [
-      "assets/Post-grsZIXrD.css"
+      "assets/Post-CT82TJaj.css"
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-KMKeFZmt.js",
+    "file": "assets/app-CeX5QpZx.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,

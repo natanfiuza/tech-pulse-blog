@@ -17,7 +17,7 @@
             <span>Tempo de leitura: <span id="reader-time">{{ read_time }}</span> min</span>
         </div>
 
-        <div class="post-content article-content" v-html="post.content" v-copy-code>
+        <div class="post-content article-content" ref="postContent" >
 
 
         </div>
@@ -39,19 +39,16 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue';
+import { defineProps, computed, ref, onMounted, watch } from 'vue';
 import { Head } from '@inertiajs/inertia-vue3'; // Importa o componente Head
 import { DateTime } from 'luxon'; // Formatação de datas
 import Navbar from '@/Components/Navbar.vue'; // Ajuste o caminho, se necessário
 import "../../css/home.css";
 import "../../css/article.css";
 import { tempo_leitura } from "../helpers";
-
-// Prism highlighting
-// import { marked } from 'marked';
-// import '../../css/themes/prism.css';
-// import Prism from 'prismjs';
-
+import MarkdownIt from 'markdown-it';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github-dark.css'; // Importe o CSS do tema!
 
 const props = defineProps({
     post: Object,
@@ -67,36 +64,41 @@ const formattedDate = computed(() => {
     }
     return DateTime.fromISO(props.post.created_at).toLocaleString(DateTime.DATE_FULL);
 });
-// Diretiva customizada v-copy-code
-const copyCode = {
-    mounted(el) { // Usa 'mounted' em vez de 'bind' (Vue 3)
-        el.querySelectorAll('pre').forEach((preElement) => {
-            const code = preElement.innerText; //Pega o texto de dentro do pre
 
-            // Cria o botão
-            const copyButton = document.createElement('button');
-            copyButton.textContent = 'Copiar';
-            copyButton.classList.add('copy-button'); // Adiciona uma classe para estilização
 
-            // Adiciona o botão *antes* do <pre>
-            preElement.parentNode.insertBefore(copyButton, preElement);
 
-            // Adiciona o event listener ao botão
-            copyButton.addEventListener('click', () => {
-                navigator.clipboard.writeText(code).then(() => {
-                    // Feedback visual (opcional)
-                    copyButton.textContent = 'Copiado!';
-                    setTimeout(() => {
-                        copyButton.textContent = 'Copiar';
-                    }, 2000); // Volta para "Copiar" depois de 2 segundos
-                }).catch(err => {
-                    console.error('Erro ao copiar: ', err);
-                    // Mostrar mensagem de erro (opcional)
-                });
-            });
-        });
+const postContent = ref(null);
+
+onMounted(() => {
+    renderMarkdown();
+});
+
+watch(() => props.post, () => {
+    renderMarkdown();
+}, { deep: true });
+
+const renderMarkdown = () => {
+    if (!props.post.content || !postContent.value) {
+        return;
     }
+
+    const md = new MarkdownIt({
+        html: true,
+        linkify: true,
+        typographer: true,
+    });
+
+    const rawHtml = md.render(props.post.content);
+    postContent.value.innerHTML = rawHtml; // Insere o HTML
+
+    // Aplica o Highlight.js
+    postContent.value.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+    });
 };
+
+
+
 </script>
 
 <style scoped>
@@ -228,11 +230,13 @@ const copyCode = {
 <style>
 /* Estilos para a tag <pre> (SEM scoped!) */
 pre {
-    position: relative;
     overflow-x: auto;
+    /* Adiciona rolagem horizontal quando necessário */
     padding: .6rem;
-    border-radius: 5px;
-    background-color: #d6d3d3;
+    border-radius: 4px;
+    /* (Opcional) Arredonda os cantos */
+    background-color: #f0f0f0;
+    /*(Opcional) Cor de fundo. Mude de acordo com o tema do highlight*/
     margin-bottom: 1rem;
 }
 code {
@@ -240,38 +244,5 @@ code {
     font-optical-sizing: auto;
     font-weight: 700;
     font-style: normal;
-}
-pre code.hljs {
-    padding: 10px;
-    display: block;
-}
-
-.copy-button {
-    position: absolute;
-    /* Posiciona o botão */
-    top: 0.5rem;
-    /* Distância do topo */
-    right: 0.5rem;
-    /* Distância da direita */
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    opacity: 0;
-    /* Começa invisível */
-    transition: opacity 0.2s ease;
-    z-index: 50;
-}
-
-/* Mostra o botão no hover do <pre> */
-pre:hover .copy-button {
-    opacity: 1;
-}
-
-.post-content {
-    line-height: 1.6;
-    color: #444;
 }
 </style>
