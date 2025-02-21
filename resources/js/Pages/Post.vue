@@ -46,7 +46,8 @@ import "../../css/article.css";
 import { tempo_leitura } from "../helpers";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
-import "highlight.js/styles/github-dark.css"; // Importe o CSS do tema!
+import "highlight.js/styles/github-dark.css";
+//import "../../css/themes/dracula.css";
 
 const props = defineProps({
   post: Object,

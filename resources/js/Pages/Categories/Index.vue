@@ -1,11 +1,12 @@
 <template>
   <div>
+    <Navbar />
     <Head>
       <title>Categorias</title>
     </Head>
 
     <h1>Categorias</h1>
-    <InertiaLink :href="route('categories.create')" class="btn btn-primary mb-3"
+    <InertiaLink :href="'/categories/create'" class="btn btn-primary mb-3"
       >Nova Categoria</InertiaLink
     >
 
@@ -22,13 +23,15 @@
         <tbody>
           <tr v-for="category in categories" :key="category.id">
             <td>
-              <CategoryName :category="category" />
+              <span :style="{ marginLeft: `${category.level * 20}px` }">
+                {{ category.name }}
+              </span>
             </td>
             <td>{{ category.slug }}</td>
             <td>{{ category.description }}</td>
             <td>
               <InertiaLink
-                :href="route('categories.edit', { category: category.slug })"
+                :href="'/categories/edit/' + category.slug"
                 class="btn btn-sm btn-primary me-1"
                 >Editar</InertiaLink
               >
@@ -47,7 +50,10 @@
 import { defineProps } from "vue";
 import { InertiaLink, useForm } from "@inertiajs/inertia-vue3";
 import { Head } from "@inertiajs/inertia-vue3";
-import CategoryName from "@/Components/CategoryName.vue"; // Componente para exibir o nome recursivamente
+//import CategoryName from "@/Components/CategoryName.vue"; // Componente para exibir o nome recursivamente
+import Navbar from "@/Components/Navbar.vue";
+
+// import CategoryName from '@/Components/CategoryName.vue'; // Remove o componente recursivo
 
 defineProps({
   categories: Array,
