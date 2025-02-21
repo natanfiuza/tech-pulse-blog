@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,17 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth'); //Protege com Middleware
 // Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
 Route::get('/post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
+
+
+
+Route::prefix('/categories')->group(function () {
+    Route::get('', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::get('/{category:slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/{category:slug}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/{category:slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+
+});
+
