@@ -1,17 +1,26 @@
 {
-  "_Navbar-!~{007}~.js": {
-    "file": "assets/Navbar-BdPZSObV.css",
-    "src": "_Navbar-!~{007}~.js"
+  "_Navbar-!~{00a}~.js": {
+    "file": "assets/Navbar-B7RvehGB.css",
+    "src": "_Navbar-!~{00a}~.js"
   },
-  "_Navbar-CqmpH7bs.js": {
-    "file": "assets/Navbar-CqmpH7bs.js",
+  "_Navbar-DitMQRyj.js": {
+    "file": "assets/Navbar-DitMQRyj.js",
     "name": "Navbar",
     "imports": [
-      "resources/js/app.js"
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/Navbar-BdPZSObV.css"
+      "assets/Navbar-B7RvehGB.css"
     ]
+  },
+  "__plugin-vue_export-helper-DlAUqK2U.js": {
+    "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "_home-!~{00c}~.js": {
+    "file": "assets/home-DLDo7ZLX.css",
+    "src": "_home-!~{00c}~.js"
   },
   "resources/css/app.css": {
     "file": "assets/app-l0sNRNKZ.js",
@@ -19,8 +28,49 @@
     "src": "resources/css/app.css",
     "isEntry": true
   },
+  "resources/js/Pages/Categories/Create.vue": {
+    "file": "assets/Create-C24sFq5T.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Categories/Create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Navbar-DitMQRyj.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Create-tn0RQdqM.css"
+    ]
+  },
+  "resources/js/Pages/Categories/Edit.vue": {
+    "file": "assets/Edit-Rmqd-UpQ.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Categories/Edit.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Create-tn0RQdqM.css"
+    ]
+  },
+  "resources/js/Pages/Categories/Index.vue": {
+    "file": "assets/Index-CZjJzCkk.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Categories/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Navbar-DitMQRyj.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Create-tn0RQdqM.css"
+    ]
+  },
   "resources/js/Pages/Create.vue": {
-    "file": "assets/Create-C-AfQRLB.js",
+    "file": "assets/Create-C01wd2bQ.js",
     "name": "Create",
     "src": "resources/js/Pages/Create.vue",
     "isDynamicEntry": true,
@@ -29,20 +79,22 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-aG8fRG0f.js",
+    "file": "assets/Home-iZ2SLdE-.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-CqmpH7bs.js"
+      "_Navbar-DitMQRyj.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/Home-Cyt5YMbI.css"
+      "assets/Home-Cyt5YMbI.css",
+      "assets/home-DLDo7ZLX.css"
     ]
   },
   "resources/js/Pages/Login.vue": {
-    "file": "assets/Login-GAFyJE8U.js",
+    "file": "assets/Login-B3a2VoWo.js",
     "name": "Login",
     "src": "resources/js/Pages/Login.vue",
     "isDynamicEntry": true,
@@ -51,24 +103,29 @@
     ]
   },
   "resources/js/Pages/Post.vue": {
-    "file": "assets/Post-CfZWEkkr.js",
+    "file": "assets/Post-DTBln1Fz.js",
     "name": "Post",
     "src": "resources/js/Pages/Post.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-CqmpH7bs.js"
+      "_Navbar-DitMQRyj.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/Post-Nm_3NJEF.css"
+      "assets/Post-C-mgUk4p.css",
+      "assets/home-DLDo7ZLX.css"
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BvhTZ5L_.js",
+    "file": "assets/app-B-64tRy8.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
+      "resources/js/Pages/Categories/Create.vue",
+      "resources/js/Pages/Categories/Edit.vue",
+      "resources/js/Pages/Categories/Index.vue",
       "resources/js/Pages/Create.vue",
       "resources/js/Pages/Home.vue",
       "resources/js/Pages/Login.vue",

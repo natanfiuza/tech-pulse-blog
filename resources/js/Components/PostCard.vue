@@ -70,37 +70,30 @@ const props = defineProps({
     margin: 10px;
     color: #666;
     flex-grow: 1;
-    /* Faz o parágrafo ocupar o espaço restante */
-    /* Permite que o parágrafo quebre em várias linhas */
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
-    /*Limita a 3 linhas*/
     overflow: hidden;
 }
 
 .read-more-link {
-/* Remove estilos de botão */
-    /* background-color: transparent;
-  border: none;
-  padding: 0; */
     margin-top: auto;
-
     margin-left: 10px;
-
     margin-bottom: 10px;
-
     color: #007bff;
-
     text-decoration: none;
-
     font-weight: bold;
-
     display: inline-block;
-
 }
 
 .read-more-link:hover {
     background-color: #0056b3;
+}
+@media (max-width: 768px) {
+    .post-card {
+            width: auto;
+
+
+    }
 }
 </style>
