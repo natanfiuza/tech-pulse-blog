@@ -63,6 +63,9 @@ import { Head } from "@inertiajs/inertia-vue3"; // Importa o componente Head
 import Navbar from "@/Components/Navbar.vue";
 import "../../../css/home.css";
 export default {
+  components: {
+    Navbar, // Registre o componente aqui
+  },
   setup() {
     const form = useForm({
       email: "",
@@ -80,63 +83,9 @@ export default {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  background-color: #f4f4f4;
-  color: #333;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #333;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-}
-
-.nav-links {
-  display: flex;
-  list-style: none;
-}
-
-.nav-links li {
-  margin-left: 20px;
-}
-
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #4caf50;
-}
-
 .login-container {
   max-width: 450px;
-  margin: 100px auto 2rem;
+  margin: 15vh auto 2rem;
   background-color: #fff;
   padding: 2rem;
   border-radius: 8px;
