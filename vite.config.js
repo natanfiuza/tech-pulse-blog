@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
+import path from 'path'; // Importe o módulo 'path'
+
 export default defineConfig({
     plugins: [
         laravel({
@@ -16,6 +18,12 @@ export default defineConfig({
             },
         }),
     ],
+    resolve: {
+        // Adicione esta seção para o alias
+        alias: {
+            "@": path.resolve(__dirname, "resources/js"),
+        },
+    },
     // define: {
     //     // Adicione esta seção!
     //     "process.env": {}, // Define process.env como um objeto vazio

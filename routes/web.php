@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -19,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Rotas de autenticação (já vêm com o Laravel, mas precisamos adaptá-las)
-// Route::get('/login', [LoginController::class, 'create'])->name('login');
-// Route::post('/login', [LoginController::class, 'store']);
-// Route::post('/logout', [LoginController::class, 'destroy'])->name('logout'); //Rota de Logout
+Route::get('/login', [LoginController::class, 'create'])->name('login');
+Route::post('/login', [LoginController::class, 'store']);
+Route::post('/logout', [LoginController::class, 'destroy'])->name('logout'); // Importante para logout
 
 // // Rotas de posts (precisamos criar o PostController)
 // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth'); //Protege com Middleware
@@ -29,7 +30,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
-Route::middleware(['auth'])->prefix('/post')->group(function () {
+Route::middleware(['auth'])->prefix('/posts')->group(function () {
     Route::get('', [PostController::class, 'index'])->name('post.index');
     Route::post('/store', [PostController::class, 'store'])->name('post.store');
     Route::get('/create', [PostController::class, 'create'])->name('post.create');
