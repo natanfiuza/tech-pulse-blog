@@ -21,5 +21,12 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos */
+.sidebar {
+  margin-left: -7px;
+  background-color: rgb(142, 196, 233);
+  margin-right: 5px;
+}
+.sidebar ul {
+  padding-right: 10px;
+}
 </style>

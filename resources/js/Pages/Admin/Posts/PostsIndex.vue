@@ -1,7 +1,7 @@
 <template>
   <AdminLayout>
     <h1>Posts</h1>
-    <Link :href="route('posts.create')" class="button">Novo Post</Link>
+    <Link :href="'/posts/create'" class="button">Novo Post</Link>
     <table>
       <thead>
         <tr>
@@ -15,9 +15,9 @@
           <td>{{ post.id }}</td>
           <td>{{ post.title }}</td>
           <td>
-            <Link :href="route('posts.edit', post)">Editar</Link>
+            <Link :href="'/posts/edit/' + post.uuid">Editar</Link>
             <Link
-              :href="route('posts.destroy', post)"
+              :href="'/posts/edit/' + post.uuid"
               method="delete"
               as="button"
               type="button"
