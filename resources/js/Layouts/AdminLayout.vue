@@ -28,6 +28,7 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin-top: 7vh;
 }
 
 .content-wrapper {

@@ -1,25 +1,25 @@
 {
-  "_AdminLayout-CnwST7Ot.js": {
-    "file": "assets/AdminLayout-CnwST7Ot.js",
+  "_AdminLayout-BvOVVJiV.js": {
+    "file": "assets/AdminLayout-BvOVVJiV.js",
     "name": "AdminLayout",
     "imports": [
       "__plugin-vue_export-helper-DlAUqK2U.js",
       "resources/js/app.js"
     ],
     "css": [
-      "assets/AdminLayout-UH-0hdT8.css"
+      "assets/AdminLayout-suinijxB.css"
     ]
   },
-  "_AdminLayout-UH-0hdT8.css": {
-    "file": "assets/AdminLayout-UH-0hdT8.css",
-    "src": "_AdminLayout-UH-0hdT8.css"
+  "_AdminLayout-suinijxB.css": {
+    "file": "assets/AdminLayout-suinijxB.css",
+    "src": "_AdminLayout-suinijxB.css"
   },
   "_MarkdownEditor-00aRrcTG.css": {
     "file": "assets/MarkdownEditor-00aRrcTG.css",
     "src": "_MarkdownEditor-00aRrcTG.css"
   },
-  "_MarkdownEditor-BO3LtzsE.js": {
-    "file": "assets/MarkdownEditor-BO3LtzsE.js",
+  "_MarkdownEditor-DpxHbC3K.js": {
+    "file": "assets/MarkdownEditor-DpxHbC3K.js",
     "name": "MarkdownEditor",
     "imports": [
       "resources/js/app.js",
@@ -29,19 +29,19 @@
       "assets/MarkdownEditor-00aRrcTG.css"
     ]
   },
-  "_Navbar-B7RvehGB.css": {
-    "file": "assets/Navbar-B7RvehGB.css",
-    "src": "_Navbar-B7RvehGB.css"
+  "_Navbar-BF2djYWr.css": {
+    "file": "assets/Navbar-BF2djYWr.css",
+    "src": "_Navbar-BF2djYWr.css"
   },
-  "_Navbar-BzsEYTQe.js": {
-    "file": "assets/Navbar-BzsEYTQe.js",
+  "_Navbar-w1XcbI8F.js": {
+    "file": "assets/Navbar-w1XcbI8F.js",
     "name": "Navbar",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/Navbar-B7RvehGB.css"
+      "assets/Navbar-BF2djYWr.css"
     ]
   },
   "__plugin-vue_export-helper-DlAUqK2U.js": {
@@ -59,48 +59,48 @@
     "isEntry": true
   },
   "resources/js/Pages/Admin/Posts/PostsCreate.vue": {
-    "file": "assets/PostsCreate-D8MQ8xcI.js",
+    "file": "assets/PostsCreate-COHHdq9c.js",
     "name": "PostsCreate",
     "src": "resources/js/Pages/Admin/Posts/PostsCreate.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AdminLayout-CnwST7Ot.js",
-      "_MarkdownEditor-BO3LtzsE.js",
+      "_AdminLayout-BvOVVJiV.js",
+      "_MarkdownEditor-DpxHbC3K.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ]
   },
   "resources/js/Pages/Admin/Posts/PostsEdit.vue": {
-    "file": "assets/PostsEdit-B-eSez1O.js",
+    "file": "assets/PostsEdit-XB70cG3p.js",
     "name": "PostsEdit",
     "src": "resources/js/Pages/Admin/Posts/PostsEdit.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AdminLayout-CnwST7Ot.js",
-      "_MarkdownEditor-BO3LtzsE.js",
+      "_AdminLayout-BvOVVJiV.js",
+      "_MarkdownEditor-DpxHbC3K.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ]
   },
   "resources/js/Pages/Admin/Posts/PostsIndex.vue": {
-    "file": "assets/PostsIndex-DNiy6UhJ.js",
+    "file": "assets/PostsIndex-BZxeMQlB.js",
     "name": "PostsIndex",
     "src": "resources/js/Pages/Admin/Posts/PostsIndex.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AdminLayout-CnwST7Ot.js",
+      "_AdminLayout-BvOVVJiV.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ]
   },
   "resources/js/Pages/Auth/Login.vue": {
-    "file": "assets/Login-H8Xas-rQ.js",
+    "file": "assets/Login-ClFykOv5.js",
     "name": "Login",
     "src": "resources/js/Pages/Auth/Login.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-BzsEYTQe.js",
+      "_Navbar-w1XcbI8F.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
@@ -109,13 +109,13 @@
     ]
   },
   "resources/js/Pages/Categories/Create.vue": {
-    "file": "assets/Create-Ct8SKsem.js",
+    "file": "assets/Create-DHaQviAT.js",
     "name": "Create",
     "src": "resources/js/Pages/Categories/Create.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-BzsEYTQe.js",
+      "_Navbar-w1XcbI8F.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
@@ -123,7 +123,7 @@
     ]
   },
   "resources/js/Pages/Categories/Edit.vue": {
-    "file": "assets/Edit-D3Wfy5Y3.js",
+    "file": "assets/Edit-Dsz5WDMy.js",
     "name": "Edit",
     "src": "resources/js/Pages/Categories/Edit.vue",
     "isDynamicEntry": true,
@@ -136,13 +136,13 @@
     ]
   },
   "resources/js/Pages/Categories/Index.vue": {
-    "file": "assets/Index-CXCY3fbp.js",
+    "file": "assets/Index-CS8pGN0J.js",
     "name": "Index",
     "src": "resources/js/Pages/Categories/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-BzsEYTQe.js",
+      "_Navbar-w1XcbI8F.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
@@ -150,7 +150,7 @@
     ]
   },
   "resources/js/Pages/Create.vue": {
-    "file": "assets/Create-B7718w9Z.js",
+    "file": "assets/Create-BRcgyFSF.js",
     "name": "Create",
     "src": "resources/js/Pages/Create.vue",
     "isDynamicEntry": true,
@@ -159,13 +159,13 @@
     ]
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-BtBvyEaL.js",
+    "file": "assets/Home-oqZZkdRM.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-BzsEYTQe.js",
+      "_Navbar-w1XcbI8F.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
@@ -174,13 +174,13 @@
     ]
   },
   "resources/js/Pages/Post.vue": {
-    "file": "assets/Post-CpGYiJsg.js",
+    "file": "assets/Post-DKkg53dI.js",
     "name": "Post",
     "src": "resources/js/Pages/Post.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Navbar-BzsEYTQe.js",
+      "_Navbar-w1XcbI8F.js",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
@@ -189,7 +189,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-CEatIhPZ.js",
+    "file": "assets/app-D_IgQxAF.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
