@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 class PostController extends Controller
 {
@@ -15,7 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return Inertia::render('Admin/Posts/PostsIndex', ['posts' => $posts]);
     }
 
     /**
@@ -23,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Posts/Create');
     }
 
     /**
@@ -31,7 +30,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([ // Validação!
+
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string',
+            'excerpt' => 'required|string',
+
+        ]);
+
+        Post::create($request->all());
+        return redirect()->route('posts.index')->with('success', 'Post criado!'); // Mensagens!
+
     }
 
     /**
@@ -50,7 +59,6 @@ class PostController extends Controller
             }
         }
 
-
         return Inertia::render('Post', [ // Renderiza o componente Vue 'Post'
             'post' => $post,
         ]);
@@ -59,9 +67,11 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(string $uuid)
     {
-        //
+        $post = Post::whereRaw(" uuid = '{$uuid}' ")->first();
+        return Inertia::render('Admin/Posts/PostsEdit', ['post' => $post]);
+
     }
 
     /**
@@ -69,7 +79,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string',
+            'except' => 'required|string',
+        ]);
+
+        $post->update($request->all());
+        return redirect()->route('posts.index')->with('success', 'Post atualizado com sucesso!');
+
     }
 
     /**
@@ -77,6 +95,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', 'Post excluído!');
+
     }
 }
