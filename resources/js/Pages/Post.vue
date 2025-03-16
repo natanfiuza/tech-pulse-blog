@@ -40,7 +40,7 @@
 import { defineProps, computed, ref, onMounted, watch } from "vue";
 import { Head } from "@inertiajs/inertia-vue3"; // Importa o componente Head
 import { DateTime } from "luxon"; // Formatação de datas
-import Navbar from "@/Components/Navbar.vue"; // Ajuste o caminho, se necessário
+import Navbar from "@/Components/Navbar.vue";
 import "../../css/home.css";
 import "../../css/article.css";
 import { tempo_leitura } from "../helpers";
