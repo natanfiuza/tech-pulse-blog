@@ -1,3 +1,4 @@
+
 import './bootstrap';
 import "./signature";
 import { createApp, h } from "vue";
@@ -5,6 +6,7 @@ import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"; //Importe isso!
 import "../css/app.css"; // Se você tiver CSS global
 import "./helpers";
+import '../sass/custom.scss'; //  Import o custom.scss
 
 createInertiaApp({
     resolve: (name) =>

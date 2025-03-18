@@ -1,11 +1,11 @@
 <template>
   <AdminLayout>
     <h1>Posts</h1>
-    <Link :href="'/posts/create'" class="button">Novo Post</Link>
+    <Link :href="'/admin/posts/create'" class="button">Novo Post</Link>
     <table class="table table-sm">
       <thead>
         <tr>
-          <th>ID</th>
+          <th class="colspan">ID</th>
           <th>Título</th>
           <th>Ações</th>
         </tr>

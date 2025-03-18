@@ -22,6 +22,7 @@ export default defineConfig({
         // Adicione esta seção para o alias
         alias: {
             "@": path.resolve(__dirname, "resources/js"),
+            "~bootstrap": path.resolve(__dirname, "node_modules/bootstrap"), // Alias para o Bootstrap
         },
     },
     // define: {
@@ -34,4 +35,5 @@ export default defineConfig({
             external: ["prismjs"],
         },
     },
+  
 });
