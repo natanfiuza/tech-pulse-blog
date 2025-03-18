@@ -28,12 +28,13 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  margin-top: 7vh;
+  margin-top: 0;
 }
 
 .content-wrapper {
   display: flex;
   flex-grow: 1;
+  padding-top: 7vh;
 }
 
 .main-content {

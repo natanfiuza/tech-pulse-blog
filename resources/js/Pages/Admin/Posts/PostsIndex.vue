@@ -2,7 +2,7 @@
   <AdminLayout>
     <h1>Posts</h1>
     <Link :href="'/posts/create'" class="button">Novo Post</Link>
-    <table>
+    <table class="table table-sm">
       <thead>
         <tr>
           <th>ID</th>
