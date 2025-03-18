@@ -55,9 +55,10 @@ export default {
 
 <style scoped>
 .sidebar {
+  margin-top: -5px;
   width: 25vh;
   /* Largura da sidebar */
-  background-color: #333;
+  background-color: #2d4363;
   /* Cor de fundo */
   color: white;
   /* Cor do texto */

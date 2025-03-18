@@ -5,6 +5,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -38,7 +39,13 @@ class PostController extends Controller
 
         ]);
 
-        Post::create($request->all());
+        $post = new Post();
+        $post->uuid = Str::uuid()->toString();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->excerpt = $request->excerpt;
+        $post->save();
+
         return redirect()->route('posts.index')->with('success', 'Post criado!'); // Mensagens!
 
     }
