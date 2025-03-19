@@ -35,7 +35,7 @@ Siga os passos abaixo para instalar e configurar o projeto em seu ambiente de de
 1.  **Clone o repositório:**
 
     ```bash
-    git clone <URL_DO_REPOSITORIO>
+    git clone https://github.com/natanfiuza/tech-pulse-blog.git
     cd tech-pulse-blog
     ```
 
