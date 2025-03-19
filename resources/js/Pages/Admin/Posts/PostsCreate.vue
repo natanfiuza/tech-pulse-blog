@@ -7,7 +7,7 @@
         <input id="title" v-model="form.title" type="text" class="form-control" />
         <div v-if="form.errors.title">{{ form.errors.title }}</div>
       </div>
-      <div class="my-3">
+      <div>
         <label for="content">Conteúdo:</label>
         <MarkdownEditor v-model="form.content" />
         <div v-if="form.errors.content">{{ form.errors.content }}</div>

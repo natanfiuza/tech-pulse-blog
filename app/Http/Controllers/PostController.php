@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -40,8 +41,10 @@ class PostController extends Controller
         ]);
 
         $post = new Post();
+        $post->user_id = Auth::user()->id;
         $post->uuid = Str::uuid()->toString();
         $post->title = $request->title;
+        $post->image = $post->uuid;
         $post->content = $request->content;
         $post->excerpt = $request->excerpt;
         $post->save();
@@ -84,7 +87,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request,Post $post)
     {
         $request->validate([
             'title'   => 'required|string|max:255',
@@ -93,6 +96,7 @@ class PostController extends Controller
         ]);
 
         $post->update($request->all());
+
         return redirect()->route('posts.index')->with('success', 'Post atualizado com sucesso!');
 
     }

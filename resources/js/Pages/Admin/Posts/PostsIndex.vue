@@ -15,7 +15,7 @@
           <td>{{ post.id }}</td>
           <td>{{ post.title }}</td>
           <td>
-            <Link :href="'/posts/edit/' + post.uuid">Editar</Link>
+            <Link :href="'/admin/posts/edit/' + post.uuid">Editar</Link>
             <Link
               :href="'/posts/edit/' + post.uuid"
               method="delete"
