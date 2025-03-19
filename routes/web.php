@@ -33,9 +33,11 @@ Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.sho
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/home', [AdminController::class, 'index'])->name('post.index');
     Route::prefix('/posts')->group(function () {
-        Route::get('', [PostController::class, 'index'])->name('post.index');
-        Route::post('/store', [PostController::class, 'store'])->name('post.store');
-        Route::get('/create', [PostController::class, 'create'])->name('post.create');
+        Route::get('', [PostController::class, 'index'])->name('posts.index');
+        Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+        Route::post('/store', [PostController::class, 'store'])->name('posts.store');
+        Route::get('/edit/{uuid}', [PostController::class, 'edit'])->name('posts.edit');
+        Route::put('/update', [PostController::class, 'update'])->name('posts.update');
     });
 });
 

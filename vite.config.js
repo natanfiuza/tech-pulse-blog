@@ -25,15 +25,6 @@ export default defineConfig({
             "~bootstrap": path.resolve(__dirname, "node_modules/bootstrap"), // Alias para o Bootstrap
         },
     },
-    // define: {
-    //     // Adicione esta seção!
-    //     "process.env": {}, // Define process.env como um objeto vazio
-    //     "process.cwd": () => "", // Adicione esta linha!
-    // },
-    build: {
-        rollupOptions: {
-            external: ["prismjs"],
-        },
-    },
-  
+    
+
 });

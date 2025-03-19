@@ -1,5 +1,5 @@
 <template>
-  <textarea ref="editor"></textarea>
+  <textarea ref="editor" class="form-control"></textarea>
 </template>
 
 <script>
