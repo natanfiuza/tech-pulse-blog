@@ -17,7 +17,7 @@
           <td>
             <Link :href="'/admin/posts/edit/' + post.uuid">Editar</Link>
             <Link
-              :href="'/posts/edit/' + post.uuid"
+              :href="'/admin/posts/edit/' + post.uuid"
               method="delete"
               as="button"
               type="button"
