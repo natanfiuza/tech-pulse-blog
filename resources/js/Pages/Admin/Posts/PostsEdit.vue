@@ -51,9 +51,8 @@ export default {
     });
 
     function submit() {
+      form.put(route("posts.update")); // Usando route()
       console.log("submit");
-
-      form.put(route("posts.update", { post: props.post })); // Usando route()
     }
 
     return { form, submit };
