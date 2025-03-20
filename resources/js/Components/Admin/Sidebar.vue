@@ -1,14 +1,13 @@
 <template>
-  <button
-    v-if="isMobile"
-    @click="toggleSidebar"
-    class="hamburger-button"
-    aria-label="Alternar menu"
-  >
-    ☰
-  </button>
-
   <aside :class="{ sidebar: true, 'sidebar-open': showSidebar || !isMobile }">
+    <button
+      v-if="isMobile"
+      @click="toggleSidebar"
+      class="hamburger-button"
+      aria-label="Alternar menu"
+    >
+      ☰
+    </button>
     <ul>
       <li>
         <Link href="/admin/posts">Posts</Link>
@@ -120,7 +119,7 @@ export default {
     /* Esconde a sidebar por padrão */
     position: fixed;
     /* Sidebar fixa para sobrepor o conteúdo */
-    top: 0;
+    top: 10px;
     left: 0;
     height: 100vh;
     /* Ocupa a altura total */
