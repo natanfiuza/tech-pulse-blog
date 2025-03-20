@@ -10,7 +10,7 @@
     <title>TechPulse - Blog de Tecnologia</title>
     @vite('resources/js/app.js')
     @inertiaHead
-    @routes
+
 
   </head>
 <body>
