@@ -1,7 +1,11 @@
 <template>
   <AdminLayout>
     <h1>Posts</h1>
+    <div v-if="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
     <Link :href="'/admin/posts/create'" class="button">Novo Post</Link>
+
     <table class="table table-sm">
       <thead>
         <tr>
@@ -15,6 +19,7 @@
           <td>{{ post.id }}</td>
           <td>{{ post.title }}</td>
           <td>
+            <!-- <Link :href="route('posts.edit', { uuid: post.uuid })">Editar</Link> -->
             <Link :href="'/admin/posts/edit/' + post.uuid">Editar</Link>
             <Link
               :href="'/admin/posts/edit/' + post.uuid"
@@ -42,5 +47,27 @@ export default {
   props: {
     posts: Array,
   },
+  computed: {
+    successMessage() {
+      return this.$page.props.flash?.success; // Usa optional chaining aqui também
+    },
+  },
 };
 </script>
+
+<style scoped>
+/* Estilos para a mensagem (opcional - use as classes do seu framework CSS) */
+.alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Adicione estilos para .alert-error, .alert-info, etc., se precisar */
+</style>
