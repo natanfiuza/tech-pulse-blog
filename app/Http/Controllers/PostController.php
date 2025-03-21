@@ -5,8 +5,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -40,16 +40,16 @@ class PostController extends Controller
 
         ]);
 
-        $post = new Post();
+        $post          = new Post();
         $post->user_id = Auth::user()->id;
-        $post->uuid = Str::uuid()->toString();
-        $post->title = $request->title;
-        $post->image = $post->uuid;
+        $post->uuid    = Str::uuid()->toString();
+        $post->title   = $request->title;
+        $post->image   = $post->uuid;
         $post->content = $request->content;
         $post->excerpt = $request->excerpt;
         $post->save();
 
-        return redirect()->route('posts.index')->with('success', 'Post criado!'); // Mensagens!
+        return Inertia::redirect(route('posts.index'))->with('success', 'Post criado!'); // Mais Inertia-like
 
     }
 
@@ -79,7 +79,11 @@ class PostController extends Controller
      */
     public function edit(string $uuid)
     {
-        $post = Post::whereRaw(" uuid = '{$uuid}' ")->first();
+        $post = Post::whereRaw(" uuid = '$uuid' ")->first();
+        if (! $post) {
+            return abort(404);
+        }
+
         return Inertia::render('Admin/Posts/PostsEdit', ['post' => $post]);
 
     }
@@ -87,17 +91,26 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Post $post)
+    public function update(Request $request)
     {
         $request->validate([
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
-            'except' => 'required|string',
+            'excerpt' => 'nullable|string',
         ]);
 
-        $post->update($request->all());
+        $post = Post::whereRaw(" uuid = '{$request->uuid}' ")->first();
 
-        return redirect()->route('posts.index')->with('success', 'Post atualizado com sucesso!');
+        if (! $post) {
+            return abort(404);
+        }
+
+        $post->title   = $request->title;
+        $post->content = $request->content;
+        $post->excerpt = $request->excerpt;
+        $post->update();
+
+        return redirect()->route('posts.index')->with('success', 'Post atualizado com sucesso!'); // A MELHOR OPÇÃO
 
     }
 

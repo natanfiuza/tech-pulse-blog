@@ -51,8 +51,7 @@ export default {
     });
 
     function submit() {
-      form.put(route("posts.update")); // Usando route()
-      console.log("submit");
+      form.put(route("posts.update", { uuid: props.post.uuid })); // Usando route()
     }
 
     return { form, submit };
