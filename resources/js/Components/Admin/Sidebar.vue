@@ -95,7 +95,7 @@ export default {
   display: none;
   /* Escondido por padrão */
   background-color: #555;
-  color: white;
+  color: rgb(81, 57, 189);
   border: none;
   padding: 10px 15px;
   cursor: pointer;
