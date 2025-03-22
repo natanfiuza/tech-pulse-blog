@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  margin-top: -5px;
+  margin-top: -10px;
   width: 25vh;
   /* Largura da sidebar */
   background-color: #2d4363;
@@ -101,7 +101,7 @@ export default {
   cursor: pointer;
   position: fixed;
   /*Fica fixo no topo, mesmo com rolagem*/
-  top: 10px;
+  top: 40px;
   left: 10px;
   z-index: 100;
   /*Garante que o botão fique acima de outros elementos*/
@@ -119,8 +119,8 @@ export default {
     /* Esconde a sidebar por padrão */
     position: fixed;
     /* Sidebar fixa para sobrepor o conteúdo */
-    top: 10px;
-    left: 0;
+    top: 40px;
+    left: 10px;
     height: 100vh;
     /* Ocupa a altura total */
     z-index: 99;
