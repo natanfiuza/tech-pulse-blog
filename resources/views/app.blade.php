@@ -13,7 +13,7 @@
 
     @inertiaHead
 
-    @routes
+
 
   </head>
 <body>

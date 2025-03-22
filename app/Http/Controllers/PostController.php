@@ -92,7 +92,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    // public function update(Request $request)
+    public function update(string $uuid)
     {
         $request->validate([
             'title'   => 'required|string|max:255',
