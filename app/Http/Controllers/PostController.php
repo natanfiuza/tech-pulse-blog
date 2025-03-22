@@ -49,7 +49,8 @@ class PostController extends Controller
         $post->excerpt = $request->excerpt;
         $post->save();
 
-        return Inertia::redirect(route('posts.index'))->with('success', 'Post criado!'); // Mais Inertia-like
+
+        return redirect()->route('posts.index')->with('success', 'Post criado com sucesso!'); // A MELHOR OPÇÃO
 
     }
 
