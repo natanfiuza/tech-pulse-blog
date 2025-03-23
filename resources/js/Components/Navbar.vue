@@ -24,7 +24,12 @@
         <InertiaLink href="#" @click="closeMenu">Contato</InertiaLink>
       </li>
       <li>
-        <InertiaLink href="/login" @click="closeMenu">Login</InertiaLink>
+        <InertiaLink v-if="$page.props.auth.user" href="/admin/home" @click="closeMenu"
+          >Dashboard</InertiaLink
+        >
+        <InertiaLink v-else href="/login" @click="closeMenu">Login</InertiaLink>
+
+
       </li>
     </ul>
   </nav>

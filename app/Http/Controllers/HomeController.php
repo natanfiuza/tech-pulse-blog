@@ -14,7 +14,8 @@ class HomeController extends Controller
     {
 
         $posts = json_decode(Storage::get('data\posts.json'),true);
-      
+
+        
         return Inertia::render('Home', [
             'posts' => $posts, // Passa os posts para a view
         ]);
