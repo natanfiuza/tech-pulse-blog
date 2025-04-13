@@ -16,7 +16,7 @@
         <span id="article-date">{{ formattedDate }}</span></span
       >
       <span
-        >Tempo de leitura: <span id="reader-time">{{ read_time }}</span> min</span
+        >Leitura: <span id="reader-time">{{ read_time }}</span> min</span
       >
     </div>
 
@@ -56,7 +56,11 @@ const props = defineProps({
 
 const read_time = tempo_leitura(props.post.content);
 
-// Formatação de data (usando Luxon)
+/**
+ * Formatação da data post.created_at (usando Luxon)
+ *
+ * @var string
+ */
 const formattedDate = computed(() => {
   if (!props.post.created_at) {
     return null;
@@ -101,7 +105,7 @@ const renderMarkdown = () => {
 
 <style scoped>
 .post-container {
-  max-width: 90%;
+  max-width: 80%;
   margin: 0 auto;
   margin-top: 5.1rem;
 
@@ -113,7 +117,7 @@ const renderMarkdown = () => {
 }
 
 .post-title {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
   color: #333;
   text-align: center;
@@ -121,7 +125,7 @@ const renderMarkdown = () => {
 
 .post-image {
   width: 100%;
-  height: 35rem;
+  height: 12rem;
   margin-bottom: 1.5rem;
   border-radius: 8px;
   aspect-ratio: 16 / 9;
@@ -186,9 +190,18 @@ const renderMarkdown = () => {
 }
 
 .post-content code {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Fira Code", serif;
 }
-
+.article-meta {
+  display: flex;
+  margin-bottom: 1.7rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: stretch;
+  font-size: 0.7rem;
+}
 @media (max-width: 768px) {
   .post-container {
     max-width: 100%;
@@ -206,7 +219,7 @@ const renderMarkdown = () => {
 
   .post-image {
     width: 100%;
-    height: 16rem;
+    height: 10rem;
     margin-bottom: 1.5rem;
     border-radius: 8px;
     aspect-ratio: 16 / 9;
@@ -220,6 +233,9 @@ const renderMarkdown = () => {
 
   li {
     margin-left: 0.1rem;
+  }
+  .article-meta {
+    font-size: 0.7rem;
   }
 }
 </style>

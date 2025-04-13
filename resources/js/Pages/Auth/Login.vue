@@ -36,14 +36,14 @@
             title="Login com Google"
           />
         </a>
-        <a href="#" class="social-btn">
+        <a href="https://github.com/natanfiuza" class="social-btn">
           <img
             src="/assets/img/social/github_ico.png"
             alt="GitHub"
             title="Login com GitHub"
           />
         </a>
-        <a href="#" class="social-btn">
+        <a href="https://www.linkedin.com/in/natanfiuza/" class="social-btn">
           <img
             src="/assets/img/social/linkedin_ico.png"
             alt="LinkedIn"

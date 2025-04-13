@@ -12,6 +12,8 @@
     @vite('resources/js/app.js')
 
     @inertiaHead
+    <!-- @routes  -->
+
 
 
 

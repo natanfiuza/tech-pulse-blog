@@ -2,8 +2,8 @@
 @import "bootstrap/scss/functions";
 
 // 2. Defina suas variáveis customizadas
-$primary: #007bff; // Exemplo: muda a cor primária
-$font-family-sans-serif: "Fira Code",serif; // Muda a fonte
+$primary: #007bff;
+$font-family-sans-serif: "Fira Code",serif;
 $display-font-weight: 700;
 // 3. Importe o restante do Bootstrap
 @import "bootstrap/scss/variables";
