@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  margin-top: -10px;
+  margin-top: 1px;
   width: 25vh;
   /* Largura da sidebar */
   background-color: #2d4363;

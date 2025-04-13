@@ -35,3 +35,4 @@ if (! function_exists('criar_slug')) {
     }
 
 }
+
