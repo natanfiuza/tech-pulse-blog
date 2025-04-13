@@ -21,3 +21,4 @@ composer.lock
 .txt
 *.log
 php_errors.log
+.log
