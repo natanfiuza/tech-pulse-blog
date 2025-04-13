@@ -12,7 +12,7 @@ class SocialiteController extends Controller
     /**
      * Redireciona o usuário para a página de autenticação do Google.
      */
-    public function redirectToGoogle()
+    public function redirect_to_google()
     {
         return Socialite::driver('google')->redirect();
     }
@@ -20,7 +20,7 @@ class SocialiteController extends Controller
     /**
      * Obtém as informações do usuário do Google e faz o login.
      */
-    public function handleGoogleCallback()
+    public function handle_google_callback()
     {
         try {
             $googleUser = Socialite::driver('google')->user();

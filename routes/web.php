@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -27,14 +28,9 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout'); // 
 
 # Rota socialite Google
 // Rota para redirecionar para o Google
-Route::get('/login/google', [SocialiteController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])->name('login.google');
 // Rota de callback que o Google chamará após a autenticação
-Route::get('/login/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
-
-
-// // Rotas de posts (precisamos criar o PostController)
-// Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth'); //Protege com Middleware
-// Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
+Route::get('/login/google/callback', [SocialiteController::class, 'handle_google_callback']);
 
 
 Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
