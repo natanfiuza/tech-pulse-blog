@@ -47,6 +47,7 @@ class PostController extends Controller
             'excerpt' => 'required|string',
 
         ], $mensagens);
+
         $uuid = Str::uuid()->toString();
 
         $imagePath = ''; // Inicializa o caminho da imagem como vazio
@@ -136,7 +137,7 @@ class PostController extends Controller
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
             'excerpt' => 'nullable|string',
-        ],$mensagens);
+        ], $mensagens);
 
         $post = Post::whereRaw(" uuid = '{$request->uuid}' ")->first();
 
@@ -148,6 +149,26 @@ class PostController extends Controller
         $post->content = base64_decode($request->content);
         $post->excerpt = $request->excerpt;
         $post->update();
+
+        $imagePath = ''; // Inicializa o caminho da imagem como vazio
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            try {
+                $image     = $request->file('image');
+                $filename  = $post->uuid;
+                $base_path = storage_path('app/public/images');
+                if (! file_exists($base_path)) {
+                    mkdir($base_path, 0777, true);
+                }
+
+                $image->storeAs('public/images', $filename);
+
+
+            } catch (\Exception $e) {
+                // Loga o erro e retorna com uma mensagem amigável
+                Log::error('PostUpdate: Erro no upload da imagem do post: ' . $e->getMessage());
+                return back()->withErrors(['image' => 'Ocorreu um erro ao fazer upload da imagem.'])->withInput();
+            }
+        }
 
         return redirect()->route('posts.index')->with('success', 'Post atualizado com sucesso!'); // A MELHOR OPÇÃO
 

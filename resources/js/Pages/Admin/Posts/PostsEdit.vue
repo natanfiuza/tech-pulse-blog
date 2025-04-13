@@ -67,7 +67,7 @@ export default {
         form.setError("content", "Não foi possível codificar o conteúdo para envio.");
         return; // Impede o envio
       }
-      console.log("btoa", encodedContent);
+
 
       // 2. Envia o formulário com o conteúdo codificado
       form
