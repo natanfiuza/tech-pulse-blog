@@ -25,6 +25,13 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout'); // Importante para logout
 
+# Rota socialite Google
+// Rota para redirecionar para o Google
+Route::get('/login/google', [SocialiteController::class, 'redirectToGoogle'])->name('login.google');
+// Rota de callback que o Google chamará após a autenticação
+Route::get('/login/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
+
+
 // // Rotas de posts (precisamos criar o PostController)
 // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth'); //Protege com Middleware
 // Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
