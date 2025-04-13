@@ -35,9 +35,9 @@ Route::get('/login/google/callback', [SocialiteController::class, 'handle_google
 
 Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-        Route::get('', [PostController::class, 'index'])->name('posts.index');
-        Route::get('/home', [AdminController::class, 'index'])->name('post.index');
-        Route::prefix('/posts')->group(function () {
+    Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
+    Route::prefix('/posts')->group(function () {
+            Route::get('', [PostController::class, 'index'])->name('posts.index');
             Route::get('/create', [PostController::class, 'create'])->name('posts.create');
             Route::post('/store', [PostController::class, 'store'])->name('posts.store');
             Route::get('/edit/{uuid}', [PostController::class, 'edit'])->name('posts.edit');
