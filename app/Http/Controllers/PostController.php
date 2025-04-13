@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -32,23 +33,52 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([ // Validação!
+        $mensagens = [
+            'title.required'   => __('Título não foi informado.'),
+            'content.required' => __('Conteúdo não foi informado.'),
+            'excerpt.required' => __('Resumo não foi informado.'),
+
+        ];
+
+        $request->validate([
 
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
             'excerpt' => 'required|string',
 
-        ]);
+        ], $mensagens);
+        $uuid = Str::uuid()->toString();
+
+        $imagePath = ''; // Inicializa o caminho da imagem como vazio
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            try {
+                $image     = $request->file('image');
+                $filename  = $uuid;
+                $base_path = storage_path('app/public/images');
+                if (! file_exists($base_path)) {
+                    mkdir($base_path, 0777, true);
+                }
+
+                $path = $image->storeAs('public/images', $filename);
+
+                // Define o caminho relativo que será salvo no banco de dados
+                $imagePath = '/storage/images/' . $filename;
+
+            } catch (\Exception $e) {
+                // Loga o erro e retorna com uma mensagem amigável
+                Log::error('Erro no upload da imagem do post: ' . $e->getMessage());
+                return back()->withErrors(['image' => 'Ocorreu um erro ao fazer upload da imagem.'])->withInput();
+            }
+        }
 
         $post          = new Post();
         $post->user_id = Auth::user()->id;
-        $post->uuid    = Str::uuid()->toString();
+        $post->uuid    = $uuid;
         $post->title   = $request->title;
-        $post->image   = $post->uuid;
-        $post->content = $request->content;
+        $post->image   = $imagePath;
+        $post->content = base64_decode($request->content);
         $post->excerpt = $request->excerpt;
         $post->save();
-
 
         return redirect()->route('posts.index')->with('success', 'Post criado com sucesso!'); // A MELHOR OPÇÃO
 
@@ -95,11 +125,18 @@ class PostController extends Controller
     // public function update(Request $request)
     public function update(Request $request)
     {
+        $mensagens = [
+            'title.required'   => __('Título não foi informado.'),
+            'content.required' => __('Conteúdo não foi informado.'),
+            'excerpt.required' => __('Resumo não foi informado.'),
+
+        ];
+
         $request->validate([
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
             'excerpt' => 'nullable|string',
-        ]);
+        ],$mensagens);
 
         $post = Post::whereRaw(" uuid = '{$request->uuid}' ")->first();
 
@@ -108,7 +145,7 @@ class PostController extends Controller
         }
 
         $post->title   = $request->title;
-        $post->content = $request->content;
+        $post->content = base64_decode($request->content);
         $post->excerpt = $request->excerpt;
         $post->update();
 
