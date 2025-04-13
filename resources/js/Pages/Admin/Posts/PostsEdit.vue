@@ -22,7 +22,11 @@
         ></textarea>
         <div v-if="form.errors.excerpt">{{ form.errors.excerpt }}</div>
       </div>
-      <button type="submit" class="btn btn-primary mt-4" :disabled="form.processing">
+      <button
+        type="submit"
+        class="btn btn-primary mt-4 btn-atualizar"
+        :disabled="form.processing"
+      >
         Atualizar
       </button>
     </form>
@@ -58,3 +62,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn-atualizar {
+  color: aliceblue;
+}
+</style>
