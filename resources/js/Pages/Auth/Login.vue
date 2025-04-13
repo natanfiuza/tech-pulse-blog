@@ -29,7 +29,7 @@
     <div class="social-login">
       <p>Ou faça login com:</p>
       <div class="social-buttons">
-        <a href="#" class="social-btn">
+        <a href="/login/google" class="social-btn">
           <img
             src="/assets/img/social/google_ico.png"
             alt="Google"
