@@ -5,22 +5,22 @@
             <div class="mt-4 form-group">
                 <label for="title">Título:</label>
                 <input id="title" v-model="form.title" class="form-control" type="text" />
-                <div v-if="form.errors.title">{{ form.errors.title }}</div>
+                <div v-if="form.errors.title" class="erro-message">{{ form.errors.title }}</div>
             </div>
             <div class="mt-3 form-group">
                 <label for="content">Conteúdo:</label>
                 <MarkdownEditor :modelValue="originalContent" @update:modelValue="updateOriginalContent" />
-                <div v-if="form.errors.content">{{ form.errors.content }}</div>
+                <div v-if="form.errors.content" class="erro-message">{{ form.errors.content }}</div>
             </div>
             <div class="mt-3 form-group">
                 <label for="excerpt">Resumo:</label>
                 <textarea id="excerpt" v-model="form.excerpt" rows="5" class="form-control"></textarea>
-                <div v-if="form.errors.excerpt">{{ form.errors.excerpt }}</div>
+                <div v-if="form.errors.excerpt" class="erro-message">{{ form.errors.excerpt }}</div>
             </div>
             <div class="mt-3 form-group"> </-- Campo para upload de imagem -->
                 <label for="image">Imagem:</label>
                 <input id="image" type="file" @change="onFileChange" class="form-control">
-                <div v-if="form.errors.image">{{ form.errors.image }}</div>
+                <div v-if="form.errors.image" class="erro-message">{{ form.errors.image }}</div>
             </div>
             <button type="submit" class="btn btn-primary mt-4 btn-atualizar" :disabled="form.processing">
                 Atualizar
@@ -49,7 +49,6 @@ export default {
 
     const form = useForm({
       title: props.post?.title || "",
-      // content: '', // Não inicializa o content diretamente no form
       excerpt: props.post?.excerpt || "",
       image: null,
     });
@@ -75,13 +74,12 @@ export default {
           ...data,
           content: encodedContent, // Adiciona o conteúdo codificado aos dados
         }))
-        .put(route("posts.update", { uuid: props.post.uuid }));
-      // .post(route("posts.store"), {
-      //   // Ou put para update
-      //   forceFormData: form.image instanceof File, // Usa FormData só se houver imagem
-      //   // onError: errors => { /* ... */ },
-      //   // onSuccess: () => { /* ... */ }
-      // });
+        .put(route("posts.update", { uuid: props.post.uuid }), {
+                onError: (errors) => {
+                    console.error("Erros do Backend:", errors);
+                },
+        });
+
     }
 
     function onFileChange(event) {
@@ -108,5 +106,9 @@ export default {
 <style scoped>
 .btn-atualizar {
   color: aliceblue;
+}
+.erro-message {
+    color: crimson;
+    font-size: 0.7rem;
 }
 </style>
