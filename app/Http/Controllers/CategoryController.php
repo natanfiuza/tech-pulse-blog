@@ -3,7 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule; // Para gerar slugs (se não usar Eloquent Sluggable)
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 //Para validar o unique, ignorando o id
@@ -21,90 +22,118 @@ class CategoryController extends Controller
             'categories' => $categories,
         ]);
     }
+   /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        // $categories = Category::whereNull('parent_id')
-        //     ->with('children.children') // Eager load até o nível 3
-        //     ->orderBy('name')
-        //     ->get();
-        $categories = Category::all();
-        // whereNull('parent_id')
-        //     ->with('children.children.children') // Eager loading recursivo (até 3 níveis)
-        //     ->orderBy('name')
-        //     ->get();
+        // Carrega categorias com seus pais para exibir o nome do pai
+        // Ordena para facilitar a visualização da hierarquia (opcional)
+        $categories = Category::with('parent')
+                            ->orderBy('parent_id') // Ou ordene como preferir
+                            ->orderBy('name')
+                            ->get();
 
-        return Inertia::render('Categories/Index', [
+        return Inertia::render('Admin/Categories/CategoriesIndex', [
             'categories' => $categories,
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        $categories = Category::all(); //Todas as categorias para popular o select
-        return Inertia::render('Categories/Create', [
+        // Busca todas as categorias para o dropdown de seleção de pai
+        // Apenas ID e Nome são necessários
+        $categories = Category::orderBy('name')->get(['id', 'name']);
+
+        return Inertia::render('Admin/Categories/Create', [
             'categories' => $categories,
         ]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'name'              => 'required|string|max:255',
             'description'       => 'nullable|string',
             'scope'             => 'nullable|string',
             'possible_contents' => 'nullable|string',
             'post_suggestions'  => 'nullable|string',
-            'parent_id'         => 'nullable|exists:categories,id', // Valida se o parent_id existe na tabela categories
+            'parent_id'         => 'nullable|exists:categories,id', // Garante que o ID do pai exista ou seja nulo
         ]);
 
-        $category = new Category(); //::create($validated); //Cria a categoria
-        $category->slug = $request->parent_id > 0 ? criar_slug(Category::find($request->parent_id)->name) ."-".criar_slug($request->name) : criar_slug($request->name);
-        $category->name = $request->name;
-        $category->description = $request->description;
-        $category->scope = $request->scope;
-        $category->possible_contents = $request->possible_contents;
-        $category->post_suggestions = $request->post_suggestions;
-        $category->save();
+        // O slug será gerado automaticamente pelo trait HasSlug
+        Category::create($validatedData);
+
         return redirect()->route('categories.index')->with('success', 'Categoria criada com sucesso!');
     }
 
-    public function show($slug)
+    /**
+     * Display the specified resource.
+     *
+     */
+     public function show(Category $category)
+     {
+         //
+     }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Category $category)
     {
-        $category = Category::where('slug', $slug)->with(['children.children', 'posts'])->firstOrFail();
-        return Inertia::render('Categories/Show', [
-            'category' => $category,
+        // Busca todas as categorias EXCETO a própria categoria sendo editada
+        // para evitar que uma categoria seja pai de si mesma.
+        $availableParents = Category::where('id', '!=', $category->id)
+                                    ->orderBy('name')
+                                    ->get(['id', 'name']);
+
+        return Inertia::render('Admin/Categories/Edit', [
+            'category' => $category, // Passa a categoria atual
+            'categories' => $availableParents, // Passa os pais disponíveis
         ]);
     }
 
-    public function edit(Category $category) // Route Model Binding (busca pelo ID, *não* pelo slug)
-    {
-        $categories = Category::all();
-        return Inertia::render('Categories/Edit', [
-            'category'   => $category,
-            'categories' => $categories,
-        ]);
-    }
-
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Category $category)
     {
-
-        $validated = $request->validate([
+         $validatedData = $request->validate([
             'name'              => 'required|string|max:255',
+            // 'slug' => ['required','string','max:255', Rule::unique('categories')->ignore($category->id)], // Se o slug não for gerado no update
             'description'       => 'nullable|string',
             'scope'             => 'nullable|string',
             'possible_contents' => 'nullable|string',
             'post_suggestions'  => 'nullable|string',
-            'parent_id'         => 'nullable|exists:categories,id',
+            // Garante que o ID do pai exista ou seja nulo, e não seja a própria categoria
+            'parent_id'         => ['nullable', Rule::exists('categories', 'id'), Rule::notIn([$category->id])],
         ]);
 
-        $category->update($validated); // Atualiza
+        // O slug pode ou não ser atualizado dependendo da config do Sluggable
+        $category->update($validatedData);
 
         return redirect()->route('categories.index')->with('success', 'Categoria atualizada com sucesso!');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Category $category)
     {
-        $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Categoria excluída com sucesso!');
+        try {
+            // A constraint ON DELETE SET NULL cuidará dos filhos
+            $category->delete();
+            return redirect()->route('categories.index')->with('success', 'Categoria excluída com sucesso!');
+        } catch (\Exception $e) {
+             // Captura erros (ex: restrições de FK se não configurado corretamente)
+             Log::error('Erro ao excluir categoria: '.$e->getMessage());
+             return redirect()->route('categories.index')->with('error', 'Não foi possível excluir a categoria.');
+        }
     }
 }

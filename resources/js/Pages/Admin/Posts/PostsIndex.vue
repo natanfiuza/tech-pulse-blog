@@ -4,7 +4,9 @@
     <div v-if="successMessage" class="alert alert-success">
       {{ successMessage }}
     </div>
-    <Link :href="'/admin/posts/create'" class="button">Novo Post</Link>
+    <Link :href="'/admin/posts/create'" class="btn btn-primary mb-3 btn-new-post">
+      Novo Post
+    </Link>
 
     <table class="table table-sm">
       <thead>
@@ -20,14 +22,19 @@
           <td>{{ post.title }}</td>
           <td>
             <!-- <Link :href="route('posts.edit', { uuid: post.uuid })">Editar</Link> -->
-            <Link :href="'/admin/posts/edit/' + post.uuid">Editar</Link>
             <Link
               :href="'/admin/posts/edit/' + post.uuid"
+              class="btn btn-primary btn-new-post"
+              >Editar
+            </Link>
+            <Link
+              :href="'/admin/posts/delete/' + post.uuid"
               method="delete"
               as="button"
-              type="button"
-              >Excluir
-            </Link>
+              class="btn btn-danger btn-new-post"
+              style="margin-left: 2px"
+              >Excluir</Link
+            >
           </td>
         </tr>
       </tbody>
@@ -68,6 +75,8 @@ export default {
   border-color: #c3e6cb;
   color: #155724;
 }
-
+.btn-new-post {
+  color: #d4edda;
+}
 /* Adicione estilos para .alert-error, .alert-info, etc., se precisar */
 </style>
