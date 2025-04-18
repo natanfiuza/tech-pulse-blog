@@ -32,26 +32,28 @@ Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])-
 // Rota de callback que o Google chamará após a autenticação
 Route::get('/login/google/callback', [SocialiteController::class, 'handle_google_callback']);
 
-
 Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
     Route::prefix('/posts')->group(function () {
-            Route::get('', [PostController::class, 'index'])->name('posts.index');
-            Route::get('/create', [PostController::class, 'create'])->name('posts.create');
-            Route::post('/store', [PostController::class, 'store'])->name('posts.store');
-            Route::get('/edit/{uuid}', [PostController::class, 'edit'])->name('posts.edit');
-            Route::put('/update', [PostController::class, 'update'])->name('posts.update');
-        });
+        Route::get('', [PostController::class, 'index'])->name('posts.index');
+        Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+        Route::post('/store', [PostController::class, 'store'])->name('posts.store');
+        Route::get('/edit/{uuid}', [PostController::class, 'edit'])->name('posts.edit');
+        Route::put('/update', [PostController::class, 'update'])->name('posts.update');
+        Route::delete('/delete/{uuid}', [PostController::class, 'update'])->name('posts.update');
+    });
 });
 
-Route::middleware(['auth'])->prefix('/categories')->group(function () {
-    Route::get('', [CategoryController::class, 'index'])->name('categories.index');
-    Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
-    Route::get('/{category:slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/{category:slug}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/{category:slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-    Route::get('/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+Route::middleware(['auth'])->prefix('/admin')->group(function () {
+    Route::prefix('/categories')->group(function () {
+        Route::get('', [CategoryController::class, 'index'])->name('categories.index');
+        Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
+        Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
+        Route::get('/{category:slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+        Route::put('/{category:slug}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/{category:slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
+    });
 });
+Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
