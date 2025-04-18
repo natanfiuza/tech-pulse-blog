@@ -24,7 +24,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Rotas de autenticação (já vêm com o Laravel, mas precisamos adaptá-las)
 Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
-Route::post('/logout', [LoginController::class, 'destroy'])->name('logout'); // Importante para logout
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout'); // Importante para logout
 
 # Rota socialite Google
 // Rota para redirecionar para o Google
@@ -45,7 +45,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     });
 });
 
-Route::middleware(['auth'])->prefix('/admin')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::prefix('/categories')->group(function () {
         Route::get('', [CategoryController::class, 'index'])->name('categories.index');
         Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');

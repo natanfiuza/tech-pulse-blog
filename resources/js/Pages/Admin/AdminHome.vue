@@ -7,6 +7,7 @@
 <script>
 import { useForm } from "@inertiajs/inertia-vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+// import DashboardResponsivo from "@/Layouts/DashboardResponsivo.vue";
 
 export default {
   components: {

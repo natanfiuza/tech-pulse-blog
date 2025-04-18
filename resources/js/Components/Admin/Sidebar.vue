@@ -15,8 +15,14 @@
       <li>
         <Link href="/admin/categories">Categorias</Link>
       </li>
-      <li>
+      <!-- <li>
         <Link href="/admin/users">Usuários</Link>
+      </li> -->
+      <li>
+        <hr />
+      </li>
+      <li>
+        <Link href="/logout">Sair</Link>
       </li>
     </ul>
   </aside>

@@ -1,106 +1,95 @@
 <template>
-  <div>
-    <Head>
-      <title>Editar Categoria</title>
-    </Head>
-    <h1>Editar Categoria</h1>
-    <form @submit.prevent="submit">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nome:</label>
-        <input type="text" id="name" v-model="form.name" class="form-control" required />
-        <div v-if="form.errors.name" class="invalid-feedback">{{ form.errors.name }}</div>
-      </div>
+    <AdminLayout>
+        <h2>Editar Categoria: {{ form.name }}</h2>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Descrição:</label>
-        <textarea
-          id="description"
-          v-model="form.description"
-          class="form-control"
-        ></textarea>
-        <div v-if="form.errors.description" class="invalid-feedback">
-          {{ form.errors.description }}
-        </div>
-      </div>
+        <form @submit.prevent="submit">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome:</label>
+                <input id="name" v-model="form.name" type="text" class="form-control" />
+                <div v-if="form.errors.name" class="text-danger mt-1">{{ form.errors.name }}</div>
+            </div>
 
-      <div class="mb-3">
-        <label for="scope" class="form-label">Abrangência:</label>
-        <textarea id="scope" v-model="form.scope" class="form-control"></textarea>
-        <div v-if="form.errors.scope" class="invalid-feedback">
-          {{ form.errors.scope }}
-        </div>
-      </div>
+            <div class="mb-3">
+                <label for="parent_id" class="form-label">Categoria Pai:</label>
+                <select id="parent_id" v-model="form.parent_id" class="form-select">
+                    <option :value="null">-- Nenhuma --</option>
+                    <option v-for="parent in categories" :key="parent.id" :value="parent.id">
+                        {{ parent.name }}
+                    </option>
+                </select>
+                <div v-if="form.errors.parent_id" class="text-danger mt-1">{{ form.errors.parent_id }}</div>
+            </div>
 
-      <div class="mb-3">
-        <label for="possible_contents" class="form-label">Possíveis Conteúdos:</label>
-        <textarea
-          id="possible_contents"
-          v-model="form.possible_contents"
-          class="form-control"
-        ></textarea>
-        <div v-if="form.errors.possible_contents" class="invalid-feedback">
-          {{ form.errors.possible_contents }}
-        </div>
-      </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descrição:</label>
+                <textarea id="description" v-model="form.description" rows="4" class="form-control"></textarea>
+                <div v-if="form.errors.description" class="text-danger mt-1">{{ form.errors.description }}</div>
+            </div>
 
-      <div class="mb-3">
-        <label for="post_suggestions" class="form-label">Sugestões de Postagens:</label>
-        <textarea
-          id="post_suggestions"
-          v-model="form.post_suggestions"
-          class="form-control"
-        ></textarea>
-        <div v-if="form.errors.post_suggestions" class="invalid-feedback">
-          {{ form.errors.post_suggestions }}
-        </div>
-      </div>
+            <div class="mb-3">
+                <label for="scope" class="form-label">Abrangência:</label>
+                <textarea id="scope" v-model="form.scope" rows="3" class="form-control"></textarea>
+                <div v-if="form.errors.scope" class="text-danger mt-1">{{ form.errors.scope }}</div>
+            </div>
 
-      <div class="mb-3">
-        <label for="parent_id" class="form-label">Categoria Pai:</label>
-        <select id="parent_id" v-model="form.parent_id" class="form-select">
-          <option :value="null">Nenhuma (Categoria Principal)</option>
-          <option v-for="cat in categories" :key="cat.id" :value="cat.id">
-            {{ cat.name }}
-          </option>
-        </select>
-        <div v-if="form.errors.parent_id" class="invalid-feedback">
-          {{ form.errors.parent_id }}
-        </div>
-      </div>
+            <div class="mb-3">
+                <label for="possible_contents" class="form-label">Possíveis Conteúdos:</label>
+                <textarea id="possible_contents" v-model="form.possible_contents" rows="5"
+                    class="form-control"></textarea>
+                <div v-if="form.errors.possible_contents" class="text-danger mt-1">{{ form.errors.possible_contents }}
+                </div>
+            </div>
 
-      <button type="submit" class="btn btn-primary" :disabled="form.processing">
-        Atualizar
-      </button>
-    </form>
-  </div>
+            <div class="mb-3">
+                <label for="post_suggestions" class="form-label">Sugestões de Postagens:</label>
+                <textarea id="post_suggestions" v-model="form.post_suggestions" rows="5"
+                    class="form-control"></textarea>
+                <div v-if="form.errors.post_suggestions" class="text-danger mt-1">{{ form.errors.post_suggestions }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" :disabled="form.processing">
+                Atualizar Categoria
+            </button>
+            <Link :href="route('admin.categories.index')" class="btn btn-secondary ms-2">
+            Cancelar
+            </Link>
+        </form>
+    </AdminLayout>
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/inertia-vue3";
-import { defineProps } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import AdminLayout from '@/Layouts/AdminLayout.vue';
+import { Link, useForm } from '@inertiajs/vue3'; // Use vue3 imports
+import { defineProps } from 'vue';
 
+// Props recebidas do controller
 const props = defineProps({
-  category: Object, // A categoria sendo editada
-  categories: Array, //Todas as categorias
+    category: Object, // A categoria sendo editada
+    categories: Array, // Os pais disponíveis
 });
 
+// Inicializa o formulário com os dados da categoria atual
 const form = useForm({
-  name: props.category.name,
-  description: props.category.description,
-  scope: props.category.scope,
-  possible_contents: props.category.possible_contents,
-  post_suggestions: props.category.post_suggestions,
-  parent_id: props.category.parent_id,
-  _method: "PUT", // Importante para o Laravel saber que é uma atualização
+    name: props.category.name,
+    description: props.category.description ?? '', // Usa ?? para tratar nulos
+    scope: props.category.scope ?? '',
+    possible_contents: props.category.possible_contents ?? '',
+    post_suggestions: props.category.post_suggestions ?? '',
+    parent_id: props.category.parent_id, // Pode ser null
 });
 
+// Função de submit
 const submit = () => {
-  form.put(route("categories.update", { category: props.category.slug }), {
-    preserveScroll: true, //Preserva o scroll da página
-  });
+    form.put(route('admin.categories.update', { category: props.category.id }), {
+        onError: (errors) => { console.error('Erros:', errors); }
+    });
 };
 </script>
+
 <style scoped>
-/*Seus estilos*/
+.text-danger {
+    color: #dc3545;
+    font-size: 0.875em;
+}
 </style>
