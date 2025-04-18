@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::whereRaw("user_id = '".Auth::user()->id."' ")->get();
         return Inertia::render('Admin/Posts/PostsIndex', ['posts' => $posts]);
     }
 
