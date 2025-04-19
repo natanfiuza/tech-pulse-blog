@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
-
-//Para validar o unique, ignorando o id
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -68,7 +67,15 @@ class CategoryController extends Controller
         ]);
 
         // O slug será gerado automaticamente pelo trait HasSlug
-        Category::create($validatedData);
+        $category = new Category();
+        $category->uuid = Str::uuid()->toString();
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->scope = $request->scope;
+        $category->possible_contents = $request->possible_contents;
+        $category->post_suggestions = $request->post_suggestions;
+        $category->parent_id = $request->parent_id;
+        $category->save();
 
         return redirect()->route('categories.index')->with('success', 'Categoria criada com sucesso!');
     }

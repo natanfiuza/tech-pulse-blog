@@ -27,14 +27,13 @@
               class="btn btn-primary btn-new-post"
               >Editar
             </Link>
-            <Link
+            <!-- <Link
               :href="'/admin/posts/delete/' + post.uuid"
               method="delete"
               as="button"
               class="btn btn-danger btn-new-post"
               style="margin-left: 2px"
-              >Excluir</Link
-            >
+              >Excluir</Link> -->
           </td>
         </tr>
       </tbody>

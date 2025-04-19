@@ -9,7 +9,10 @@
       {{ $page.props.flash.error }}
     </div>
 
-    <Link :href="route('categories.create')" class="btn btn-primary mb-3 btn-new-category">
+    <Link
+      :href="route('categories.create')"
+      class="btn btn-primary mb-3 btn-new-category"
+    >
       Nova Categoria
     </Link>
 
@@ -37,9 +40,9 @@
               >
                 Editar
               </Link>
-              <button @click="confirmDelete(category)" class="btn btn-sm btn-danger">
+              <!-- <button @click="confirmDelete(category)" class="btn btn-sm btn-danger">
                 Excluir
-              </button>
+              </button> -->
             </td>
           </tr>
           <tr v-if="categories.length === 0">
@@ -83,7 +86,8 @@ const confirmDelete = (category) => {
 <style scoped>
 /* Adicione estilos se necessário */
 .btn-info,
-.btn-danger,.btn-new-category {
-  color: white;
+.btn-danger,
+.btn-new-category {
+  color: #d4edda;
 }
 </style>

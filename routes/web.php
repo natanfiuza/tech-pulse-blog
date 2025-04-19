@@ -50,9 +50,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::get('', [CategoryController::class, 'index'])->name('categories.index');
         Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
         Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
-        Route::get('/{category:slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-        Route::put('/{category:slug}', [CategoryController::class, 'update'])->name('categories.update');
-        Route::delete('/{category:slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+        Route::get('/edit/{uuid}', [CategoryController::class, 'edit'])->name('categories.edit');
+        Route::put('/update/{uuid}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/delete/{uuid}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     });
 });
