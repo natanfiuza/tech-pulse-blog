@@ -47,6 +47,8 @@ export default {
     // Armazena o conteúdo original do editor
     const originalContent = ref(props.post?.content || "");
 
+   
+
     const form = useForm({
       title: props.post?.title || "",
       excerpt: props.post?.excerpt || "",
