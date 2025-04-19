@@ -90,16 +90,16 @@ class PostController extends Controller
      */
     public function show($slug) // Recebe o slug como parâmetro
     {
-        // $post = Post::where('slug', $slug)->firstOrFail(); // Busca o post
-        $posts = json_decode(Storage::get('data\posts.json'), true);
+         $post = Post::where('slug', $slug)->firstOrFail(); // Busca o post
+        
+        // $posts = json_decode(Storage::get('data\posts.json'), true);
 
-        foreach ($posts as $value) {
-            if ($value['slug'] == $slug) {
-                $post = $value;
-                //$post['content'] = app(MarkdownRenderer::class)->toHtml($post['content']);
-                break;
-            }
-        }
+        // foreach ($posts as $value) {
+        //     if ($value['slug'] == $slug) {
+        //         $post = $value;
+        //         break;
+        //     }
+        // }
 
         return Inertia::render('Post', [ // Renderiza o componente Vue 'Post'
             'post' => $post,

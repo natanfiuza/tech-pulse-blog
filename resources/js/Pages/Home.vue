@@ -14,7 +14,7 @@
       <div v-if="featuredPost" class="hero-featured">
         <InertiaLink :href="'/post/show/' + featuredPost.slug" class="featured-link">
           <img
-            :src="featuredPost.image"
+            :src="'/storage/images/' + featuredPost.uuid"
             :alt="featuredPost.title"
             class="featured-image"
           />
