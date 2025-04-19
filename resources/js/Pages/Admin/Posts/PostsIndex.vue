@@ -27,13 +27,14 @@
               class="btn btn-primary btn-new-post"
               >Editar
             </Link>
-            <!-- <Link
+            <Link
               :href="'/admin/posts/delete/' + post.uuid"
               method="delete"
               as="button"
               class="btn btn-danger btn-new-post"
               style="margin-left: 2px"
-              >Excluir</Link> -->
+              >Excluir</Link
+            >
           </td>
         </tr>
       </tbody>
@@ -74,8 +75,10 @@ export default {
   border-color: #c3e6cb;
   color: #155724;
 }
+
 .btn-new-post {
   color: #d4edda;
 }
+
 /* Adicione estilos para .alert-error, .alert-info, etc., se precisar */
 </style>
