@@ -8,7 +8,7 @@
     </Head>
 
     <h1 class="post-title">{{ post.title }}</h1>
-    <img :src="`${post.image}`" :alt="post.title" class="post-image" />
+    <img :src="`/storage/images/${post.uuid}`" :alt="post.title" class="post-image" />
 
     <div class="article-meta">
       <span
