@@ -16,7 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::whereRaw("user_id = '".Auth::user()->id."' ")->get();
+        $posts = Post::whereRaw("user_id = '".Auth::user()->id."' ")
+            ->orderByRaw('created_at DESC')
+            ->get();
         return Inertia::render('Admin/Posts/PostsIndex', ['posts' => $posts]);
     }
 
@@ -91,7 +93,7 @@ class PostController extends Controller
     public function show($slug) // Recebe o slug como parâmetro
     {
          $post = Post::where('slug', $slug)->firstOrFail(); // Busca o post
-        
+
         // $posts = json_decode(Storage::get('data\posts.json'), true);
 
         // foreach ($posts as $value) {
