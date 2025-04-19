@@ -41,7 +41,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::post('/store', [PostController::class, 'store'])->name('posts.store');
         Route::get('/edit/{uuid}', [PostController::class, 'edit'])->name('posts.edit');
         Route::put('/update', [PostController::class, 'update'])->name('posts.update');
-        Route::delete('/delete/{uuid}', [PostController::class, 'update'])->name('posts.update');
+        Route::delete('/delete/{uuid}', [PostController::class, 'update'])->name('posts.destroy');
     });
 });
 

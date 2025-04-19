@@ -177,8 +177,9 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request )
     {
+        $post = Post::whereRaw("uuid = '{$request->uuid}' and user_id='".Auth::user()->id."'");
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Post excluído!');
 
