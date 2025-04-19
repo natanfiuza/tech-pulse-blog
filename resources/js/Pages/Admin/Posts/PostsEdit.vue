@@ -47,7 +47,7 @@ export default {
     // Armazena o conteúdo original do editor
     const originalContent = ref(props.post?.content || "");
 
-   
+
 
     const form = useForm({
       title: props.post?.title || "",
@@ -76,7 +76,7 @@ export default {
           ...data,
           content: encodedContent, // Adiciona o conteúdo codificado aos dados
         }))
-        .put(route("posts.update", { uuid: props.post.uuid }), {
+        .post(route("posts.update", { uuid: props.post.uuid }), {
                 onError: (errors) => {
                     console.error("Erros do Backend:", errors);
                 },
