@@ -48,10 +48,14 @@ import { tempo_leitura } from "../helpers";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
+import mermaid from "mermaid"; // Importa Mermaid
 //import "../../css/themes/dracula.css";
 
 const props = defineProps({
-  post: Object,
+  post: {
+    type: Object,
+    required: true,
+  },
 });
 
 const read_time = tempo_leitura(props.post.content);

@@ -103,7 +103,7 @@ class PostController extends Controller
         //     }
         // }
 
-        return Inertia::render('Post', [ // Renderiza o componente Vue 'Post'
+        return Inertia::render('PostMermaid', [ // Renderiza o componente Vue 'Post'
             'post' => $post,
         ]);
     }
