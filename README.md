@@ -99,7 +99,7 @@ Siga os passos abaixo para instalar e configurar o projeto em seu ambiente de de
 
 ## Utilização
 
-*   **Criação de Posts:**  Após o login, navegue até a rota `/posts/create` para acessar o formulário de criação de posts. Preencha o título e o conteúdo e clique em "Criar Post".
+*   **Criação de Posts:**  Foram feitas algumas implementações e agora você pode fazer o login e cadastrar um Post.
 *   **Visualização de Posts:**  Na página inicial (`/`), você verá uma lista dos posts mais recentes.  Clique em um título para ver a página de detalhes do post.
 *   **Login/Logout:** Use a rota `/login` para fazer login. A rota de logout é `/logout`.
 *   **Usuários:** Para criar posts, é preciso ter usuários. O projeto não implementa o registro de usuários por padrão para simplificar. Você pode adicionar usuários manualmente através do `php artisan tinker`, ou criar uma rota de registro, seguindo os passos para criação de um blog completo.
