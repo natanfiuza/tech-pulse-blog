@@ -10,7 +10,7 @@
     </div>
 
     <Link
-      :href="route('categories.create')"
+      :href="'/admin/categories/create'"
       class="btn btn-primary mb-3 btn-new-category"
     >
       Nova Categoria
