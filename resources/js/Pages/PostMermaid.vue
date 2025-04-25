@@ -218,7 +218,7 @@ watch(
   width: 100%;
   /* height: 12rem; */
   /* Removido para usar aspect-ratio */
-  max-height: 450px;
+  max-height: 12rem;
   /* Altura máxima opcional */
   display: block;
   /* Para remover espaço extra abaixo */
