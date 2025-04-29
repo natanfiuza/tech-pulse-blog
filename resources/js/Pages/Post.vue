@@ -3,7 +3,7 @@
 
   <div class="post-container">
     <Head>
-      <title>{{ post.title }}</title>
+      <title>TechPulse - {{ post.title }}</title>
       <meta name="description" :content="post.excerpt" />
     </Head>
 
