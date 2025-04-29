@@ -90,18 +90,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug) // Recebe o slug como parâmetro
+    public function show(Request $request) // Recebe o slug como parâmetro
     {
-         $post = Post::where('slug', $slug)->firstOrFail(); // Busca o post
-
-        // $posts = json_decode(Storage::get('data\posts.json'), true);
-
-        // foreach ($posts as $value) {
-        //     if ($value['slug'] == $slug) {
-        //         $post = $value;
-        //         break;
-        //     }
-        // }
+        if (isset($request->slug)) {
+            $post = Post::where('slug', $request->slug )->firstOrFail(); // Busca o post
+        }
+        if (isset($request->uuid)) {
+            $post = Post::where('uuid', $request->uuid )->firstOrFail(); // Busca o post
+        }
 
         return Inertia::render('PostMermaid', [ // Renderiza o componente Vue 'Post'
             'post' => $post,

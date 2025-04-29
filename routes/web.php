@@ -33,6 +33,7 @@ Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])-
 Route::get('/login/google/callback', [SocialiteController::class, 'handle_google_callback']);
 
 Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
+Route::get('post/show/fix/{uuid}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
     Route::prefix('/posts')->group(function () {
