@@ -1,6 +1,6 @@
 <template>
   <nav class="topbar">
-    <a href="/" class="logo"><img src="/assets/img/logo_natanfiuza_branco.png" /></a>
+    <a href="/" class="logo"><img src="/assets/img/logo_techpulse_branco.png" /></a>
   </nav>
 </template>
 <style scoped>
