@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar">
-    <a href="/" class="logo"><img src="/assets/img/logo_natanfiuza_branco.png" /></a>
+    <a href="/" class="logo"><img src="/assets/img/logo_techpulse_branco.png" /></a>
     <div class="menu-toggle" @click="toggleMenu" :class="{ active: isMenuActive }">
       <span></span>
       <span></span>
