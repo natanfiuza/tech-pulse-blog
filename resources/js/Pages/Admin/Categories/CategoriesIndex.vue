@@ -2,13 +2,6 @@
   <AdminLayout>
     <h2>Categorias</h2>
 
-    <div v-if="$page.props.flash?.success" class="alert alert-success mb-4">
-      {{ $page.props.flash.success }}
-    </div>
-    <div v-if="$page.props.flash?.error" class="alert alert-danger mb-4">
-      {{ $page.props.flash.error }}
-    </div>
-
     <Link
       :href="'/admin/categories/create'"
       class="btn btn-primary mb-3 btn-new-category"
@@ -35,8 +28,8 @@
             <td>{{ category.parent ? category.parent.name : "Nenhuma" }}</td>
             <td>
               <Link
-                :href="route('categories.edit', { category: category.id })"
-                class="btn btn-sm btn-info me-2"
+                :href="route('categories.edit', { category: category.uuid })"
+                class="btn btn-sm btn-primary me-2 btn-edit-category"
               >
                 Editar
               </Link>
@@ -88,6 +81,9 @@ const confirmDelete = (category) => {
 .btn-info,
 .btn-danger,
 .btn-new-category {
+  color: #d4edda;
+}
+.btn-edit-category {
   color: #d4edda;
 }
 </style>

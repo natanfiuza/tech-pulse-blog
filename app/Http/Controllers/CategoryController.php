@@ -47,7 +47,7 @@ class CategoryController extends Controller
         // Apenas ID e Nome são necessários
         $categories = Category::orderBy('name')->get(['id', 'name']);
 
-        return Inertia::render('Admin/Categories/Create', [
+        return Inertia::render('Admin/Categories/CategoriesCreate', [
             'categories' => $categories,
         ]);
     }
