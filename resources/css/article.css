@@ -50,13 +50,18 @@
 
 .article-content h3 {
     margin: 1.5rem 0 1rem;
-    color: #0552bd;
+    color: #0663e4;
 }
 
 .article-content h4 {
     margin: 1.8rem 0 1.2rem;
-    color: #3782eb;
-    font-size: 2rem;
+    color: #3488ff;
+    font-size: 1.3rem;
+}
+.article-content h5 {
+    margin: 2.1rem 0 1.5rem;
+    color: #77a5e6;
+    font-size: 1rem;
 }
 
 .author-bio {
