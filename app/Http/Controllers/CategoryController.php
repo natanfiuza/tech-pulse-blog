@@ -96,13 +96,13 @@ class CategoryController extends Controller
     {
         // Busca todas as categorias EXCETO a própria categoria sendo editada
         // para evitar que uma categoria seja pai de si mesma.
-        $availableParents = Category::where('id', '!=', $category->id)
+        $available_parents = Category::where('id', '!=', $category->id)
                                     ->orderBy('name')
                                     ->get(['id', 'name']);
 
-        return Inertia::render('Admin/Categories/Edit', [
+        return Inertia::render('Admin/Categories/CategoriesEdit', [
             'category' => $category, // Passa a categoria atual
-            'categories' => $availableParents, // Passa os pais disponíveis
+            'categories' => $available_parents, // Passa os pais disponíveis
         ]);
     }
 

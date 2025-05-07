@@ -1,7 +1,9 @@
 <template>
   <AdminLayout>
-    <h2>Categorias</h2>
-
+    <h1>Categorias</h1>
+    <div v-if="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
     <Link
       :href="'/admin/categories/create'"
       class="btn btn-primary mb-3 btn-new-category"
@@ -28,7 +30,7 @@
             <td>{{ category.parent ? category.parent.name : "Nenhuma" }}</td>
             <td>
               <Link
-                :href="route('categories.edit', { category: category.uuid })"
+                :href="'/admin/categories/edit/' + category.uuid"
                 class="btn btn-sm btn-primary me-2 btn-edit-category"
               >
                 Editar
@@ -46,36 +48,25 @@
     </div>
   </AdminLayout>
 </template>
-
-<script setup>
+<script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Link, usePage, router } from "@inertiajs/vue3"; // Use vue3 imports
-import { defineProps } from "vue";
+import { Link } from "@inertiajs/inertia-vue3";
 
-// Define as props recebidas do controller
-const props = defineProps({
-  categories: Array,
-});
-
-// Função para confirmar exclusão (melhor usar um modal em um app real)
-const confirmDelete = (category) => {
-  if (
-    confirm(
-      `Tem certeza que deseja excluir a categoria "${category.name}"? As subcategorias se tornarão categorias principais.`
-    )
-  ) {
-    router.delete(route("categories.destroy", { category: category.id }), {
-      preserveScroll: true, // Mantém a posição da página após a ação
-      onError: (errors) => {
-        // Você pode exibir erros de forma mais elaborada se necessário
-        console.error("Erro ao excluir:", errors);
-        alert("Ocorreu um erro ao excluir a categoria.");
-      },
-    });
-  }
+export default {
+  components: {
+    Link,
+    AdminLayout,
+  },
+  props: {
+    categories: Array,
+  },
+  computed: {
+    successMessage() {
+      return this.$page.props.flash?.success; // Usa optional chaining aqui também
+    },
+  },
 };
 </script>
-
 <style scoped>
 /* Adicione estilos se necessário */
 .btn-info,
@@ -83,6 +74,7 @@ const confirmDelete = (category) => {
 .btn-new-category {
   color: #d4edda;
 }
+
 .btn-edit-category {
   color: #d4edda;
 }

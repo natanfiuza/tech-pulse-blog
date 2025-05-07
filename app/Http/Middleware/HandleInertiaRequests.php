@@ -23,9 +23,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function version(Request $request): ?string
     {
+        if (file_exists($manifest = public_path('build/manifest.json'))) {
+            return md5_file($manifest);
+        }
         return parent::version($request);
     }
-
     /**
      * Define the props that are shared by default.
      *
@@ -46,9 +48,9 @@ class HandleInertiaRequests extends Middleware
                     //Outras informações
                 ] : null,
             ],
-              'ziggy' => fn () => [
-            ...(new Ziggy)->toArray(),
-            'location' => $request->url(),
+            'ziggy'   => fn()   => [
+                 ...(new Ziggy)->toArray(),
+                'location' => $request->url(),
             ],
         ]);
     }
