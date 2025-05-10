@@ -66,7 +66,6 @@ class CategoryController extends Controller
             'parent_id'         => 'nullable|exists:categories,id', // Garante que o ID do pai exista ou seja nulo
         ]);
 
-        // O slug será gerado automaticamente pelo trait HasSlug
         $category = new Category();
         $category->uuid = Str::uuid()->toString();
         $category->name = $request->name;
