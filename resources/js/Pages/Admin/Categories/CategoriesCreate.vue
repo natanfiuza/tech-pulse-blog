@@ -103,7 +103,7 @@ const form = useForm({
 
 // Função de submit
 const submit = () => {
-  form.post(route("categories.store"), {
+  form.post("/admin/categories/store", {
     onError: (errors) => {
       console.error("Erros:", errors);
     },
