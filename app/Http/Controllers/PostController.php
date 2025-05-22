@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::whereRaw("user_id = '".Auth::user()->id."' ")
+        $posts = Post::whereRaw("user_id = '" . Auth::user()->id . "' ")
             ->orderByRaw('created_at DESC')
             ->get();
         return Inertia::render('Admin/Posts/PostsIndex', ['posts' => $posts]);
@@ -93,10 +93,10 @@ class PostController extends Controller
     public function show(Request $request) // Recebe o slug como parâmetro
     {
         if (isset($request->slug)) {
-            $post = Post::where('slug', $request->slug )->firstOrFail(); // Busca o post
+            $post = Post::where('slug', $request->slug)->firstOrFail(); // Busca o post
         }
         if (isset($request->uuid)) {
-            $post = Post::where('uuid', $request->uuid )->firstOrFail(); // Busca o post
+            $post = Post::where('uuid', $request->uuid)->firstOrFail(); // Busca o post
         }
 
         return Inertia::render('PostMermaid', [ // Renderiza o componente Vue 'Post'
@@ -160,7 +160,6 @@ class PostController extends Controller
 
                 $image->storeAs('public/images', $filename);
 
-
             } catch (\Exception $e) {
                 // Loga o erro e retorna com uma mensagem amigável
                 Log::error('PostUpdate: Erro no upload da imagem do post: ' . $e->getMessage());
@@ -175,11 +174,41 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request )
+    public function destroy(Request $request)
     {
-        $post = Post::whereRaw("uuid = '{$request->uuid}' and user_id='".Auth::user()->id."'");
+        $post = Post::whereRaw("uuid = '{$request->uuid}' and user_id='" . Auth::user()->id . "'");
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Post excluído!');
 
     }
+    public function list_rss(Request $request)
+    {
+        $posts = Post::orderByRaw('created_at DESC')
+            ->get();
+
+        return $posts->map(function ($post) {
+           return [
+                "id" => $post->uuid,
+                "date_gmt" => $post->created_at, // Usado para 'publishedDate'
+                "title" => [
+                    "rendered" => $post->title // Usado para 'title'
+                ],
+                "content" => [
+                    "rendered" => $post->content // Usado para 'content'
+                ],
+                "excerpt" => [
+                    "rendered" => $post->excerpt
+                ],
+                "jetpack_featured_media_url" => "https://tech-pulse.natanfiuza.dev.br/storage/images/".$post->uuid,
+                "_embedded" => [
+                    "wp:featuredmedia" => [
+
+                            "source_url" => "https://tech-pulse.natanfiuza.dev.br/storage/images/".$post->uuid // Usado para 'imageUrl'
+
+                    ]
+                ],
+            ];
+        });
+    }
+
 }
