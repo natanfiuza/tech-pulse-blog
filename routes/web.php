@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])-
 // Rota de callback que o Google chamará após a autenticação
 Route::get('/login/google/callback', [SocialiteController::class, 'handle_google_callback']);
 
+Route::get('post/image/{filename}', [ImageController::class, 'show']);
 Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
 Route::get('post/show/fix/{uuid}', [PostController::class, 'show'])->name('posts.show'); //Para exibir um post
 Route::middleware(['auth'])->prefix('admin')->group(function () {
