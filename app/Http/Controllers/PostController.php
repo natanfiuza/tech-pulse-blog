@@ -201,11 +201,11 @@ class PostController extends Controller
                 "excerpt" => [
                     "rendered" => $post->excerpt
                 ],
-                "jetpack_featured_media_url" => "https://tech-pulse.natanfiuza.dev.br/storage/images/".$post->uuid,
+                "jetpack_featured_media_url" => "https://tech-pulse.natanfiuza.dev.br/post/image/".$post->uuid,
                 "_embedded" => [
                     "wp:featuredmedia" => [
 
-                            "source_url" => "https://tech-pulse.natanfiuza.dev.br/storage/images/".$post->uuid // Usado para 'imageUrl'
+                            "source_url" => "https://tech-pulse.natanfiuza.dev.br/post/image/".$post->uuid // Usado para 'imageUrl'
 
                     ]
                 ],
