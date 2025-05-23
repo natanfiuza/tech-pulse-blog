@@ -183,7 +183,9 @@ class PostController extends Controller
     }
     public function list_rss(Request $request)
     {
+        $per_page = $request->input('per_page', 5);
         $posts = Post::orderByRaw('created_at DESC')
+        ->take($per_page)
             ->get();
 
         return $posts->map(function ($post) {
