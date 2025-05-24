@@ -181,6 +181,14 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post excluído!');
 
     }
+    /**
+     * Lista RSS com os posts
+     *
+     * @param Request $request
+     *
+     * @return JSON
+     *
+     */
     public function list_rss(Request $request)
     {
         $per_page = $request->input('per_page', 5);
@@ -212,5 +220,49 @@ class PostController extends Controller
             ];
         });
     }
+/**
+     * Lista todos os posts de forma paginada.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function list_published_posts(Request $request)
+    {
+        $page = $request->input('page', 1);
+        $per_page = $request->input('per_page', 15); // Um valor padrão, o Flutter pode requisitar outro
 
+
+        $paginated_posts = Post::orderBy('created_at', 'desc')
+                             // ->published() // Exemplo: Se tiver um scope para posts publicados
+                             ->paginate($per_page, ['*'], 'page', $page);
+
+        // Transforma a coleção de posts dentro do objeto paginador
+        $transformed_posts = $paginated_posts->getCollection()->map(function ($post) {
+            return [
+                "id" => $post->uuid,
+                "date_gmt" => $post->created_at,
+                "title" => [
+                    "rendered" => $post->title
+                ],
+                "content" => [
+                    "rendered" => $post->content
+                ],
+                "excerpt" => [
+                    "rendered" => $post->excerpt
+                ],
+                "image_front_url" => "https://tech-pulse.natanfiuza.dev.br/post/image/".$post->uuid,
+                "web_url" => "https://tech-pulse.natanfiuza.dev.br/post/show/".$post->slug,
+                "web_fix_url" => "https://tech-pulse.natanfiuza.dev.br/post/show/fix/".$post->uuid,
+                "slug" => $post->slug,
+                "uuid" => $post->uuid,
+                "user_id" => $post->user_id,
+                "created_at" => $post->created_at,
+                "updated_at" => $post->updated_at,
+            ];
+        });
+
+        $paginated_posts->setCollection($transformed_posts);
+
+        return response()->json($paginated_posts);
+    }
 }

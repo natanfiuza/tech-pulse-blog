@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/posts', [PostController::class, 'list_rss']);
+Route::get('/posts/pagination', [PostController::class, 'list_published_posts']);
