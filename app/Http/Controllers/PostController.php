@@ -201,14 +201,14 @@ class PostController extends Controller
                 "excerpt" => [
                     "rendered" => $post->excerpt
                 ],
-                "jetpack_featured_media_url" => "https://tech-pulse.natanfiuza.dev.br/post/image/".$post->uuid,
-                "_embedded" => [
-                    "wp:featuredmedia" => [
-
-                            "source_url" => "https://tech-pulse.natanfiuza.dev.br/post/image/".$post->uuid // Usado para 'imageUrl'
-
-                    ]
-                ],
+                "image_front_url" => "https://tech-pulse.natanfiuza.dev.br/post/image/".$post->uuid,
+                "web_url" => "https://tech-pulse.natanfiuza.dev.br/post/show/".$post->slug,
+                "web_fix_url" => "https://tech-pulse.natanfiuza.dev.br/post/show/fix/".$post->uuid,
+                "slug" => $post->slug,
+                "uuid" => $post->uuid,
+                "user_id" => $post->user_id,
+                "created_at" => $post->created_at,
+                "updated_at" => $post->updated_at,
             ];
         });
     }
