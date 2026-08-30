@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mastering React Hooks - TechPulse</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b52ee",
+                        "accent": "#6272b4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#001247",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #001247;
+        }
+        .code-block {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #081a54;
+        }
+        .sidebar-sticky {
+            position: sticky;
+            top: 5rem;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-white">
+<div class="p-1 bg-primary rounded">
+<span class="material-symbols-outlined text-white text-2xl">bolt</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">TechPulse</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#">News</a>
+<a class="text-sm font-medium text-white border-b-2 border-primary py-5" href="#">Coding Tutorials</a>
+<a class="text-sm font-medium text-slate-300 hover:text-white transition-colors" href="#">Quick Tips</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-64 bg-slate-900/50 border border-white/10 rounded-lg py-1.5 pl-10 pr-4 text-sm focus:ring-primary focus:border-primary outline-none" placeholder="Search tutorials..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all">
+                        Subscribe
+                    </button>
+<div class="h-8 w-8 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Small round user profile avatar photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSWjE3NEqLNS7JwQp-RJps7u2RUFgj2OXUJJsCkT3W6ALNo4yFxgxyvGLKeo0spKaBCTlNvk4pDfnDOljpOIt8A-YYZh5RUen2eRn2AHdr3MOXmlzxYARuTeH236tyqKgIbjFZLMKBptS4Xc7pcr-S9odEcbbS5o7mgYEVUplEci2L6e_cOzwi6QNapwWO-v0V3eJTesAErFhs5EdrCsJuSk_knunupvXKZK36P3VjsdLhloDl-ViUf1wPlxjUZY_JSpHEWfIzw4Bh"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Grid -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="flex flex-col lg:flex-row gap-12">
+<!-- Article Column -->
+<article class="flex-1 max-w-4xl">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-sm text-accent mb-6">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Coding Tutorials</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-white">React</span>
+</nav>
+<h1 class="text-4xl md:text-5xl font-black text-white leading-tight mb-6">
+                    Mastering React Hooks: A Deep Dive into <span class="text-primary italic">useEffect</span>
+</h1>
+<div class="flex items-center gap-4 mb-8 pb-8 border-b border-white/5">
+<img alt="Author Alex Rivera" class="h-12 w-12 rounded-full border-2 border-primary/20" data-alt="Professional headshot of a developer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN415XnJTkUJVGlmoSMVnUYpvn-IMd5rjsNKkwCBxvRYjZEcHArzFhEQ7bXtmfQZ2sRdiFjv-ZC0I9ifpuLegqiIAy1iwFJJf5PF7MbEq9UegnJyIbei3ELUer2WF3hr1kWz391pDhwuzZJCok4JNMJMztgHipzZKa-HMwykHYqpng0G5bQYohxP40eufcflp83YbfmWDffFPBS4Hd55B-oapHa9sJeqQoklmXV-WVpDQKZhIIdZvL1LP1QWUi_2Ru654MCJ1rKslt"/>
+<div>
+<p class="text-white font-semibold">Alex Rivera</p>
+<p class="text-slate-400 text-sm">Published Oct 24, 2023 • 12 min read • <span class="text-accent">Updated 2 days ago</span></p>
+</div>
+<div class="ml-auto flex gap-2">
+<button class="p-2 hover:bg-white/5 rounded-full transition-colors text-slate-400">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+<button class="p-2 hover:bg-white/5 rounded-full transition-colors text-slate-400">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<!-- Article Content -->
+<div class="prose prose-invert prose-slate max-w-none space-y-6 text-slate-300 leading-relaxed text-lg">
+<p>
+                        The <code class="bg-slate-800 text-primary px-1.5 py-0.5 rounded font-mono">useEffect</code> hook is one of the most powerful yet misunderstood features in React. It allows you to perform side effects in functional components, handling everything from API calls to manual DOM mutations and subscriptions.
+                    </p>
+<p>
+                        In the early days of React, we managed lifecycle methods like <code class="text-accent font-mono">componentDidMount</code> and <code class="text-accent font-mono">componentWillUnmount</code>. With Hooks, these concepts are unified into a single elegant function call, but with that simplicity comes a significant shift in mental model.
+                    </p>
+<h2 class="text-2xl font-bold text-white pt-4">The Dependency Array</h2>
+<p>
+                        One of the most critical aspects of <code class="text-primary font-mono">useEffect</code> is the second argument: the dependency array. Failing to manage this properly is the leading cause of infinite loops and stale closures in modern React applications.
+                    </p>
+<!-- Code Block -->
+<div class="code-block rounded-xl border border-white/10 overflow-hidden my-8">
+<div class="flex items-center justify-between px-4 py-2 bg-slate-900/80 border-b border-white/5">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+</div>
+<span class="text-xs font-mono text-slate-400 uppercase tracking-widest">UserProfile.tsx</span>
+<button class="flex items-center gap-1 text-xs text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+                                Copy
+                            </button>
+</div>
+<pre class="p-6 overflow-x-auto text-sm leading-relaxed"><code class="text-blue-300">import <span class="text-purple-400">{</span> useState, useEffect <span class="text-purple-400">}</span> from <span class="text-emerald-400">'react'</span>;
+
+<span class="text-slate-500">// Fetching user data on component mount</span>
+<span class="text-primary">function</span> <span class="text-yellow-200">UserProfile</span>(<span class="text-purple-400">{</span> userId <span class="text-purple-400">}</span>) <span class="text-purple-400">{</span>
+  <span class="text-primary">const</span> [user, setUser] = <span class="text-yellow-200">useState</span>(<span class="text-slate-200">null</span>);
+
+  <span class="text-yellow-200">useEffect</span>(() <span class="text-primary">=&gt;</span> <span class="text-purple-400">{</span>
+    <span class="text-primary">const</span> <span class="text-yellow-200">fetchData</span> = <span class="text-primary">async</span> () <span class="text-primary">=&gt;</span> <span class="text-purple-400">{</span>
+      <span class="text-primary">const</span> response = <span class="text-primary">await</span> <span class="text-yellow-200">fetch</span>(<span class="text-emerald-400">`/api/users/</span><span class="text-purple-400">${</span>userId<span class="text-purple-400">}</span><span class="text-emerald-400">`</span>);
+      <span class="text-primary">const</span> data = <span class="text-primary">await</span> response.<span class="text-yellow-200">json</span>();
+      <span class="text-yellow-200">setUser</span>(data);
+    <span class="text-purple-400">}</span>;
+
+    <span class="text-yellow-200">fetchData</span>();
+
+    <span class="text-slate-500">// Cleanup logic</span>
+    <span class="text-primary">return</span> () <span class="text-primary">=&gt;</span> <span class="text-purple-400">{</span>
+      <span class="text-yellow-200">console</span>.<span class="text-yellow-200">log</span>(<span class="text-emerald-400">'Cleaning up component'</span>);
+    <span class="text-purple-400">}</span>;
+  <span class="text-purple-400">}</span>, [userId]); <span class="text-slate-500">// Effect runs when userId changes</span>
+
+  <span class="text-primary">if</span> (!user) <span class="text-primary">return</span> <span class="text-purple-400">&lt;</span><span class="text-yellow-200">Loading</span> <span class="text-purple-400">/&gt;</span>;
+
+  <span class="text-primary">return</span> <span class="text-purple-400">&lt;</span><span class="text-yellow-200">div</span><span class="text-purple-400">&gt;{</span>user.name<span class="text-purple-400">}&lt;/</span><span class="text-yellow-200">div</span><span class="text-purple-400">&gt;</span>;
+<span class="text-purple-400">}</span></code></pre>
+</div>
+<h2 class="text-2xl font-bold text-white pt-4">Cleanup Functions</h2>
+<p>
+                        React performs the cleanup when the component unmounts. However, effects run for every completed render and not just once. This is why React also cleans up effects from the previous render before running the effects next time.
+                    </p>
+<div class="bg-primary/10 border-l-4 border-primary p-6 rounded-r-lg">
+<p class="text-white font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                            Pro Tip
+                        </p>
+<p class="text-slate-300 italic">Always return a cleanup function if your effect creates a subscription, timer, or manual DOM mutation. This prevents memory leaks and inconsistent UI states.</p>
+</div>
+</div>
+<!-- Discussion Section -->
+<section class="mt-16 pt-10 border-t border-white/10">
+<div class="flex items-center justify-between mb-10">
+<h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                            Discussion <span class="text-sm font-normal bg-accent/20 text-accent px-2 py-0.5 rounded-full">12</span>
+</h2>
+<div class="flex items-center gap-2 text-sm text-slate-400">
+                            Sort by: <button class="text-white hover:text-primary flex items-center gap-1 font-medium">Newest <span class="material-symbols-outlined text-sm">expand_more</span></button>
+</div>
+</div>
+<!-- Comment Input -->
+<div class="flex gap-4 mb-12">
+<img alt="Current User" class="h-10 w-10 rounded-full border border-white/10" data-alt="Small round user profile avatar photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD23MI18dChoydGuJhSDQWXNc_FzEJdtBFp9HonWqbndLwWzrkrcxh69vy-_yBvBml8uZmVc3GHCEascuSRweErS5r33qMyJ8et205fE4RVIXcR07dWPDENRIA1XfwpbxroGHLKyoje2bihR0nx7BHJvwkMp7M6NFDCSSpVUzMw4gLAW2s_WduTSdhR5en5sWxEl7157pHh9zRsJMdj55xHzur4mnczQKkj0GAGTVB3QKerxLIrLw_x5mdVD8NR38LVaq23vfmp1YOe"/>
+<div class="flex-1">
+<textarea class="w-full bg-slate-900/50 border border-white/10 rounded-xl p-4 text-white focus:ring-primary focus:border-primary placeholder:text-slate-500 transition-all resize-none" placeholder="Join the discussion... Share your thoughts or ask a question." rows="3"></textarea>
+<div class="flex justify-end mt-2">
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-6 rounded-lg transition-all text-sm">Post Comment</button>
+</div>
+</div>
+</div>
+<!-- Comment Thread -->
+<div class="space-y-8">
+<!-- Comment 1 -->
+<div class="flex gap-4">
+<img alt="User Avatar" class="h-10 w-10 rounded-full" data-alt="Developer profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9y69SyaLvR-SUKvXrjyDQscScmP90IWxu-rsMwdH3vZ0ctsuSV4e1cJlgHLG_tBTNz8zbpdZHU_QVHgrqG1U2rcmGGsGMuNvaxDfBYbBT90sLDNsXsMhQ0aerXKEkxAezExSgvxNRy6gvzP48dIGIPte6z6RRlVTl7TJJeaC1VIENYZ_9_akjgoms0coU9zLaN_zeXpary5JzBGd7Djdsu0eVKRktlGDEuGqROit7LyMKp_RRUX-4SExny4dKYw9CiSauweRhEyVY"/>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold text-white">Jordan Smith</span>
+<span class="text-xs text-accent">3 hours ago</span>
+</div>
+<p class="text-slate-300 text-sm leading-relaxed mb-3">
+                                    This is exactly what I needed! I was struggling with an infinite loop in my dashboard component and realizing I was missing a dependency in the array fixed it instantly. Thanks Alex!
+                                </p>
+<div class="flex items-center gap-4 text-xs text-slate-400">
+<button class="flex items-center gap-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">thumb_up</span> 14 Upvotes</button>
+<button class="hover:text-primary transition-colors font-semibold">Reply</button>
+</div>
+<!-- Nested Reply -->
+<div class="mt-6 flex gap-4 pl-4 border-l-2 border-white/5">
+<img alt="Author" class="h-8 w-8 rounded-full" data-alt="Professional headshot of a developer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyp6pSXuqQCngwmuMXyo2wNgPQWqgTT8xfmAccVzMgjZzYUkO6PIO4Fr-rkPpx6oFroMsbEp0uOuBsS5VwOme8gDJ8tqUHUItqiwNXAcG-LXqDl71jid3NJbDoLBt3AJnzvUoJ-_f0ItqmH5Jw8SEONtbGC2j-HMrn3zrY0SzLADF8X0Bev10F6oTFHNfhRqsz0KtHZ6eNld8u75q02BkmUGgt7k6OHc0WriOagebFu3Z7vcmUp5p4sYjGo61Ns1daXJnjPHFJawAk"/>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold text-white">Alex Rivera</span>
+<span class="bg-primary/20 text-primary text-[10px] uppercase font-bold px-1.5 py-0.5 rounded">Author</span>
+<span class="text-xs text-accent">2 hours ago</span>
+</div>
+<p class="text-slate-300 text-sm leading-relaxed mb-3">
+                                            Glad it helped, Jordan! Infinite loops are almost always a missing dependency or updating a state that is also a dependency. Keep coding!
+                                        </p>
+<div class="flex items-center gap-4 text-xs text-slate-400">
+<button class="flex items-center gap-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">thumb_up</span> 3 Upvotes</button>
+<button class="hover:text-primary transition-colors font-semibold">Reply</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="flex gap-4 pt-6">
+<img alt="User Avatar" class="h-10 w-10 rounded-full" data-alt="Female developer profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8L0J1nDXQZoeaSlzvuv7e29rBpCpbvgADxl5Hrk5p-LrFtpVQaSYEmP5sJG-twQR9ZGzHM-CHLBTxs6u6sI51wUhIiegoAQsXUPQpPUTD1t0kQtr3pk0G_jRpDSxy1YjU4oRabaflmZ9IGFIkhsI6iM1jCz0hpI6YIF_DskteYGi86dIWJxCLhdmvcrs-Uh13jjDh4VVqjMZZfmThEeQpUF2QBPI0WKVNZCNleN6BfJZ9fPHFqSffxUuVC5BaZxNQ60s1DknKuEef"/>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-bold text-white">Sarah Chen</span>
+<span class="text-xs text-accent">Yesterday</span>
+</div>
+<p class="text-slate-300 text-sm leading-relaxed mb-3">
+                                    How do you handle multiple effects that depend on each other? Should I combine them into one `useEffect` or keep them separate?
+                                </p>
+<div class="flex items-center gap-4 text-xs text-slate-400">
+<button class="flex items-center gap-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">thumb_up</span> 8 Upvotes</button>
+<button class="hover:text-primary transition-colors font-semibold">Reply</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</article>
+<!-- Sidebar -->
+<aside class="w-full lg:w-80 space-y-8">
+<div class="sidebar-sticky">
+<!-- Newsletter Signup -->
+<div class="bg-slate-900 border border-white/10 p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 text-primary/10 group-hover:text-primary/20 transition-colors">
+<span class="material-symbols-outlined text-9xl">mail</span>
+</div>
+<h3 class="text-xl font-bold text-white mb-2 relative z-10">Stay ahead</h3>
+<p class="text-slate-400 text-sm mb-6 relative z-10">Join 50k+ developers getting weekly deep dives into modern tech stacks.</p>
+<form class="space-y-3 relative z-10">
+<input class="w-full bg-slate-950 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:ring-primary focus:border-primary outline-none" placeholder="email@address.com" type="email"/>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2.5 rounded-lg transition-all text-sm shadow-lg shadow-primary/20" type="submit">Subscribe Now</button>
+</form>
+</div>
+<!-- Related Posts -->
+<div class="bg-background-dark p-2">
+<h3 class="text-lg font-bold text-white mb-6 pl-2 border-l-4 border-primary">Related Tutorials</h3>
+<div class="space-y-6">
+<a class="group flex flex-col gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<div class="h-32 w-full rounded-lg overflow-hidden bg-slate-800">
+<img alt="Tutorial Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Abstract code patterns on a dark blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5o_4rqASIriyUuAvoNcmB6pZvPfde5mcAI37NrifsF5LjMvtyFhwJRPJG2GTpJLyydbV9aK6IFhD9o1aze6fGi818KSX1nGDPtD2zGhFA6zY2l2Y5WMpOpYK8oyDrSRC0Sw9RGI3wFLqBYy248pJrMtoheHgytszIP5c4b53OpMO31U4bEDWAyF40RqPX4MLhmDhrIJ7KEskgTNuwoSEP_FTPsTaIz973pb57TtHCPnxxlDH7gKhOiCDg-8JMA8e_MxT9tZ4DHRde"/>
+</div>
+<div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-accent">Clean Code</span>
+<h4 class="text-white font-semibold text-base group-hover:text-primary transition-colors">5 Essential Tips for Writing Clean React Components</h4>
+<p class="text-xs text-slate-500 mt-1">Oct 18 • 6 min read</p>
+</div>
+</a>
+<a class="group flex flex-col gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<div class="h-32 w-full rounded-lg overflow-hidden bg-slate-800">
+<img alt="Tutorial Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Geometric nodes and network lines in blue" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaCmOD8WIMU8_yXMpQekPF9I5ggWWkazNPESx_hRZmQAtBL7PFWXig1JeNOEvSctImhhs13nMV3P1oLCxSH1xwUWQFg1ek1eGi2dca1kaZM5uphvfWA-WpvgXTKiXQMaztOU7r8iL7-1G86H-PkJllP29IvKNIS5rxhAQT4wtqaGZkeywggyEakz5jn1_w9fnH7pR5Qhv_NBfcKYxVGDcDsKwBFf12C9dqJc5Tpf9USGTLcXPwVRiP3W50x_Arxby-yhtDfNudBDw6"/>
+</div>
+<div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-accent">Next.js</span>
+<h4 class="text-white font-semibold text-base group-hover:text-primary transition-colors">Understanding Server-Side Rendering (SSR) in Next.js 14</h4>
+<p class="text-xs text-slate-500 mt-1">Oct 12 • 15 min read</p>
+</div>
+</a>
+</div>
+</div>
+<!-- Tags -->
+<div class="pt-8">
+<h3 class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4 px-2">Popular Tags</h3>
+<div class="flex flex-wrap gap-2 px-2">
+<a class="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-xs text-slate-300 transition-colors" href="#">#React</a>
+<a class="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-xs text-slate-300 transition-colors" href="#">#Hooks</a>
+<a class="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-xs text-slate-300 transition-colors" href="#">#Frontend</a>
+<a class="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-xs text-slate-300 transition-colors" href="#">#JavaScript</a>
+<a class="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-full text-xs text-slate-300 transition-colors" href="#">#WebDev</a>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-950 border-t border-white/5 py-12 mt-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-2 text-white mb-4">
+<div class="p-1 bg-primary rounded">
+<span class="material-symbols-outlined text-white text-xl">bolt</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">TechPulse</h2>
+</div>
+<p class="text-slate-400 text-sm max-w-sm">
+                        High-quality technical content for the modern developer. Stay updated with the latest in React, Node, and everything web development.
+                    </p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4">Explore</h4>
+<ul class="space-y-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">News</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Tutorials</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Quick Tips</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Authors</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4">Community</h4>
+<ul class="space-y-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">GitHub</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Discord</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Twitter</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">RSS Feed</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+<p>© 2023 TechPulse Media. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-white" href="#">Privacy Policy</a>
+<a class="hover:text-white" href="#">Terms of Service</a>
+<a class="hover:text-white" href="#">Cookie Settings</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -220,7 +220,7 @@ class PostController extends Controller
             ];
         });
     }
-/**
+    /**
      * Lista todos os posts de forma paginada.
      *
      * @param Request $request

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#380d00",
+              "on-primary-fixed-variant": "#0033c2",
+              "primary-container": "rgba(43, 82, 238, 0.1)",
+              "surface-bright": "#1a2a6c",
+              "on-surface-variant": "#6272b4",
+              "primary": "#2b52ee",
+              "on-secondary-fixed-variant": "#344284",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#f6f6f8",
+              "on-tertiary-fixed-variant": "#812800",
+              "on-primary-fixed": "#001258",
+              "surface-variant": "#0b253a",
+              "on-surface": "#f6f6f8",
+              "surface-container-highest": "#1e3a5f",
+              "on-error": "#ffffff",
+              "tertiary-container": "#011627",
+              "outline": "#6272b4",
+              "surface-container-lowest": "#000821",
+              "surface-dim": "#000b2b",
+              "error-container": "#450a07",
+              "tertiary": "#82aaff",
+              "secondary-container": "rgba(98, 114, 180, 0.2)",
+              "surface-container": "#001b5e",
+              "surface-container-high": "#0b253a",
+              "primary-fixed": "#dee1ff",
+              "secondary-fixed": "#dee1ff",
+              "on-primary": "#ffffff",
+              "outline-variant": "rgba(98, 114, 180, 0.2)",
+              "tertiary-fixed": "#ffdbcf",
+              "secondary-fixed-dim": "#b9c3ff",
+              "surface": "#001247",
+              "background": "#001247",
+              "on-background": "#f6f6f8",
+              "secondary": "#6272b4",
+              "inverse-primary": "#5c7cff",
+              "on-primary-container": "#2b52ee",
+              "on-error-container": "#ffb4ab",
+              "surface-tint": "#2b52ee",
+              "on-secondary-container": "#f6f6f8",
+              "inverse-on-surface": "#001247",
+              "surface-container-low": "#001247",
+              "error": "#ff5f56",
+              "on-secondary-fixed": "#001258",
+              "tertiary-fixed-dim": "#ffb59b",
+              "on-tertiary": "#001247",
+              "on-tertiary-container": "#82aaff",
+              "primary-fixed-dim": "#b9c3ff"
+            },
+            fontFamily: {
+              "headline": ["Inter", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Inter", "sans-serif"],
+              "mono": ["JetBrains Mono", "monospace"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 20px rgba(43, 82, 238, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<nav class="fixed top-0 w-full z-50 bg-[#001247]/80 backdrop-blur-xl border-b border-slate-400/20 shadow-2xl shadow-blue-900/20">
+<div class="flex justify-between items-center h-20 px-8 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-black tracking-tighter text-slate-100 uppercase">
+                TechPulse
+            </div>
+<div class="hidden md:flex items-center gap-8 font-['Inter'] font-medium text-sm tracking-wide">
+<a class="text-[#2b52ee] border-b-2 border-[#2b52ee] pb-1" href="#">Notícias</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors" href="#">Tutoriais de Programação</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors" href="#">Dicas Rápidas</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-4 text-slate-400">
+<button class="hover:bg-blue-600/10 hover:text-blue-400 transition-all duration-300 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="hover:bg-blue-600/10 hover:text-blue-400 transition-all duration-300 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+<button class="bg-primary text-white px-6 py-2.5 rounded-lg font-bold text-sm tracking-wide glow-hover transition-all scale-95 active:scale-90">
+                    Inscrever-se
+                </button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-20 px-8 max-w-screen-2xl mx-auto">
+<section class="mb-16">
+<div class="relative w-full h-[600px] rounded-xl overflow-hidden group">
+<img alt="IA Generativa e o futuro da programação" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Digital blue neural network visualization abstract" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj3Kxp1oF290pPLMSGTxdnf8sc-Ui8BwtscOWhbK-cAOSRwlsbQB3nMeVoa5URUCqTXTTqc4whvHmq_WANvvV2qP5AW1mF5LocuPRztgg-l2U92SCnBWFu8yZwY91NKa24r5HMAHq8OKHdeGUCG-UaNELgGyzu8Q2W2QeF3-pV63yQSUC9P-RC7IBrvSmcgXJKN7YNmJQMT53NVxnVTB4y76lQUir4M9_tOKo-gUelxrKzDkQYDzllH80rkwTKz48rBCDprwnt2wSt"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim via-surface-dim/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-12 max-w-4xl">
+<span class="bg-primary px-3 py-1 rounded text-[10px] font-black tracking-widest uppercase mb-4 inline-block">Destaque</span>
+<h1 class="text-5xl md:text-6xl font-black leading-tight tracking-tight mb-6">
+                        O Salto Quântico da <span class="text-primary">IA Generativa</span> no Desenvolvimento de Software
+                    </h1>
+<p class="text-on-surface-variant text-lg max-w-2xl mb-8 leading-relaxed">
+                        Como as novas LLMs estão transformando a arquitetura de sistemas e o que os desenvolvedores seniores precisam aprender hoje para continuar relevantes amanhã.
+                    </p>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-white px-8 py-4 rounded-lg font-extrabold flex items-center gap-2 glow-hover transition-all">
+                            Ler Reportagem Completa
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<span class="text-sm text-on-surface-variant font-mono">12 min de leitura</span>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col lg:flex-row gap-12">
+<div class="flex-1">
+<div class="flex flex-wrap items-center gap-3 mb-12">
+<button class="bg-primary text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider">TUDO</button>
+<button class="bg-surface-container-high text-on-surface-variant hover:text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider transition-colors border border-outline-variant/20">INTELIGÊNCIA ARTIFICIAL</button>
+<button class="bg-surface-container-high text-on-surface-variant hover:text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider transition-colors border border-outline-variant/20">WEB DESIGN</button>
+<button class="bg-surface-container-high text-on-surface-variant hover:text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider transition-colors border border-outline-variant/20">BACKEND</button>
+<button class="bg-surface-container-high text-on-surface-variant hover:text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider transition-colors border border-outline-variant/20">GADGETS</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- News Card 1 -->
+<article class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/20 group hover:border-primary/40 transition-all">
+<div class="aspect-video overflow-hidden">
+<img alt="React 19 Novidades" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern web application UI code editor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD822hQlU0gwUmegGTDCbec18gJ-K2t5Nhnyu4qONDVRTx_oOF5bB_R46jSM6Cs5iALIxH1wu20qqoNY22iwaFk-AfyRbKV60gzG4x44MmAWeIYJBi21_YVrpPyeKlDqQDX7RwU56hrOlQlQ_Fmxvy0s2_6VM18NXtIu8hC3qEUViC-I-59SzTSaeC5WfPFwyct8ge3GKRlIkedVhjntlJSYdbv0WqYdP1hmrVBzRchFI1E9u1uIvx922K90csSWbCFysWep44m5ZyG"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-primary/20 text-primary text-[10px] font-black px-2 py-0.5 rounded">PRO</span>
+<span class="text-on-surface-variant text-[10px] font-mono">15 OUT, 2024</span>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors leading-snug">React 19: O que muda na gestão de estados complexos?</h3>
+<p class="text-on-surface-variant text-sm mb-6 line-clamp-2">Exploramos as novas APIs experimentais que prometem eliminar o boilerplate excessivo em aplicações de larga escala.</p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/10">
+<span class="text-[11px] font-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span> 8 min de leitura
+                                </span>
+<button class="text-primary text-xs font-black uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all">
+                                    Ler <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</article>
+<!-- News Card 2 -->
+<article class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/20 group hover:border-primary/40 transition-all">
+<div class="aspect-video overflow-hidden">
+<img alt="Segurança em Backend" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Server hardware blue light abstract background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOMW-xW5RNpJph6rHo-blfpdEQCd0YEp8Phbb78MkLV12MuJreIT82uXxiT3ll-CM60zoDOLNUaBRsgBlhQfIJl-6RJRhIQycmP1_UY6mKglvyAcA7861-XmKEC4sgsE_i3W0V8_dguCgIbscyF_c_0q_wXosXBKjpvXlXQgDh_g5dgKSi3CQrw2LY8IdcPbnUvgLfKv_FYi6_8KgK24FIjO7HOlwe3wV-aXmEAZtbI0OWw0p5Cm8AFnR20QNAddAeUxAiw-_4lIh-"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-emerald-500/20 text-emerald-500 text-[10px] font-black px-2 py-0.5 rounded uppercase">Iniciante</span>
+<span class="text-on-surface-variant text-[10px] font-mono">14 OUT, 2024</span>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors leading-snug">5 Falhas de Segurança que todo Dev Backend ignora</h3>
+<p class="text-on-surface-variant text-sm mb-6 line-clamp-2">Um guia prático sobre como proteger suas APIs de ataques de injeção e sequestro de sessão.</p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/10">
+<span class="text-[11px] font-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span> 5 min de leitura
+                                </span>
+<button class="text-primary text-xs font-black uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all">
+                                    Ler <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</article>
+<!-- News Card 3 -->
+<article class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/20 group hover:border-primary/40 transition-all">
+<div class="aspect-video overflow-hidden">
+<img alt="Retro Hardware" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High tech retro computer devices setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaOs1jZ3zLXCrWgCCi0qf9P-D66vgrj6bjmY5eX7Y3TJPv9wfAudFvCg8i6sJ3EOzJR-WLRoYo6u5KN--Rsd57vsliVBdGOdRg8DP_tS66O8a5RoIy9ybz_snDpv0UoCCsK4aY31uC2TUlNLUa6JsBzZRGH5SiyT93PjdkXJgm_ESmlz3M5V1tuLkfyPiL3plVXvsLI2Xw60BdjeOUDRNo89MHmhrxQyduoFvJcHAT-3g2KQzgmo8F0k9BZBZPWjWZ565YXIi9IENE"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-primary/20 text-primary text-[10px] font-black px-2 py-0.5 rounded">GADOETS</span>
+<span class="text-on-surface-variant text-[10px] font-mono">13 OUT, 2024</span>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors leading-snug">O renascimento dos teclados mecânicos customizados</h3>
+<p class="text-on-surface-variant text-sm mb-6 line-clamp-2">Por que engenheiros de software estão investindo milhares de reais em hardware de entrada?</p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/10">
+<span class="text-[11px] font-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span> 10 min de leitura
+                                </span>
+<button class="text-primary text-xs font-black uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all">
+                                    Ler <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</article>
+<!-- News Card 4 -->
+<article class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/20 group hover:border-primary/40 transition-all">
+<div class="aspect-video overflow-hidden">
+<img alt="TypeScript 5.0" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Code on screen with typescript syntax" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrdV5c_ltfZ3BGpgtm0QHqe4c2Ftf5FDn8D7nczg9K51e_zw_y8MoMqwRsPcxxfTCgZ0BRaLbuSHDVZEP6Ymjh7rHaF5OfAVIz0g4JG7WwxCTTjEPQcj10Ylu59wUs9gmpPHZg2Caw7jIF2-GklbQXjdxRc64CA-6hcIYKODSRfE_JZ0i_1sSo5HrhoEjFtWb62Z2pZKyfMF8ZQDmmqdZ1ukcg5eypM51YAzlMRNfQwSKmyn6x8wcEbk1dNHktxUhQvBCn_5fKR1fJ"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-primary/20 text-primary text-[10px] font-black px-2 py-0.5 rounded">PRO</span>
+<span class="text-on-surface-variant text-[10px] font-mono">12 OUT, 2024</span>
+</div>
+<h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors leading-snug">TypeScript: Decorators finalmente chegam ao padrão</h3>
+<p class="text-on-surface-variant text-sm mb-6 line-clamp-2">Como a nova implementação nativa afeta frameworks como NestJS e Angular.</p>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/10">
+<span class="text-[11px] font-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span> 7 min de leitura
+                                </span>
+<button class="text-primary text-xs font-black uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all">
+                                    Ler <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+</div>
+<aside class="w-full lg:w-96 space-y-12">
+<div class="bg-surface-container-high rounded-xl p-8 border border-outline-variant/10">
+<h4 class="text-xs font-black tracking-widest uppercase mb-6 text-primary">Boletim Informativo</h4>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Receba os pulsos de tecnologia e hacks de programação diretamente no seu e-mail, toda segunda-feira.</p>
+<form class="space-y-4">
+<input class="w-full bg-surface-dim border border-outline-variant/30 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-on-surface-variant/50" placeholder="seu@email.com" type="email"/>
+<button class="w-full bg-primary text-white font-bold py-3 rounded-lg text-sm glow-hover transition-all" type="submit">Inscrever Agora</button>
+</form>
+<p class="text-[10px] text-on-surface-variant/40 mt-4 text-center">Respeitamos sua privacidade. Cancele a qualquer momento.</p>
+</div>
+<div>
+<h4 class="text-xs font-black tracking-widest uppercase mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">trending_up</span>
+                        Tags Populares
+                    </h4>
+<div class="flex flex-wrap gap-2">
+<a class="bg-surface-container-low border border-outline-variant/20 hover:border-primary/50 px-3 py-1.5 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all" href="#">#rust-lang</a>
+<a class="bg-surface-container-low border border-outline-variant/20 hover:border-primary/50 px-3 py-1.5 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all" href="#">#serverless</a>
+<a class="bg-surface-container-low border border-outline-variant/20 hover:border-primary/50 px-3 py-1.5 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all" href="#">#tailwind-tips</a>
+<a class="bg-surface-container-low border border-outline-variant/20 hover:border-primary/50 px-3 py-1.5 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all" href="#">#cybersecurity</a>
+<a class="bg-surface-container-low border border-outline-variant/20 hover:border-primary/50 px-3 py-1.5 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all" href="#">#nextjs</a>
+<a class="bg-surface-container-low border border-outline-variant/20 hover:border-primary/50 px-3 py-1.5 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all" href="#">#devops</a>
+<a class="bg-surface-container-low border border-outline-variant/20 hover:border-primary/50 px-3 py-1.5 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary transition-all" href="#">#web3</a>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 to-surface-container-high p-8 border border-primary/20">
+<div class="relative z-10">
+<h4 class="text-xl font-bold mb-4 leading-tight">Torne-se um Autor no TechPulse</h4>
+<p class="text-sm text-on-surface-variant mb-6">Compartilhe seu conhecimento com mais de 50k desenvolvedores mensais.</p>
+<a class="inline-flex items-center gap-2 text-primary text-sm font-black uppercase tracking-widest hover:translate-x-1 transition-transform" href="#">
+                            Saiba como participar <span class="material-symbols-outlined text-lg">arrow_right_alt</span>
+</a>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl text-primary/10 rotate-12">edit_note</span>
+</div>
+</aside>
+</section>
+</main>
+<footer class="bg-[#000b2b] w-full py-12 border-t border-slate-800">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 gap-6 max-w-screen-2xl mx-auto">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="text-lg font-black text-slate-200 uppercase tracking-tighter">TechPulse</span>
+<p class="text-[#2b52ee] font-['Inter'] text-[10px] uppercase tracking-[0.2em] font-bold">O Pulsar da Tecnologia.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 font-['Inter'] text-xs uppercase tracking-widest font-bold">
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Privacidade</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Termos de Uso</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Anuncie</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Contato</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-slate-500 hover:text-primary transition-all p-2 bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</a>
+<a class="text-slate-500 hover:text-primary transition-all p-2 bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="rss_feed">rss_feed</span>
+</a>
+</div>
+</div>
+<div class="mt-8 text-center">
+<p class="text-slate-600 text-[10px] tracking-widest uppercase">© 2024 TechPulse - O Pulsar da Tecnologia.</p>
+</div>
+</footer>
+</body></html>
