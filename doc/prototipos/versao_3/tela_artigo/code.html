@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>O Futuro da IA Generativa no Desenvolvimento | TechPulse</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#001247",
+                    "surface-container-low": "#001247",
+                    "on-surface": "#f6f6f8",
+                    "primary-container": "rgba(43, 82, 238, 0.1)",
+                    "on-error-container": "#ffb4ab",
+                    "surface": "#001247",
+                    "primary": "#2b52ee",
+                    "primary-fixed-dim": "#b9c3ff",
+                    "error-container": "#450a07",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#380d00",
+                    "tertiary-fixed": "#ffdbcf",
+                    "secondary": "#6272b4",
+                    "surface-container-high": "#0b253a",
+                    "on-primary-fixed": "#001258",
+                    "on-tertiary-container": "#82aaff",
+                    "on-primary-container": "#2b52ee",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#001247",
+                    "inverse-primary": "#5c7cff",
+                    "secondary-fixed": "#dee1ff",
+                    "surface-tint": "#2b52ee",
+                    "surface-container": "#001b5e",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#6272b4",
+                    "on-primary-fixed-variant": "#0033c2",
+                    "surface-variant": "#0b253a",
+                    "secondary-fixed-dim": "#b9c3ff",
+                    "error": "#ff5f56",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "background": "#001247",
+                    "surface-dim": "#000b2b",
+                    "inverse-surface": "#f6f6f8",
+                    "tertiary-container": "#011627",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "on-secondary-container": "#f6f6f8",
+                    "secondary-container": "rgba(98, 114, 180, 0.2)",
+                    "on-background": "#f6f6f8",
+                    "surface-container-lowest": "#000821",
+                    "tertiary": "#82aaff",
+                    "primary-fixed": "#dee1ff",
+                    "outline-variant": "rgba(98, 114, 180, 0.2)",
+                    "surface-container-highest": "#1e3a5f",
+                    "outline": "#6272b4",
+                    "on-secondary-fixed": "#001258",
+                    "on-secondary-fixed-variant": "#344284",
+                    "surface-bright": "#1a2a6c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter", "sans-serif"],
+                    "display": ["Inter", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #001247; color: #f6f6f8; }
+        .glass-header { backdrop-filter: blur(12px); background-color: rgba(0, 18, 71, 0.8); border-bottom: 1px solid rgba(98, 114, 180, 0.2); }
+        .glow-hover:hover { box-shadow: 0 0 20px rgba(43, 82, 238, 0.4); }
+        .code-block { background-color: #011627; }
+        .keyword { color: #c792ea; }
+        .function { color: #82aaff; }
+        .string { color: #c3e88d; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col pt-20 antialiased selection:bg-primary/30 selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#001247]/80 backdrop-blur-xl border-b border-slate-400/20 shadow-2xl shadow-blue-900/20 font-['Inter'] font-medium text-sm tracking-wide">
+<div class="flex justify-between items-center h-20 px-8 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<a class="text-2xl font-black tracking-tighter text-slate-100 hover:text-blue-400 transition-all duration-300 scale-95 active:scale-90 transition-transform" href="#">TechPulse</a>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-400 hover:text-slate-100 transition-colors hover:bg-blue-600/10 hover:text-blue-400 transition-all duration-300 py-2 px-3 rounded-md" href="#">Notícias</a>
+<a class="text-[#2b52ee] border-b-2 border-[#2b52ee] pb-1 py-2 px-3" href="#">Tutoriais de Programação</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors hover:bg-blue-600/10 hover:text-blue-400 transition-all duration-300 py-2 px-3 rounded-md" href="#">Dicas Rápidas</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#2b52ee] hover:bg-blue-600/10 hover:text-blue-400 transition-all duration-300 p-2 rounded-full scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-[#2b52ee] hover:bg-blue-600/10 hover:text-blue-400 transition-all duration-300 p-2 rounded-full scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+<button class="bg-[#2b52ee] text-white px-4 py-2 rounded-lg font-bold glow-hover scale-95 active:scale-90 transition-transform">Inscrever-se</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-6 lg:px-12 py-12 max-w-5xl lg:grid lg:grid-cols-12 lg:gap-12"><div class="lg:col-span-8"><header class="mb-12 text-center md:text-left relative"><div class="absolute -top-20 -left-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] -z-10 pointer-events-none"></div><div class="flex flex-wrap items-center gap-3 mb-6 justify-center md:justify-start"><span class="px-3 py-1 text-[10px] uppercase tracking-wider font-bold bg-primary/20 text-primary rounded-full">Inteligência Artificial</span><span class="px-3 py-1 text-[10px] uppercase tracking-wider font-bold bg-emerald-500/20 text-emerald-400 rounded-full">Pro Level</span></div><h1 class="text-5xl md:text-[64px] font-black leading-tight tracking-tight mb-8 text-white drop-shadow-lg">O Futuro da <span class="text-primary">IA Generativa</span> no Desenvolvimento de Software</h1><div class="flex items-center justify-center md:justify-start gap-4 text-on-surface-variant font-medium text-sm"><div class="flex items-center gap-3"><img class="w-12 h-12 rounded-full border-2 border-surface-container-high object-cover shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2-EfJlAhH6P6t9jcXX-nW7h7_rRkGQ4dfAUrkkhj6Zn88KnmCd9HXiI4RJrmlZmcfXhFGZ-F6OzlcaiiwirA3l2R66ed97svEgIeTpHe8t6mUlTozXywatusvWXQytm2lYZ_gs3KCqZfjen4XoHd_ntBRCzOxni7IJUm_ybUI_5mEgMd5f_pTbxeYalhAVYKEa4_Bf4Hxbzb3QzgGoO9DdwFWqUAbsvVId4rH02qTC2Ezvl28oF76ww"/><div class="flex flex-col"><span class="text-white font-bold">Alex Rivera</span><span>Engenheiro de Machine Learning</span></div></div><div class="h-8 w-px bg-outline-variant mx-2"></div><div class="flex flex-col"><span class="text-white">24 de Outubro, 2024</span><span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> 12 min de leitura</span></div></div></header><div class="w-full aspect-video rounded-xl overflow-hidden mb-16 shadow-2xl relative group"><div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGv5lvlwmYtYad9vsIJKnhfVySPxgUgBdn3wfGJ6fdx5izWAGJOzXzIC4rLDIJOIZCKvfEIPxwqMadS0Y4ec3XlP9gpDfatRTbuRfXwUSKrQlBxXljK99bXdOgwX9lpxJasLofSTG2OgmZGo7BSSZSEbi3H7xDE5VSXoBunQ1846mwAMmCGjzB6MiBkv-3RbfUEINUBrGgzDzeWmZPTahJx1z_lUlhscpRvmkfq-RtGXqYCdCBbpkEPg"/></div><article class="prose prose-invert prose-lg max-w-none text-on-surface/80"><p class="text-xl leading-relaxed font-medium text-white mb-8 border-l-4 border-primary pl-6">A integração de modelos de linguagem de grande escala (LLMs) no fluxo de trabalho de engenharia de software não é mais uma promessa futurista; é uma realidade operacional.</p><h2 class="text-3xl font-extrabold text-white mt-12 mb-6">Além do Autocomplete: Arquitetura Assistida</h2><p class="leading-relaxed mb-6">Ferramentas como o GitHub Copilot e Claude 3.5 Sonnet provaram que a assistência a nível de linha de código aumenta a produtividade.</p><div class="bg-surface-container-high rounded-xl p-8 my-10 border border-outline-variant/30 shadow-2xl relative overflow-hidden"><div class="absolute top-0 right-0 p-4 opacity-10"><span class="material-symbols-outlined text-9xl">memory</span></div><h3 class="text-xl font-bold text-white mb-4 relative z-10 flex items-center gap-2"><span class="material-symbols-outlined text-primary">data_object</span> Exemplo de Implementação: Orquestrador de IA </h3><p class="text-sm mb-6 relative z-10">Um padrão comum surgindo é o "Agent Router", onde uma função central avalia a intenção do usuário e roteia para o modelo ou ferramenta específica mais eficiente.</p><div class="code-block rounded-lg p-6 font-mono text-sm overflow-x-auto relative z-10 border border-slate-800 shadow-inner"><div class="flex gap-2 mb-4"><div class="w-3 h-3 rounded-full bg-error/50"></div><div class="w-3 h-3 rounded-full bg-yellow-500/50"></div><div class="w-3 h-3 rounded-full bg-emerald-500/50"></div></div><pre><code><span class="keyword">import</span> <span class="string">{ Anthropic }</span> <span class="keyword">from</span> <span class="string">'@anthropic-ai/sdk'</span>;
+<span class="keyword">import</span> <span class="string">{ OpenAI }</span> <span class="keyword">from</span> <span class="string">'openai'</span>;
+
+<span class="keyword">class</span> <span class="function">AIOperator</span> {
+  <span class="keyword">private</span> anthropic = <span class="keyword">new</span> Anthropic();
+  <span class="keyword">private</span> openai = <span class="keyword">new</span> OpenAI();
+
+  <span class="keyword">async function</span> <span class="function">routeQuery</span>(query: <span class="keyword">string</span>, context: <span class="keyword">any</span>) {
+    <span class="keyword">const</span> intent = <span class="keyword">await</span> <span class="keyword">this</span>.<span class="function">analyzeIntent</span>(query);
+    
+    <span class="keyword">if</span> (intent === <span class="string">'complex_reasoning'</span>) {
+      <span class="keyword">return</span> <span class="keyword">this</span>.anthropic.messages.<span class="function">create</span>({
+        model: <span class="string">'claude-3-5-sonnet-20240620'</span>,
+        messages: [{ role: <span class="string">'user'</span>, content: query }]
+      });
+    } <span class="keyword">else</span> {
+       <span class="keyword">return</span> <span class="keyword">this</span>.openai.chat.completions.<span class="function">create</span>({
+        model: <span class="string">'gpt-4o-mini'</span>,
+        messages: [{ role: <span class="string">'user'</span>, content: query }]
+      });
+    }
+  }
+}</code></pre></div></div></article><section class="bg-surface-container-high rounded-2xl p-8 border border-outline-variant/20 mt-12"><h3 class="text-2xl font-bold text-white mb-8">Discussão (3)</h3><div class="flex gap-4 mb-10"><div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold flex-shrink-0"> U </div><div class="flex-grow"><textarea class="w-full bg-surface border border-outline-variant/50 rounded-lg p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none font-['Inter'] text-sm" placeholder="Adicione à discussão..." rows="3"></textarea><div class="flex justify-end mt-3"><button class="bg-primary text-white px-5 py-2 rounded-lg font-bold text-sm glow-hover transition-all">Comentar</button></div></div></div><div class="space-y-8"><div class="flex gap-4"><img class="w-10 h-10 rounded-full object-cover flex-shrink-0 border border-slate-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZUcCzG7DKNydoPf0tky1BXLMk2SPAijopY6XSAzL4TJsKNfQBEexmPIW50H6GV1JCqPpN-zqLUyGGEXgUvmoOL1rJUTshAc3Qx4LXvgUJXOTwayJYsOw6pCyHv-UiObX0LNtY6iJWxzFtXx89nP4cXlNL9MjuH9Blmwrst_8LyWbefxrGtMHM1gXX-CmSecLym6xSFSIVyM5idQVWUbvUetNb_g03juqb28oclw9eBXaHlL6pF4uZpg"/><div class=""><div class="flex items-baseline gap-2 mb-1"><span class="font-bold text-white">Carla Mendes</span><span class="text-xs text-on-surface-variant">Há 2 horas</span></div><p class="text-sm text-slate-300 leading-relaxed mb-2">Excelente artigo, Alex. Concordo plenamente com a parte do "Agent Router". Implementamos algo similar na semana passada usando LangChain e a diferença no tempo de resposta para queries simples foi brutal.</p><div class="flex gap-4 text-xs text-on-surface-variant"><button class="flex items-center gap-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">thumb_up</span> 12</button><button class="flex items-center gap-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">reply</span> Responder</button></div></div></div><div class="flex gap-4"><div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold flex-shrink-0 border border-emerald-500/30"> RM </div><div class=""><div class="flex items-baseline gap-2 mb-1"><span class="font-bold text-white">Roberto Martins</span><span class="text-xs text-on-surface-variant">Há 5 horas</span></div><p class="text-sm text-slate-300 leading-relaxed mb-2">A questão da "alucinação técnica" me preocupa muito em bibliotecas menores ou muito recentes. O Copilot insiste em sugerir métodos que foram removidos no React 18, por exemplo. O code review manual nunca foi tão importante.</p><div class="flex gap-4 text-xs text-on-surface-variant"><button class="flex items-center gap-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">thumb_up</span> 8</button><button class="flex items-center gap-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">reply</span> Responder</button></div></div></div></div></section></div><aside class="lg:col-span-4 space-y-8 mt-12 lg:mt-0"><div class="bg-surface-container-high rounded-xl p-6 border border-outline-variant/20"><span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-4 block">Patrocinado</span><div class="aspect-video bg-surface rounded-lg mb-4 flex items-center justify-center border border-outline-variant/10"><span class="material-symbols-outlined text-4xl text-primary/40">ads_click</span></div><h4 class="text-white font-bold mb-2">CloudScale Pro</h4><p class="text-xs text-on-surface-variant mb-4">A infraestrutura que sua IA merece. Escalabilidade infinita para modelos LLM.</p><button class="w-full py-2 border border-primary text-primary rounded-lg text-xs font-bold hover:bg-primary/10 transition-colors">Saiba Mais</button></div><div class="bg-surface-container-high rounded-xl p-6 border border-outline-variant/20"><h4 class="text-white font-bold mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">sell</span> Tags Relacionadas</h4><div class="flex flex-wrap gap-2"><a class="px-3 py-1 bg-surface border border-outline-variant/30 rounded-full text-xs text-slate-300 hover:border-primary hover:text-primary transition-colors" href="#">#IA</a><a class="px-3 py-1 bg-surface border border-outline-variant/30 rounded-full text-xs text-slate-300 hover:border-primary hover:text-primary transition-colors" href="#">#DevOps</a><a class="px-3 py-1 bg-surface border border-outline-variant/30 rounded-full text-xs text-slate-300 hover:border-primary hover:text-primary transition-colors" href="#">#Futuro</a><a class="px-3 py-1 bg-surface border border-outline-variant/30 rounded-full text-xs text-slate-300 hover:border-primary hover:text-primary transition-colors" href="#">#LLM</a><a class="px-3 py-1 bg-surface border border-outline-variant/30 rounded-full text-xs text-slate-300 hover:border-primary hover:text-primary transition-colors" href="#">#Cloud</a></div></div><div class="bg-primary/10 rounded-xl p-6 border border-primary/30"><h4 class="text-white font-bold mb-2">Assine nossa Newsletter</h4><p class="text-xs text-slate-300 mb-4">Receba as últimas tendências de tecnologia diretamente no seu e-mail.</p><div class="space-y-3"><input class="w-full bg-surface border border-outline-variant/50 rounded-lg px-4 py-2 text-sm text-white focus:ring-1 focus:ring-primary focus:border-primary" placeholder="seu@email.com" type="email"/><button class="w-full bg-primary text-white py-2 rounded-lg font-bold text-sm glow-hover">Inscrever</button></div></div></aside></main>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-slate-800 bg-[#000b2b] mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 gap-6 max-w-screen-2xl mx-auto">
+<div class="text-lg font-black text-slate-200 tracking-tighter">
+                TechPulse
+            </div>
+<div class="flex gap-6 font-['Inter'] text-xs uppercase tracking-widest font-bold">
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Privacidade</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Termos de Uso</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Anuncie</a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#">Contato</a>
+</div>
+<div class="text-[#2b52ee] text-xs font-['Inter']">
+                © 2024 TechPulse - O Pulsar da Tecnologia.
+            </div>
+</div>
+</footer>
+</body></html>
