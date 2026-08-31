@@ -1,120 +1,142 @@
 <template>
   <AdminLayout>
-    <h2>Nova Categoria</h2>
+    <div class="mx-auto max-w-3xl">
+      <h1 class="mb-6 font-headline text-2xl font-extrabold text-on-surface md:text-3xl">Nova Categoria</h1>
 
-    <form @submit.prevent="submit">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nome:</label>
-        <input id="name" v-model="form.name" type="text" class="form-control" />
-        <div v-if="form.errors.name" class="text-danger mt-1">{{ form.errors.name }}</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="parent_id" class="form-label">Categoria Pai:</label>
-        <select id="parent_id" v-model="form.parent_id" class="form-select">
-          <option :value="null">-- Nenhuma --</option>
-          <option v-for="category in categories" :key="category.id" :value="category.id">
-            {{ category.name }}
-          </option>
-        </select>
-        <div v-if="form.errors.parent_id" class="text-danger mt-1">
-          {{ form.errors.parent_id }}
+      <form
+        @submit.prevent="submit"
+        class="space-y-5 rounded-xl border border-outline-variant/20 bg-surface-container-low p-6 shadow-2xl"
+      >
+        <!-- Nome -->
+        <div>
+          <label for="name" class="mb-2 block font-headline text-sm font-bold text-on-surface">Nome</label>
+          <input
+            id="name"
+            v-model="form.name"
+            type="text"
+            class="w-full rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            placeholder="Ex.: Back-end"
+          />
+          <p v-if="form.errors.name" class="mt-1 text-sm text-error" role="alert">{{ form.errors.name }}</p>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Descrição:</label>
-        <textarea
-          id="description"
-          v-model="form.description"
-          rows="4"
-          class="form-control"
-        ></textarea>
-        <div v-if="form.errors.description" class="text-danger mt-1">
-          {{ form.errors.description }}
+        <!-- Categoria Pai -->
+        <div>
+          <label for="parent_id" class="mb-2 block font-headline text-sm font-bold text-on-surface">
+            Categoria Pai
+          </label>
+          <select
+            id="parent_id"
+            v-model="form.parent_id"
+            class="w-full appearance-none rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          >
+            <option :value="null">-- Nenhuma --</option>
+            <option v-for="category in categories" :key="category.id" :value="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <p v-if="form.errors.parent_id" class="mt-1 text-sm text-error" role="alert">
+            {{ form.errors.parent_id }}
+          </p>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="scope" class="form-label">Abrangência:</label>
-        <textarea
-          id="scope"
-          v-model="form.scope"
-          rows="3"
-          class="form-control"
-        ></textarea>
-        <div v-if="form.errors.scope" class="text-danger mt-1">
-          {{ form.errors.scope }}
+        <!-- Descrição -->
+        <div>
+          <label for="description" class="mb-2 block font-headline text-sm font-bold text-on-surface">Descrição</label>
+          <textarea
+            id="description"
+            v-model="form.description"
+            rows="4"
+            class="w-full rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          ></textarea>
+          <p v-if="form.errors.description" class="mt-1 text-sm text-error" role="alert">
+            {{ form.errors.description }}
+          </p>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="possible_contents" class="form-label">Possíveis Conteúdos:</label>
-        <textarea
-          id="possible_contents"
-          v-model="form.possible_contents"
-          rows="5"
-          class="form-control"
-        ></textarea>
-        <div v-if="form.errors.possible_contents" class="text-danger mt-1">
-          {{ form.errors.possible_contents }}
+        <!-- Abrangência -->
+        <div>
+          <label for="scope" class="mb-2 block font-headline text-sm font-bold text-on-surface">Abrangência</label>
+          <textarea
+            id="scope"
+            v-model="form.scope"
+            rows="3"
+            class="w-full rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          ></textarea>
+          <p v-if="form.errors.scope" class="mt-1 text-sm text-error" role="alert">{{ form.errors.scope }}</p>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="post_suggestions" class="form-label">Sugestões de Postagens:</label>
-        <textarea
-          id="post_suggestions"
-          v-model="form.post_suggestions"
-          rows="5"
-          class="form-control"
-        ></textarea>
-        <div v-if="form.errors.post_suggestions" class="text-danger mt-1">
-          {{ form.errors.post_suggestions }}
+        <!-- Possíveis Conteúdos -->
+        <div>
+          <label for="possible_contents" class="mb-2 block font-headline text-sm font-bold text-on-surface">
+            Possíveis Conteúdos
+          </label>
+          <textarea
+            id="possible_contents"
+            v-model="form.possible_contents"
+            rows="5"
+            class="w-full rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          ></textarea>
+          <p v-if="form.errors.possible_contents" class="mt-1 text-sm text-error" role="alert">
+            {{ form.errors.possible_contents }}
+          </p>
         </div>
-      </div>
 
-      <button type="submit" class="btn btn-primary" :disabled="form.processing">
-        Criar Categoria
-      </button>
-    </form>
+        <!-- Sugestões de Postagens -->
+        <div>
+          <label for="post_suggestions" class="mb-2 block font-headline text-sm font-bold text-on-surface">
+            Sugestões de Postagens
+          </label>
+          <textarea
+            id="post_suggestions"
+            v-model="form.post_suggestions"
+            rows="5"
+            class="w-full rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          ></textarea>
+          <p v-if="form.errors.post_suggestions" class="mt-1 text-sm text-error" role="alert">
+            {{ form.errors.post_suggestions }}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 pt-2">
+          <button
+            type="submit"
+            class="glow-hover rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-all duration-300 hover:bg-surface-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-60"
+            :disabled="form.processing"
+          >
+            Criar Categoria
+          </button>
+          <Link
+            href="/admin/categories"
+            class="rounded-lg border border-outline-variant/20 bg-surface px-5 py-2.5 text-sm font-medium text-on-surface transition-colors hover:bg-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          >
+            Cancelar
+          </Link>
+        </div>
+      </form>
+    </div>
   </AdminLayout>
 </template>
 
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { useForm } from "@inertiajs/vue3"; // Use vue3 imports
-import { defineProps } from "vue";
+import { Link, useForm } from "@inertiajs/vue3";
 
-// Props recebidas do controller (lista de todas as categorias para o select)
+// Lista de todas as categorias para o select de pai
 const props = defineProps({
-  categories: Array,
+    categories: { type: Array, default: () => [] },
 });
 
-// Inicializa o formulário
 const form = useForm({
-  name: "",
-  description: "",
-  scope: "",
-  possible_contents: "",
-  post_suggestions: "",
-  parent_id: null, // Começa sem pai selecionado
+    name: "",
+    description: "",
+    scope: "",
+    possible_contents: "",
+    post_suggestions: "",
+    parent_id: null,
 });
 
-// Função de submit
 const submit = () => {
-  form.post("/admin/categories/store", {
-    onError: (errors) => {
-      console.error("Erros:", errors);
-    },
-    // onSuccess: () => { /* Limpar form talvez? */ }
-  });
+    form.post(route("categories.store"));
 };
 </script>
-
-<style scoped>
-.text-danger {
-  color: #dc3545;
-  font-size: 0.875em;
-}
-</style>

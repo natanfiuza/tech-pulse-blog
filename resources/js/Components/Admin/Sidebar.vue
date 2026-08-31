@@ -1,141 +1,119 @@
 <template>
-  <aside :class="{ sidebar: true, 'sidebar-open': showSidebar || !isMobile }">
-    <button
-      v-if="isMobile"
-      @click="toggleSidebar"
-      class="hamburger-button"
-      aria-label="Alternar menu"
-    >
-      ☰
-    </button>
-    <ul>
-      <li>
-        <Link href="/admin/posts">Posts</Link>
-      </li>
-      <li>
-        <Link href="/admin/categories">Categorias</Link>
-      </li>
-      <!-- <li>
-        <Link href="/admin/users">Usuários</Link>
-      </li> -->
-      <li>
-        <hr />
-      </li>
-      <li>
-        <Link href="/logout">Sair</Link>
-      </li>
-    </ul>
+  <aside
+    class="fixed top-0 left-0 z-40 flex h-screen w-64 flex-col border-r border-outline-variant/20 bg-background py-6 px-4 transition-transform duration-300 md:translate-x-0"
+    :class="open ? 'translate-x-0' : '-translate-x-full'"
+    :aria-hidden="is_mobile && !open ? 'true' : null"
+    :inert="is_mobile && !open"
+  >
+    <!-- Header -->
+    <div class="mb-10 px-4">
+      <h1 class="font-display text-2xl font-black tracking-tight text-on-primary-fixed">TechPulse</h1>
+      <p class="mt-1 text-sm text-on-surface-variant">Admin Console</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="mb-8 px-2">
+      <Link
+        href="/admin/posts/create"
+        class="glow-hover flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 px-4 font-medium text-on-primary transition-all duration-300 hover:bg-surface-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+      >
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+        Novo Post
+      </Link>
+    </div>
+
+    <!-- Navegação principal -->
+    <nav class="flex-1 space-y-2 px-2" aria-label="Navegação principal">
+      <Link
+        v-for="item in menu_items"
+        :key="item.href"
+        :href="item.href"
+        class="flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        :class="
+          item.active
+            ? 'bg-secondary-container text-on-surface'
+            : 'text-on-surface-variant hover:bg-secondary-container hover:text-on-surface'
+        "
+      >
+        <span class="material-symbols-outlined">{{ item.icon }}</span>
+        <span class="font-body text-sm font-medium">{{ item.label }}</span>
+      </Link>
+    </nav>
+
+    <!-- Navegação do rodapé -->
+    <div class="mt-auto space-y-2 border-t border-outline-variant/20 px-2 pt-4">
+      <div
+        class="flex cursor-default items-center gap-3 rounded-lg px-4 py-3 text-on-surface-variant/60"
+        title="Perfil (em breve)"
+      >
+        <span class="material-symbols-outlined">account_circle</span>
+        <span class="font-body text-sm font-medium">Perfil</span>
+      </div>
+      <Link
+        href="/logout"
+        class="flex items-center gap-3 rounded-lg px-4 py-3 text-error/80 transition-all duration-300 hover:bg-error/10 hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60"
+      >
+        <span class="material-symbols-outlined">logout</span>
+        <span class="font-body text-sm font-medium">Sair</span>
+      </Link>
+    </div>
   </aside>
 </template>
+
 <script>
-import { Link } from "@inertiajs/inertia-vue3"; // Importante!
+import { Link } from "@inertiajs/vue3";
+
 export default {
-  components: { Link },
-  data() {
-    return {
-      showSidebar: false,
-      isMobile: false,
-    };
-  },
-  mounted() {
-    this.checkIsMobile();
-    window.addEventListener("resize", this.checkIsMobile);
-  },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.checkIsMobile);
-  },
-  methods: {
-    toggleSidebar() {
-      this.showSidebar = !this.showSidebar;
+    components: { Link },
+    props: {
+        open: { type: Boolean, default: false },
     },
-    checkIsMobile() {
-      this.isMobile = window.innerWidth <= 768; // Ajuste o breakpoint conforme necessário
-      if (!this.isMobile) {
-        this.showSidebar = false; // Garante que o menu fique fechado em telas maiores
-      }
+    emits: ["close"],
+    data() {
+        return {
+            is_mobile: false,
+            mql: null,
+        };
     },
-  },
+    computed: {
+        menu_items() {
+            const componente = this.$page.component;
+            return [
+                {
+                    label: "Dashboard",
+                    icon: "dashboard",
+                    href: "/admin/home",
+                    active: componente === "Admin/AdminHome",
+                },
+                {
+                    label: "Posts",
+                    icon: "article",
+                    href: "/admin/posts",
+                    active: componente.startsWith("Admin/Posts"),
+                },
+                {
+                    label: "Categorias",
+                    icon: "category",
+                    href: "/admin/categories",
+                    active: componente.startsWith("Admin/Categories"),
+                },
+            ];
+        },
+    },
+    mounted() {
+        this.mql = window.matchMedia("(max-width: 767px)");
+        this.is_mobile = this.mql.matches;
+        this.mql.addEventListener("change", this.check_mobile);
+    },
+    beforeUnmount() {
+        if (this.mql) {
+            this.mql.removeEventListener("change", this.check_mobile);
+        }
+    },
+    methods: {
+        check_mobile(event) {
+            this.is_mobile = event.matches;
+        },
+    },
 };
 </script>
-
-<style scoped>
-.sidebar {
-  margin-top: -7px;
-  width: 25vh;
-  /* Largura da sidebar */
-  background-color: #2d4363;
-  /* Cor de fundo */
-  color: white;
-  /* Cor do texto */
-  transition: transform 0.3s ease;
-  /* Animação suave */
-}
-
-.sidebar ul {
-  list-style: none;
-  /* Remove marcadores da lista */
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar li {
-  padding: 10px 15px;
-  /* Espaçamento interno */
-}
-
-.sidebar a {
-  color: white;
-  text-decoration: none;
-  /* Remove sublinhado */
-  display: block;
-  /* Faz o link ocupar a largura total do item */
-}
-
-.sidebar a:hover {
-  background-color: #555;
-  /* Cor de fundo ao passar o mouse */
-}
-
-/* Estilos para mobile */
-.hamburger-button {
-  display: none;
-  /* Escondido por padrão */
-  background-color: #555;
-  color: rgb(81, 57, 189);
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  position: fixed;
-  /*Fica fixo no topo, mesmo com rolagem*/
-  top: 40px;
-  left: 10px;
-  z-index: 100;
-  /*Garante que o botão fique acima de outros elementos*/
-}
-
-@media (max-width: 768px) {
-  /* Breakpoint para mobile */
-  .hamburger-button {
-    display: block;
-    /* Mostra o botão em telas menores */
-  }
-
-  .sidebar {
-    transform: translateX(-100%);
-    /* Esconde a sidebar por padrão */
-    position: fixed;
-    /* Sidebar fixa para sobrepor o conteúdo */
-    top: 40px;
-    left: 10px;
-    height: 100vh;
-    /* Ocupa a altura total */
-    z-index: 99;
-    /* Sidebar fica abaixo do botão hamburguer*/
-  }
-
-  .sidebar-open {
-    transform: translateX(0);
-    /* Mostra a sidebar */
-  }
-}
-</style>

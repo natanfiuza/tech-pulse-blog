@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Str;
+
 /*
 
     Funções auxiliares
@@ -11,28 +14,44 @@ if (! function_exists('criar_slug')) {
      * convertendo para minúsculas, removendo caracteres especiais e espaços,
      * e substituindo espaços por hífens.
      *
-     * @param string $titulo O título a ser convertido em slug.
+     * A ordem importa: a transliteração (Str::ascii) acontece ANTES da remoção
+     * de stopwords para que o \b do PCRE funcione em fronteiras reais de palavra
+     * (com caracteres acentuados o \b falhava e stopwords "comiam" pedaços,
+     * ex.: "Ação" -> "o"). Nunca usar Str::slug antes das stopwords — a
+     * hifenização destruiria as fronteiras de palavra.
+     *
+     * @param  string  $titulo  O título a ser convertido em slug.
      * @return string O slug gerado a partir do título.
      */
     function criar_slug($titulo)
     {
-        // 1. Remover palavras irrelevantes (artigos e preposições)
-        $palavras_irrelevantes = ['de', 'do', 'da', 'das', 'o', 'a', 'os', 'as', 'em', 'um', 'uma', 'uns', 'umas', 'para', 'com', 'por'];
-        $titulo                = preg_replace('/\b(' . implode('|', $palavras_irrelevantes) . ')\b/i', '', $titulo);
+        $titulo_original = $titulo;
 
-        // 2. Converter para minúsculas
+        // 1. Transliterar acentos/cedilha preservando espaços ("Ação" -> "Acao")
+        $titulo = Str::ascii($titulo);
+
+        // 2. Remover palavras irrelevantes (artigos e preposições)
+        $palavras_irrelevantes = ['de', 'do', 'da', 'das', 'o', 'a', 'os', 'as', 'em', 'um', 'uma', 'uns', 'umas', 'para', 'com', 'por'];
+        $titulo = preg_replace('/\b('.implode('|', $palavras_irrelevantes).')\b/i', ' ', $titulo);
+
+        // 3. Converter para minúsculas
         $titulo = strtolower($titulo);
 
-                                                               // 3. Remover caracteres especiais e espaços em branco
+        // 4. Remover caracteres especiais e espaços em branco
         $titulo = preg_replace('/[^a-z0-9\s-]/', '', $titulo); // Mantém letras, números, espaços e hífens
         $titulo = trim($titulo);                               // Remove espaços em branco no início e no fim
         $titulo = preg_replace('/\s+/', '-', $titulo);         // Substitui espaços por hífens
 
-        // 4. Remover hífens duplicados
+        // 5. Remover hífens duplicados e hífens nas pontas
         $titulo = preg_replace('/-+/', '-', $titulo);
+        $titulo = trim($titulo, '-');
+
+        // 6. Fallback defensivo: título formado só por stopwords/pontuação
+        if (empty($titulo)) {
+            $titulo = Str::slug($titulo_original, '-', 'pt');
+        }
 
         return $titulo;
     }
 
 }
-

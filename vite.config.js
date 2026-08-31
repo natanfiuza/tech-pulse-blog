@@ -6,7 +6,7 @@ import path from 'path'; // Importe o módulo 'path'
 export default defineConfig({
     plugins: [
         laravel({
-            input: ["resources/css/app.css", "resources/js/app.js"],
+            input: ["resources/css/tailwind.css", "resources/js/app.js"],
             refresh: true,
         }),
         vue({
@@ -22,7 +22,6 @@ export default defineConfig({
         // Adicione esta seção para o alias
         alias: {
             "@": path.resolve(__dirname, "resources/js"),
-            "~bootstrap": path.resolve(__dirname, "node_modules/bootstrap"), // Alias para o Bootstrap
         },
     },
     

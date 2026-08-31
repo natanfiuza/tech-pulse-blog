@@ -1,70 +1,111 @@
 <template>
-  <Navbar />
-  <div class="login-container">
-    <header class="login-header">
-      <h1>Bem-vindo de Volta</h1>
-      <p>Faça login para continuar no TechPulse</p>
-    </header>
+  <div class="min-h-screen bg-background text-on-background font-body flex flex-col">
+    <Navbar />
 
-    <form @submit.prevent="submit">
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input id="email" v-model="form.email" type="email" required autofocus />
-        <div v-if="form.errors.email" class="error">{{ form.errors.email }}</div>
+    <main class="flex-grow w-full max-w-md mx-auto px-4 sm:px-8 py-12 flex items-start justify-center">
+      <div
+        class="w-full bg-surface-container-low rounded-xl border border-outline-variant/20 p-8 shadow-2xl relative overflow-hidden"
+      >
+        <div
+          class="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none"
+        ></div>
+
+        <header class="mb-8 relative">
+          <h1 class="font-display font-black text-2xl tracking-tight text-on-surface">
+            Bem-vindo de Volta
+          </h1>
+          <p class="text-on-surface-variant text-sm mt-1">
+            Faça login para continuar no TechPulse
+          </p>
+        </header>
+
+        <form class="relative space-y-5" @submit.prevent="submit">
+          <div>
+            <label for="email" class="block font-headline font-bold text-sm text-on-surface mb-2">
+              E-mail
+            </label>
+            <input
+              id="email"
+              v-model="form.email"
+              type="email"
+              required
+              autofocus
+              class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-lg py-2.5 px-3 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-on-surface-variant/50"
+            />
+            <p v-if="form.errors.email" class="text-error text-sm mt-1">{{ form.errors.email }}</p>
+          </div>
+
+          <div>
+            <label for="password" class="block font-headline font-bold text-sm text-on-surface mb-2">
+              Senha
+            </label>
+            <input
+              id="password"
+              v-model="form.password"
+              type="password"
+              required
+              class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-lg py-2.5 px-3 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-on-surface-variant/50"
+            />
+            <p v-if="form.errors.password" class="text-error text-sm mt-1">{{ form.errors.password }}</p>
+          </div>
+
+          <div class="text-right">
+            <a href="#" class="text-primary text-sm font-medium hover:text-inverse-primary transition-colors">
+              Esqueceu sua senha?
+            </a>
+          </div>
+
+          <button
+            type="submit"
+            :disabled="form.processing"
+            class="w-full bg-primary hover:bg-surface-tint text-on-primary font-medium py-3 px-4 rounded-lg glow-hover transition-all duration-300 disabled:opacity-50"
+          >
+            {{ form.processing ? "Entrando..." : "Entrar" }}
+          </button>
+        </form>
+
+        <div class="mt-8 relative">
+          <p class="text-center text-on-surface-variant text-sm mb-4">Ou faça login com:</p>
+          <div class="flex justify-center gap-4">
+            <a
+              href="/login/google"
+              class="flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-highest border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:border-primary/50 transition-all"
+              title="Login com Google"
+            >
+              <img src="/assets/img/social/google_ico.png" alt="Google" class="w-6 h-6" />
+            </a>
+            <a
+              href="https://github.com/natanfiuza"
+              class="flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-highest border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:border-primary/50 transition-all"
+              title="Login com GitHub"
+            >
+              <span class="material-symbols-outlined">code</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/natanfiuza/"
+              class="flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-highest border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:border-primary/50 transition-all"
+              title="Login com LinkedIn"
+            >
+              <span class="material-symbols-outlined">work</span>
+            </a>
+          </div>
+        </div>
+
+        <p class="text-center text-on-surface-variant text-sm mt-8 relative">
+          Não tem uma conta? <a href="#" class="text-primary font-bold hover:text-inverse-primary">Cadastre-se</a>
+        </p>
       </div>
-
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <input id="password" v-model="form.password" type="password" required />
-        <div v-if="form.errors.password" class="error">{{ form.errors.password }}</div>
-      </div>
-
-      <div class="forgot-password">
-        <a href="#">Esqueceu sua senha?</a>
-      </div>
-
-      <button type="submit" class="btn" :disabled="form.processing">Entrar</button>
-    </form>
-
-    <div class="social-login">
-      <p>Ou faça login com:</p>
-      <div class="social-buttons">
-        <a href="/login/google" class="social-btn">
-          <img
-            src="/assets/img/social/google_ico.png"
-            alt="Google"
-            title="Login com Google"
-          />
-        </a>
-        <a href="https://github.com/natanfiuza" class="social-btn">
-          <img
-            src="/assets/img/social/github_ico.png"
-            alt="GitHub"
-            title="Login com GitHub"
-          />
-        </a>
-        <a href="https://www.linkedin.com/in/natanfiuza/" class="social-btn">
-          <img
-            src="/assets/img/social/linkedin_ico.png"
-            alt="LinkedIn"
-            title="Login com LinkedIn"
-          />
-        </a>
-      </div>
-    </div>
-
-    <div class="signup-link">Não tem uma conta? <a href="#">Cadastre-se</a></div>
+    </main>
   </div>
 </template>
 
 <script>
-import { useForm } from "@inertiajs/inertia-vue3";
-import { Head } from "@inertiajs/inertia-vue3"; // Importa o componente Head
+import { useForm } from "@inertiajs/vue3";
 import Navbar from "@/Components/Navbar.vue";
-import "../../../css/home.css";
+
 export default {
   components: {
-    Navbar, // Registre o componente aqui
+    Navbar,
   },
   setup() {
     const form = useForm({
@@ -74,137 +115,10 @@ export default {
     });
 
     function submit() {
-      form.post("/login"); // Usa a rota nomeada!
+      form.post("/login");
     }
 
     return { form, submit };
   },
 };
 </script>
-
-<style scoped>
-.login-container {
-  max-width: 450px;
-  margin: 15vh auto 2rem;
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.login-header {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
-}
-
-.login-header h1 {
-  color: #4caf50;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #666;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.btn {
-  background-color: #4caf50;
-  color: white;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-  margin-top: 1rem;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-.forgot-password {
-  text-align: right;
-  margin-top: 0.5rem;
-}
-
-.forgot-password a {
-  color: #4caf50;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.signup-link {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-}
-
-.signup-link a {
-  color: #4caf50;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.social-login {
-  margin-top: 1.5rem;
-}
-
-.social-login p {
-  margin-bottom: 1rem;
-  color: #666;
-}
-
-.social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.social-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #f4f4f4;
-  text-decoration: none;
-  color: #333;
-  transition: background-color 0.3s ease;
-}
-
-.social-btn:hover {
-  background-color: #e0e0e0;
-}
-
-.social-btn img {
-  width: 24px;
-  height: 24px;
-}
-
-.error {
-  color: red;
-  font-size: 0.8em;
-}
-</style>

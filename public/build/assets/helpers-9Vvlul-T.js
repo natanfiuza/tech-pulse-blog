@@ -1,0 +1,1 @@
+function p(t){const e=t.replace(/[^a-zA-Z\s]/g,"").toLowerCase().split(/\s+/).length,o=Math.round(e/200);return Math.max(1,o)}function r(t){const a=t.image||t.uuid;return/^https?:\/\//.test(a)?a:"/post/image/"+a.split("/").pop()}export{p as t,r as u};

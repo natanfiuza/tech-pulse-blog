@@ -56,8 +56,8 @@ Ambiente: **Windows** (shell primário PowerShell).
 
 ## Frontend
 
-- Páginas principais: [resources/js/Pages/](resources/js/Pages/) — `Home.vue`, `Post.vue`, `PostMermaid.vue`, além das páginas `Admin/`.
-- **Design system:** os protótipos da versão 3 ("Midnight Pulse") em [doc/prototipos/versao_3/](doc/prototipos/versao_3/) são a fonte de verdade para mudanças visuais (telas: `DESIGN.md`, `code.html`, `screen.png`). Para mudanças de layout, use o agente **TechPulse Layout** ([.github/agents/tech-pulse-layout.agent.md](.github/agents/tech-pulse-layout.agent.md)).
+- Páginas principais: [resources/js/Pages/](resources/js/Pages/) — `Home.vue`, `Post.vue`, `Auth/Login.vue`, além das páginas `Admin/`.
+- **Design system:** os protótipos da versão 3 ("Midnight Pulse") em [doc/prototipos/versao_3/](doc/prototipos/versao_3/) são a fonte de verdade para mudanças visuais (telas: `DESIGN.md`, `code.html`, `screen.png`). Para mudanças de layout público, use o agente **TechPulse Layout** ([.github/agents/tech-pulse-layout.agent.md](.github/agents/tech-pulse-layout.agent.md)); para o admin, use o agente **TechPulse Admin** ([.github/agents/tech-pulse-admin.agent.md](.github/agents/tech-pulse-admin.agent.md)).
 - Documentação de apoio em [doc/](doc/) (bibliotecas, estrutura de categorias, protótipos).
 
 ## Modelos de Dados

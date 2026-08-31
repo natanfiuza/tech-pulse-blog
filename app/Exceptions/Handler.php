@@ -8,7 +8,7 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-     /**
+    /**
      * A list of exception types with their corresponding custom log levels.
      *
      * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
@@ -47,19 +47,20 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
     public function render($request, Throwable $e)
     {
         $response = parent::render($request, $e);
 
         // Verifica se é uma requisição Inertia
         if (! app()->environment(['local', 'testing']) && Inertia::isSsr()) {
-              return $response;
-          }
+            return $response;
+        }
         if (! app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403])) {
             return Inertia::render('Errors/404', ['status' => $response.status()])
                 ->toResponse($request)
                 ->setStatusCode(404);
-        } else if ($response->status() === 419) {
+        } elseif ($response->status() === 419) {
             return back()->with([
                 'message' => 'The page expired, please try again.',
             ]);
