@@ -2,13 +2,16 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +32,10 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::get('/logout', [LoginController::class, 'destroy'])->name('logout'); // Importante para logout
 
+// Cadastro self-service (novos usuários nascem como 'leitor')
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
 // Rota socialite Google
 // Rota para redirecionar para o Google
 Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])->name('login.google');
@@ -46,7 +53,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/comments/{comment}/upvote', [CommentController::class, 'vote'])->name('comments.vote');
 });
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+
+// Dashboard pessoal do leitor
+Route::get('/minha-conta', [DashboardController::class, 'index'])->middleware('auth')->name('minha_conta');
+
+// Admin: autores e admins (posts são filtrados por dono no PostController)
+Route::middleware(['auth', 'role:autor,admin'])->prefix('admin')->group(function () {
     Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
     Route::prefix('/posts')->group(function () {
         Route::get('', [PostController::class, 'index'])->name('posts.index');
@@ -58,7 +70,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     });
 });
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+// Admin: categorias são estrutura compartilhada do blog — somente admin
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::prefix('/categories')->group(function () {
         Route::get('', [CategoryController::class, 'index'])->name('categories.index');
         Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
@@ -67,6 +80,13 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('/update/{category}', [CategoryController::class, 'update'])->name('categories.update');
         Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
+    });
+
+    // Admin: gestão de usuários e privilégios — somente admin
+    Route::prefix('/users')->group(function () {
+        Route::get('', [UserController::class, 'index'])->name('users.index');
+        Route::put('/{user}/role', [UserController::class, 'update_role'])->name('users.update_role');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
 });
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');

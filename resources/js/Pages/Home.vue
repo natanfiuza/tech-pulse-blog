@@ -36,7 +36,7 @@
               {{ featured_post.title }}
             </h1>
             <p
-              class="text-on-surface-variant text-base md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed line-clamp-3"
+              class="text-white text-base md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed line-clamp-3 [text-shadow:0_1px_6px_rgba(0,0,0,0.8)]"
             >
               {{ featured_post.excerpt }}
             </p>

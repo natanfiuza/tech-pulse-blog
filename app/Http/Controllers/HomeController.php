@@ -18,7 +18,7 @@ class HomeController extends Controller
         $categoria_ativa = null;
 
         $query = Post::publicado()
-            ->with('category', 'hashtags')
+            ->with('category', 'hashtags', 'user')
             ->orderByRaw('created_at DESC');
 
         if ($categoria_slug) {

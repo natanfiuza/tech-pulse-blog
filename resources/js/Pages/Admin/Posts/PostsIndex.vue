@@ -84,7 +84,8 @@
               </div>
 
               <p class="mt-3 font-mono text-xs text-on-surface-variant">
-                Atualizado em {{ formatar_data(post.updated_at) }}
+                Por <span class="text-on-surface">{{ nome_autor(post) }}</span> · Atualizado em
+                {{ formatar_data(post.updated_at) }}
               </p>
             </div>
 
@@ -157,6 +158,9 @@ export default {
         },
     },
     methods: {
+        nome_autor(post) {
+            return post.user ? post.user.name : "Usuário removido";
+        },
         status_label(status) {
             return rotulos_status[status] ?? status;
         },

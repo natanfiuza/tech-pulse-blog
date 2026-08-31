@@ -7,7 +7,7 @@
       class="w-10 h-10 rounded-full object-cover flex-shrink-0 border border-slate-700"
     />
     <div
-      v-else
+      v-else-if="comentario.user"
       class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold flex-shrink-0"
     >
       {{ inicial }}
@@ -125,7 +125,8 @@ const eh_dono = computed(
 );
 
 const avatar_url = computed(() => props.comentario.user?.avatar || null);
-const nome_autor = computed(() => props.comentario.user?.name || "Anônimo");
+// Usuário soft-deletado chega como null → "Usuário removido", sem foto
+const nome_autor = computed(() => props.comentario.user?.name || "Usuário removido");
 const inicial = computed(() => (nome_autor.value || "?").charAt(0).toUpperCase());
 const data_relativa = computed(() => {
   if (!props.comentario.created_at) {

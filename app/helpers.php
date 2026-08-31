@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Str;
 
 /*
@@ -52,6 +53,26 @@ if (! function_exists('criar_slug')) {
         }
 
         return $titulo;
+    }
+
+}
+
+if (! function_exists('caminho_inicial_do_usuario')) {
+    /**
+     * Retorna a URL inicial após login/cadastro conforme o perfil do usuário.
+     *
+     * Autores e admins vão para o painel admin; leitores vão para o dashboard pessoal.
+     *
+     * @param  User  $user  O usuário autenticado.
+     * @return string A URL de destino (route()).
+     */
+    function caminho_inicial_do_usuario(User $user): string
+    {
+        if (in_array($user->role, [User::ROLE_AUTOR, User::ROLE_ADMIN], true)) {
+            return route('admin.home');
+        }
+
+        return route('minha_conta');
     }
 
 }

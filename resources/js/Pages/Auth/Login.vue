@@ -92,7 +92,8 @@
         </div>
 
         <p class="text-center text-on-surface-variant text-sm mt-8 relative">
-          Não tem uma conta? <a href="#" class="text-primary font-bold hover:text-inverse-primary">Cadastre-se</a>
+          Não tem uma conta?
+          <Link href="/register" class="text-primary font-bold hover:text-inverse-primary">Cadastre-se</Link>
         </p>
       </div>
     </main>
@@ -101,11 +102,13 @@
 
 <script>
 import { useForm } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import Navbar from "@/Components/Navbar.vue";
 
 export default {
   components: {
     Navbar,
+    Link,
   },
   setup() {
     const form = useForm({

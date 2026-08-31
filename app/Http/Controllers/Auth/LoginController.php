@@ -24,7 +24,8 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/admin/home'); // Redireciona para o dashboard
+            // Redireciona conforme o perfil: leitor → dashboard pessoal; autor/admin → admin
+            return redirect()->intended(caminho_inicial_do_usuario(Auth::user()));
         }
 
         return back()->withErrors([

@@ -40,8 +40,8 @@ class SocialiteController extends Controller
             // Faz o login do usuário
             Auth::login($user, true); // O 'true' ativa o "lembrar-me"
 
-            // Redireciona para o dashboard ou página inicial
-            return redirect()->intended('/admin/home'); // Ou use route('dashboard')
+            // Redireciona conforme o perfil: leitor → dashboard pessoal; autor/admin → admin
+            return redirect()->intended(caminho_inicial_do_usuario($user));
 
         } catch (\Exception $e) {
             // Em caso de erro, redireciona de volta para o login com uma mensagem de erro
