@@ -2,13 +2,12 @@
 import './bootstrap';
 import "./signature";
 import { createApp, h } from "vue";
-import { createInertiaApp } from "@inertiajs/inertia-vue3";
+import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"; //Importe isso!
 import { ZiggyVue } from "ziggy-js";
 import { Ziggy } from './ziggy'; // Importe o arquivo ziggy.js gerado
-import "../css/app.css"; // Se você tiver CSS global
+import "../css/tailwind.css"; // Tailwind v3 (Midnight Pulse)
 import "./helpers";
-import '../sass/custom.scss'; //  Import o custom.scss
 
 createInertiaApp({
     resolve: (name) =>

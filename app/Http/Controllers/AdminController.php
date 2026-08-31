@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -14,5 +13,4 @@ class AdminController extends Controller
     {
         return Inertia::render('Admin/AdminHome');
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -29,22 +30,23 @@ class SocialiteController extends Controller
             $user = User::updateOrCreate(
                 ['google_id' => $googleUser->getId()], // Condição para encontrar
                 [                                      // Dados para atualizar ou criar
-                    'name'     => $googleUser->getName(),
-                    'email'    => $googleUser->getEmail(),
-                    'avatar'   => $googleUser->getAvatar(),
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'avatar' => $googleUser->getAvatar(),
                     'password' => null, // Ou Hash::make(Str::random(24)) se precisar de senha
                 ]
             );
 
-                                      // Faz o login do usuário
+            // Faz o login do usuário
             Auth::login($user, true); // O 'true' ativa o "lembrar-me"
 
-                                                         // Redireciona para o dashboard ou página inicial
+            // Redireciona para o dashboard ou página inicial
             return redirect()->intended('/admin/home'); // Ou use route('dashboard')
 
         } catch (\Exception $e) {
-                                                                          // Em caso de erro, redireciona de volta para o login com uma mensagem de erro
-            Log::error('Erro no Login com Google: ' . $e->getMessage()); // Loga o erro
+            // Em caso de erro, redireciona de volta para o login com uma mensagem de erro
+            Log::error('Erro no Login com Google: '.$e->getMessage()); // Loga o erro
+
             return redirect('/login')->with('error', 'Falha ao autenticar com o Google. Tente novamente.');
         }
     }

@@ -25,6 +25,13 @@ You are the TechPulse frontend layout specialist. Implement focused visual and i
 - Keep structural sections unframed; use cards only for repeated content, comments, sponsored/newsletter modules, and other genuinely framed tools.
 - Use existing project dependencies and components before adding a new library.
 
+## Tailwind CSS (v3, "Midnight Pulse")
+
+- The project now uses **Tailwind CSS v3.4** (no CDN): tokens M3 dark and fonts are already defined in `tailwind.config.js` (colors `primary #2b52ee`, `background #001247`, `secondary #6272b4`, family `surface-*`, Inter/JetBrains Mono). Do not recreate tokens or use a Tailwind CDN.
+- `corePlugins.preflight` is **disabled** during the Bootstrap transition: set explicit `bg-*` and `font-*` classes on page wrappers — do not rely on Tailwind's reset.
+- `resources/css/app.css`, `home.css`, `article.css` and `resources/sass/custom.scss` are legacy Bootstrap — do not use or extend them; new styles go in `resources/css/tailwind.css` custom classes or Tailwind utilities in the templates.
+- Material Symbols Outlined are loaded globally in `resources/views/app.blade.php`; use `<span class="material-symbols-outlined">` for icons.
+
 ## Implementation Rules
 
 1. Inspect the owning Vue page, layout, components, CSS, routes, and data shape before editing.

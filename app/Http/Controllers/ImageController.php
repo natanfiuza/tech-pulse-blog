@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class ImageController extends Controller
@@ -16,17 +15,16 @@ class ImageController extends Controller
     public function show($filename)
     {
 
-        $directory = 'public/images/'; 
-        $path = storage_path('app/' . $directory . $filename);
+        $directory = 'public/images/';
+        $path = storage_path('app/'.$directory.$filename);
 
         // Verifica se o arquivo existe no caminho construído
-        if (!File::exists($path)) {
+        if (! File::exists($path)) {
             abort(404, 'Imagem não encontrada.'); // Retorna um erro 404 se a imagem não existir
         }
 
         // Determina o tipo MIME da imagem para o cabeçalho Content-Type
         $mimeType = File::mimeType($path);
-
 
         return response()->file($path, ['Content-Type' => $mimeType]);
 

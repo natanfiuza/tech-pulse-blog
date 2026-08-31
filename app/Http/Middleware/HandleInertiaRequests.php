@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
@@ -26,8 +27,10 @@ class HandleInertiaRequests extends Middleware
         if (file_exists($manifest = public_path('build/manifest.json'))) {
             return md5_file($manifest);
         }
+
         return parent::version($request);
     }
+
     /**
      * Define the props that are shared by default.
      *
@@ -40,16 +43,17 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             // Compartilhe dados globalmente aqui, se necessário. Exemplo:
             'appName' => config('app.name'),
-            'auth'    => [
-                'user' => $request->user() ? [ //Passa informações do usuário logado
-                    'id'    => $request->user()->id,
-                    'name'  => $request->user()->name,
+            'auth' => [
+                'user' => $request->user() ? [ // Passa informações do usuário logado
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
                     'email' => $request->user()->email,
-                    //Outras informações
+                    'avatar' => $request->user()->avatar,
+                    // Outras informações
                 ] : null,
             ],
-            'ziggy'   => fn()   => [
-                 ...(new Ziggy)->toArray(),
+            'ziggy' => fn () => [
+                ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
         ]);

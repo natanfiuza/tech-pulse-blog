@@ -1,13 +1,19 @@
 <?php
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Post extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'uuid',
         'title',
@@ -15,7 +21,50 @@ class Post extends Model
         'image',
         'excerpt',
         'content',
+        'category_id',
+        'status',
+        'published_at',
     ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
+    /**
+     * Escopo: apenas posts publicados (rascunhos e agendados ficam ocultos).
+     */
+    public function scopePublicado(Builder $query): Builder
+    {
+        return $query->where('status', 'publicado')
+            ->where(function (Builder $q) {
+                $q->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            });
+    }
+
+    /**
+     * Relacionamento: post pertence a uma categoria.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Relacionamento: post tem várias hashtags.
+     */
+    public function hashtags(): BelongsToMany
+    {
+        return $this->belongsToMany(Hashtag::class, 'post_hashtag');
+    }
+
+    /**
+     * Relacionamento: post tem vários comentários.
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     /**
      * Define o atributo 'slug'.
@@ -26,13 +75,12 @@ class Post extends Model
      * (assumindo que o modelo possui um atributo 'title') usando a função helper `Str::slug()`.
      *
      * @param  string|null  $value  O valor do slug a ser definido.  Se for nulo ou uma string vazia,
-     *                                 um slug será gerado a partir do título.
+     *                              um slug será gerado a partir do título.
      * @return void
      *
      * @example
      * // Exemplo 1: Definindo um slug manualmente.
      * $model->setSlugAttribute('meu-slug-personalizado'); // Atribui 'meu-slug-personalizado' ao atributo slug.
-     *
      * @example
      * // Exemplo 2: Gerando um slug automaticamente a partir do título.
      * $model->title = "Meu Título Incrível";
@@ -48,13 +96,14 @@ class Post extends Model
         // Se o slug não for fornecido (ex: ao criar um novo post),
         // gera um slug a partir do título.
         if (empty(trim($value))) {
-            //$this->attributes['slug'] = Str::slug($this->title, '-', 'pt-br', ['@' => 'at']);
+            // $this->attributes['slug'] = Str::slug($this->title, '-', 'pt-br', ['@' => 'at']);
             $this->attributes['slug'] = criar_slug($this->title);
         } else {
             // Se um valor for fornecido, usa ele mesmo
             $this->attributes['slug'] = $value;
         }
     }
+
     /**
      * Sobrescreve o método `save` do modelo base.
      *
@@ -64,11 +113,11 @@ class Post extends Model
      * 3. Chamar o método `save` original da classe pai (Eloquent Model) para persistir os dados.
      *
      * @param  array  $options  Opções a serem passadas para o método `save` da classe pai.
-     *                           Veja a documentação do Eloquent para as opções disponíveis.
+     *                          Veja a documentação do Eloquent para as opções disponíveis.
      * @return bool Retorna o resultado do método save() original.
      *
      * @throws \Exception Se ocorrer uma exceção durante o processo de salvamento do modelo pai.  A exceção original
-     *                   será relançada.
+     *                    será relançada.
      *
      * @example
      * // Exemplo 1: Salvando um novo modelo com título (slug gerado automaticamente).
@@ -76,7 +125,6 @@ class Post extends Model
      * $model->title = "Meu Novo Post";
      * $model->content = "Conteúdo do post...";
      * $model->save(); // Gera um slug único (e.g., 'meu-novo-post') e salva.
-     *
      * @example
      * // Exemplo 2: Salvando um modelo com slug predefinido (ainda garante a unicidade).
      * $model = new MyModel();
@@ -84,7 +132,6 @@ class Post extends Model
      * $model->slug = "meu-slug"; //Slug definido manualmente.
      * $model->content = "Conteúdo...";
      * $model->save(); // Verifica a unicidade de 'meu-slug'. Se existir, gera um novo (e.g., 'meu-slug-2').
-     *
      * @example
      *  //Exemplo 3: Salvando um modelo existente com possivel conflito de slug
      *  $model = MyModel::find(1);
@@ -98,16 +145,16 @@ class Post extends Model
      */
     public function save(array $options = [])
     {
-        if (empty(trim($this->slug)) || $this->isDirty('title')) { //Slug vazio ou título foi alterado
+        if (empty(trim($this->slug)) || $this->isDirty('title')) { // Slug vazio ou título foi alterado
             $this->slug = criar_slug($this->title);
         }
 
-        //Garantir que o slug seja único
+        // Garantir que o slug seja único
         $originalSlug = $this->slug;
-        $counter      = 2;
+        $counter = 2;
 
         while (static::where('slug', $this->slug)->where('id', '!=', $this->id)->exists()) {
-            $this->slug = $originalSlug . '-' . $counter;
+            $this->slug = $originalSlug.'-'.$counter;
             $counter++;
         }
 

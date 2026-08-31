@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Cria a tabela de votos de comentários (presença da linha = upvote, alternável).
+     */
+    public function up(): void
+    {
+        Schema::create('comment_votes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('comment_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->unique(['comment_id', 'user_id']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverte a migração.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('comment_votes');
+    }
+};

@@ -1,183 +1,72 @@
 <template>
-  <nav class="navbar">
-    <a href="/" class="logo"><img src="/assets/img/logo_techpulse_branco.png" /></a>
-    <div class="menu-toggle" @click="toggleMenu" :class="{ active: isMenuActive }">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <ul class="nav-links" :class="{ active: isMenuActive }">
-      <li>
-        <InertiaLink href="/" @click="closeMenu">Início</InertiaLink>
-      </li>
-      <li>
-        <InertiaLink href="#" @click="closeMenu">Artigos</InertiaLink>
-      </li>
-      <li>
-        <InertiaLink href="#" @click="closeMenu">Categorias</InertiaLink>
-      </li>
-      <li>
-        <InertiaLink href="#" @click="closeMenu">Sobre</InertiaLink>
-      </li>
-      <li>
-        <InertiaLink href="#" @click="closeMenu">Contato</InertiaLink>
-      </li>
-      <li>
-        <InertiaLink v-if="$page.props.auth.user" href="/admin/home" @click="closeMenu"
-          >Dashboard</InertiaLink
+  <nav
+    class="glass-header fixed top-0 w-full z-50 border-b border-outline-variant/20 shadow-2xl shadow-blue-900/20"
+  >
+    <div class="flex justify-between items-center h-20 px-4 sm:px-8 max-w-screen-2xl mx-auto">
+      <div class="flex items-center gap-4 lg:gap-8">
+        <Link
+          href="/"
+          class="text-xl sm:text-2xl font-black tracking-tighter text-slate-100 hover:text-primary transition-colors uppercase no-underline"
         >
-        <InertiaLink v-else href="/login" @click="closeMenu">Login</InertiaLink>
-
-
-      </li>
-    </ul>
+          TechPulse
+        </Link>
+        <div v-if="categorias && categorias.length" class="hidden lg:flex gap-2">
+          <Link
+            v-for="categoria in categorias.slice(0, 3)"
+            :key="categoria.id"
+            :href="route('home', { categoria: categoria.slug })"
+            :class="link_classe(categoria.slug)"
+            class="px-3 py-2 rounded-md text-sm font-medium tracking-wide no-underline transition-all duration-300"
+          >
+            {{ categoria.name }}
+          </Link>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-4">
+        <Link
+          :href="conta_link"
+          class="text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-all duration-300 p-2 rounded-full"
+          :aria-label="conta_label"
+        >
+          <span class="material-symbols-outlined">account_circle</span>
+        </Link>
+        <Link
+          href="/#newsletter"
+          class="bg-primary text-white px-4 sm:px-6 py-2.5 rounded-lg font-bold text-sm tracking-wide glow-hover transition-all scale-95 active:scale-90 no-underline"
+        >
+          Inscrever-se
+        </Link>
+      </div>
+    </div>
   </nav>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { InertiaLink } from "@inertiajs/inertia-vue3"; // Importante!
+import { computed } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
 
-// Use ref() para criar variáveis reativas
-const isMenuActive = ref(false);
+const props = defineProps({
+  categorias: {
+    type: Array,
+    default: () => [],
+  },
+  categoria_ativa: {
+    type: String,
+    default: null,
+  },
+});
 
-const toggleMenu = () => {
-  isMenuActive.value = !isMenuActive.value;
-};
+const page = usePage();
+const usuario = computed(() => page.props.auth?.user ?? null);
+const conta_link = computed(() => (usuario.value ? route("admin.home") : route("login")));
+const conta_label = computed(() =>
+  usuario.value ? "Ir para o painel administrativo" : "Entrar"
+);
 
-const closeMenu = () => {
-  isMenuActive.value = false;
-};
-
-const handleClickOutside = (event) => {
-  const navbar = document.querySelector(".navbar"); // Usar querySelector, já que $el não está disponível diretamente no setup.
-  if (!navbar.contains(event.target) && isMenuActive.value) {
-    closeMenu();
+const link_classe = (slug) => {
+  if (props.categoria_ativa === slug) {
+    return "text-primary border-b-2 border-primary";
   }
+  return "text-on-surface-variant hover:text-slate-100 hover:bg-primary/10";
 };
-
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener("click", handleClickOutside);
-});
 </script>
-
-<style scoped>
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #001247;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* padding: 1rem 2rem; */
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li a {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  display: block;
-  transition: background-color 0.3s ease;
-}
-
-.nav-links li {
-  margin-left: 20px;
-}
-
-.nav-links a:hover {
-  color: #6272b4;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-}
-
-.logo img {
-  margin-top: 15px;
-  margin-left: 20px;
-  width: 150px;
-  height: 30%;
-}
-
-/* Adicionar um botão "hambúrguer" (menu mobile) */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  padding: 10px;
-}
-
-.menu-toggle span {
-  height: 3px;
-  width: 25px;
-  background-color: white;
-  margin: 3px 0;
-  display: block;
-  transition: 0.3s;
-}
-
-/* Media query para telas menores (ex: celulares) */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-  }
-
-  .nav-links {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    text-align: center;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    background-color: #001247;
-    z-index: 1000;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: flex;
-  }
-
-  /*Animação do Botão Hamburger*/
-  .menu-toggle.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
-
-  .menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .menu-toggle.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-  }
-}
-</style>

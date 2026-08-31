@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,13 +30,12 @@ class Category extends Model
      * (assumindo que o modelo possui um atributo 'name') usando a função helper `criar_slug()`.
      *
      * @param  string|null  $value  O valor do slug a ser definido.  Se for nulo ou uma string vazia,
-     *                                 um slug será gerado a partir do título.
+     *                              um slug será gerado a partir do título.
      * @return void
      *
      * @example
      * // Exemplo 1: Definindo um slug manualmente.
      * $model->setSlugAttribute('meu-slug-personalizado'); // Atribui 'meu-slug-personalizado' ao atributo slug.
-     *
      * @example
      * // Exemplo 2: Gerando um slug automaticamente a partir do título.
      * $model->name = "Nome cateogoria";
@@ -57,6 +57,7 @@ class Category extends Model
             $this->attributes['slug'] = $value;
         }
     }
+
     /**
      * Sobrescreve o método `save` do modelo base.
      *
@@ -66,11 +67,11 @@ class Category extends Model
      * 3. Chamar o método `save` original da classe pai (Eloquent Model) para persistir os dados.
      *
      * @param  array  $options  Opções a serem passadas para o método `save` da classe pai.
-     *                           Veja a documentação do Eloquent para as opções disponíveis.
+     *                          Veja a documentação do Eloquent para as opções disponíveis.
      * @return bool Retorna o resultado do método save() original.
      *
      * @throws \Exception Se ocorrer uma exceção durante o processo de salvamento do modelo pai.  A exceção original
-     *                   será relançada.
+     *                    será relançada.
      *
      * @example
      *  //Exemplo 3: Salvando um modelo existente com possivel conflito de slug
@@ -84,21 +85,22 @@ class Category extends Model
      */
     public function save(array $options = [])
     {
-        if (empty(trim($this->slug)) || $this->isDirty('name')) { //Slug vazio ou título foi alterado
+        if (empty(trim($this->slug)) || $this->isDirty('name')) { // Slug vazio ou título foi alterado
             $this->slug = criar_slug($this->name);
         }
 
-        //Garantir que o slug seja único
+        // Garantir que o slug seja único
         $originalSlug = $this->slug;
-        $counter      = 2;
+        $counter = 2;
 
         while (static::where('slug', $this->slug)->where('id', '!=', $this->id)->exists()) {
-            $this->slug = $originalSlug . '-' . $counter;
+            $this->slug = $originalSlug.'-'.$counter;
             $counter++;
         }
 
         parent::save($options);
     }
+
     // Relacionamento: Uma categoria PODE ter um pai (categoria pai)
     public function parent(): BelongsTo
     {
@@ -111,7 +113,7 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    //Relacionamento com posts (se a sua tabela posts tiver uma coluna category_id)
+    // Relacionamento com posts (se a sua tabela posts tiver uma coluna category_id)
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);

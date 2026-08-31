@@ -7,11 +7,11 @@ return [
         'theme' => 'dracula-soft', // Tema padrão.  MUDE ISSO!
 
         'shiki' => [  // Configurações do Shiki
-            //'theme' => 'dracula', // Escolha um tema do Shiki!
-            //'theme' => 'github-light',
-            //Adicione outras configurações do shiki, se precisar
+            // 'theme' => 'dracula', // Escolha um tema do Shiki!
+            // 'theme' => 'github-light',
+            // Adicione outras configurações do shiki, se precisar
 
-            //Você pode definir vários temas para modos claro/escuro
+            // Você pode definir vários temas para modos claro/escuro
             // 'themes' => [
             //    'light' => 'github-light',
             //    'dark' => 'github-dark',
@@ -46,7 +46,6 @@ return [
      * caching set this value to `false`.
      */
     'cache_store' => null,
-
 
     /*
      * When cache_store is enabled, this value will be used to determine

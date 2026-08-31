@@ -1,8 +1,8 @@
 <template>
   <!-- <span>
-        <InertiaLink :href="'/categories/show/' + category.slug">
+        <Link :href="'/categories/show/' + category.slug">
             {{ category.name }}
-        </InertiaLink>
+        </Link>
         <span v-if="category.children && category.children.length">
             <span v-for="child in category.children" :key="child.id">
                 <span v-if="child.children && child.children.length">
@@ -11,17 +11,17 @@
                 </span>
                 <span v-else>
                     /
-                    <InertiaLink :href="'/categories/show/' + child.slug">
+                    <Link :href="'/categories/show/' + child.slug">
                         {{ child.name }}
-                    </InertiaLink>
+                    </Link>
                 </span>
             </span>
         </span>
     </span> -->
   <li>
-    <InertiaLink :href="'/categories/show/' + category.slug">
+    <Link :href="'/categories/show/' + category.slug">
       {{ category.name }}
-    </InertiaLink>
+    </Link>
     <ul v-if="category.children && category.children.length > 0">
       <CategoryTreeItem
         v-for="childCategory in category.children"
@@ -34,7 +34,7 @@
 
 <script setup>
 import { defineProps } from "vue";
-import { InertiaLink } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/vue3";
 defineProps({
   category: Object,
 });

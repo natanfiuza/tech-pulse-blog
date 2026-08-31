@@ -38,3 +38,23 @@ export function tempo_leitura(texto) {
     // Retorna o tempo de leitura, com um mínimo de 1 minuto
     return Math.max(1, tempoDeLeituraEmMinutos);
 }
+
+/**
+ * Monta a URL de exibição da imagem de um post.
+ *
+ * O campo `image` do banco pode vir vazio, como nome de arquivo puro
+ * (uuid do post) ou com o prefixo `/storage/images/`; todas as variantes
+ * são normalizadas para a rota `post/image/{filename}`, que lê direto
+ * do storage sem depender do link simbólico.
+ *
+ * @param {Object} post - O post com os campos `image` e `uuid`.
+ *
+ * @returns {string} A URL pública da imagem.
+ */
+export function url_da_imagem(post) {
+    const imagem = post.image || post.uuid;
+    if (/^https?:\/\//.test(imagem)) {
+        return imagem;
+    }
+    return "/post/image/" + imagem.split("/").pop();
+}
