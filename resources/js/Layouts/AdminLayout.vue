@@ -29,6 +29,7 @@ const rotulos_breadcrumb = {
     "Admin/Categories/CategoriesIndex": "Categorias",
     "Admin/Categories/CategoriesCreate": "Nova Categoria",
     "Admin/Categories/CategoriesEdit": "Editar Categoria",
+    "Admin/Users": "Usuários",
 };
 
 export default {

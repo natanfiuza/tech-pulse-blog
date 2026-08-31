@@ -36,7 +36,9 @@ Ambiente: **Windows** (shell primário PowerShell).
 - `GET /login/google` e `/login/google/callback` — login via Google (SocialiteController)
 - `GET post/show/{slug}` e `post/show/fix/{uuid}` — exibição do post (PostController; nota: ambas usam `name('posts.show')` — duplicação conhecida)
 - `GET post/image/{filename}` — serve imagens (ImageController)
-- Grupo `admin` (requer auth): CRUD de posts e categorias
+- `GET /register`, `POST /register` — cadastro self-service (RegisteredUserController)
+- `GET /minha-conta` — dashboard do leitor (DashboardController)
+- Grupo `admin` (requer auth + papel): `admin.home`/posts exigem `role:autor,admin`; categorias e `/admin/users` exigem `role:admin`
 
 ### API ([routes/api.php](routes/api.php))
 - `GET /api/posts` — `PostController::list_rss` (últimos posts, `?per_page=5`)
@@ -49,14 +51,14 @@ Ambiente: **Windows** (shell primário PowerShell).
 - **Imagens:** salvas em `storage/app/public/images` com **nome = uuid do post, sem extensão**; exibidas via rota `post/image/{filename}` (ImageController). Ative o link simbólico com `php artisan storage:link` se necessário.
 - **Slugs:** gerados pelo helper global `criar_slug()` (app/helpers.php, autoload via composer) e garantidos únicos no `save()` sobrescrito do modelo `Post` (adiciona sufixo `-2`, `-3`...).
 - **IDs de API:** a API expõe `uuid` (não o `id` numérico) como identificador público dos posts; links externos usam o domínio de produção **hardcoded** `https://tech-pulse.natanfiuza.dev.br/` nas respostas de API.
-- **Auth:** não há registro self-service — usuários são criados via seed/tinker; `CreateUsersSeeder` é o seeder de referência.
+- **Auth e perfis:** registro self-service em `/register` (novos usuários nascem como `leitor`). Papéis: `leitor`, `autor`, `admin` (coluna `role`). Autor vê/edita/exclui apenas os próprios posts; admin vê tudo e gerencia usuários em `/admin/users` (promover/diminuir, excluir com **soft delete** — conteúdo preservado, exibido como "Usuário removido"). `CreateUsersSeeder` cria os admins iniciais. Redirect pós-login/cadastro pelo helper `caminho_inicial_do_usuario()` (leitor → `/minha-conta`; autor/admin → `/admin/home`).
 - **CORS:** configurado para permitir o consumo da API pelo app Flutter (ver [config/cors.php](config/cors.php)).
 - **Rotas mal definidas (não "consertar" sem autorização):** `Route::get('post/show/fix/{uuid}', ...)` reutiliza `name('posts.show')`, e `destroy` do PostController chama `update` em vez do método destrutivo (provavelmente bug histórico, mas altere só se solicitado).
 - Queries usam `whereRaw`/`orderByRaw` com interpolação direta em alguns pontos do PostController — ao editar esses métodos, prefira query builder/Eloquent com bindings.
 
 ## Frontend
 
-- Páginas principais: [resources/js/Pages/](resources/js/Pages/) — `Home.vue`, `Post.vue`, `Auth/Login.vue`, além das páginas `Admin/`.
+- Páginas principais: [resources/js/Pages/](resources/js/Pages/) — `Home.vue`, `Post.vue`, `Auth/Login.vue`, `Auth/Register.vue`, `Reader/Dashboard.vue`, além das páginas `Admin/` (inclui `Admin/Users.vue`).
 - **Design system:** os protótipos da versão 3 ("Midnight Pulse") em [doc/prototipos/versao_3/](doc/prototipos/versao_3/) são a fonte de verdade para mudanças visuais (telas: `DESIGN.md`, `code.html`, `screen.png`). Para mudanças de layout público, use o agente **TechPulse Layout** ([.github/agents/tech-pulse-layout.agent.md](.github/agents/tech-pulse-layout.agent.md)); para o admin, use o agente **TechPulse Admin** ([.github/agents/tech-pulse-admin.agent.md](.github/agents/tech-pulse-admin.agent.md)).
 - Documentação de apoio em [doc/](doc/) (bibliotecas, estrutura de categorias, protótipos).
 
@@ -64,7 +66,8 @@ Ambiente: **Windows** (shell primário PowerShell).
 
 - **Post:** `id`, `user_id`, `uuid`, `title`, `slug` (único), `image` (path), `excerpt`, `content` (longText, base64)
 - **Category:** `id`, `name`, `slug` (único), `description`, `scope`, `possible_contents`, `post_suggestions`, `parent_id` (recursivo, nullable)
-- **User:** inclui campos do Socialite (Google) — `add_socialite_fields_to_users_table` migration
+- **User:** `role` (`leitor`/`autor`/`admin`), campos do Socialite (Google), soft delete (`deleted_at`)
+- **PostView:** histórico de visualizações por usuário logado (`user_id`, `post_id`, `viewed_at`; único por par)
 
 ## Code Conventions
 

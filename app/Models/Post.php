@@ -51,6 +51,14 @@ class Post extends Model
     }
 
     /**
+     * Relacionamento: post pertence a um usuário (autor).
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Relacionamento: post tem várias hashtags.
      */
     public function hashtags(): BelongsToMany

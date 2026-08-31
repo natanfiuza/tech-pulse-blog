@@ -1,6 +1,6 @@
 # Tech Pulse Blog
 
-Blog pessoal de tecnologia (Laravel + Inertia + Vue 3) que publica artigos sobre desenvolvimento, IA, gadgets e carreira, com área administrativa restrita a usuários seedados.
+Blog pessoal de tecnologia (Laravel + Inertia + Vue 3) que publica artigos sobre desenvolvimento, IA, gadgets e carreira, com área administrativa organizada por perfis de usuário (leitor, autor e admin).
 
 ## Language
 
@@ -52,3 +52,25 @@ _Avoid_: schedule, published_at
 **Slug**:
 Identificador de URL gerado a partir do título com transliteração para caracteres ASCII (sem acentos) e sem palavras irrelevantes (artigos e preposições). É único no blog; conflitos recebem sufixo numérico (`-2`, `-3`).
 _Avoid_: url, path, permalink
+
+### Pessoas
+
+**Usuário**:
+Pessoa com conta no blog, criada por cadastro self-service ou pelo login Google. Todo usuário tem um perfil (papel) que define o que pode fazer. Um usuário removido tem o acesso revogado, mas seu conteúdo permanece — o nome é substituído por "Usuário removido".
+_Avoid_: account, membro, login
+
+**Leitor**:
+Perfil padrão de novos cadastros. Pode comentar, votar em comentários e consultar o dashboard pessoal (`/minha-conta`) com histórico de visualizações. Não acessa o painel admin.
+_Avoid_: leitor/comentarista, visitante, seguidor
+
+**Autor**:
+Perfil concedido pelo admin a um leitor. Publica e gerencia os próprios posts no painel admin; não vê nem edita posts de outros autores.
+_Avoid_: escritor, editor
+
+**Admin**:
+Perfil de administração total do blog: vê e gerencia todos os posts, categorias e usuários (concede e revoga perfis, remove usuários com soft delete). Os usuários iniciais do blog (seed) são admins.
+_Avoid_: administrador (no código), root, superuser
+
+**Visualização**:
+Registro de que um usuário logado abriu um post, usado no histórico do dashboard do leitor. Só existe para usuários logados; o mesmo par usuário-post mantém apenas a última data.
+_Avoid_: view, hit, acesso

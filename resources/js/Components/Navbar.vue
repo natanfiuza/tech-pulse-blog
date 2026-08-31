@@ -58,10 +58,20 @@ const props = defineProps({
 
 const page = usePage();
 const usuario = computed(() => page.props.auth?.user ?? null);
-const conta_link = computed(() => (usuario.value ? route("admin.home") : route("login")));
-const conta_label = computed(() =>
-  usuario.value ? "Ir para o painel administrativo" : "Entrar"
-);
+const conta_link = computed(() => {
+  if (!usuario.value) {
+    return route("login");
+  }
+  return usuario.value.role === "leitor" ? route("minha_conta") : route("admin.home");
+});
+const conta_label = computed(() => {
+  if (!usuario.value) {
+    return "Entrar";
+  }
+  return usuario.value.role === "leitor"
+    ? "Ir para minha conta"
+    : "Ir para o painel administrativo";
+});
 
 const link_classe = (slug) => {
   if (props.categoria_ativa === slug) {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Hashtag;
 use App\Models\Post;
+use App\Models\PostView;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -18,9 +20,15 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('user_id', Auth::user()->id)
-            ->orderByRaw('created_at DESC')
-            ->with('category', 'hashtags')
+        $query = Post::query();
+
+        // Autor vê apenas os próprios posts; admin vê todos
+        if (Auth::user()->possui_papel(User::ROLE_AUTOR)) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
+        $posts = $query->orderByRaw('created_at DESC')
+            ->with('category', 'hashtags', 'user')
             ->get();
 
         return Inertia::render('Admin/Posts/PostsIndex', ['posts' => $posts]);
@@ -143,6 +151,14 @@ class PostController extends Controller
             $post = $query->where('uuid', $request->uuid)->firstOrFail(); // Busca o post
         }
 
+        // Registra a visualização do usuário logado (histórico do dashboard do leitor)
+        if (Auth::check()) {
+            PostView::updateOrCreate(
+                ['user_id' => Auth::id(), 'post_id' => $post->id],
+                ['viewed_at' => now()]
+            );
+        }
+
         return Inertia::render('Post', [ // Renderiza o componente Vue 'Post' (pipeline markdown-it + mermaid unificado)
             'post' => $post,
         ]);
@@ -157,6 +173,8 @@ class PostController extends Controller
         if (! $post) {
             return abort(404);
         }
+
+        $this->autorizar_post($post);
 
         return Inertia::render('Admin/Posts/PostsEdit', [
             'post' => $post,
@@ -214,6 +232,8 @@ class PostController extends Controller
             return abort(404);
         }
 
+        $this->autorizar_post($post);
+
         $status = $this->normalizar_status($request->input('status', 'publicado'), $request->input('published_at'));
         $published_at = $request->input('published_at') ? \Carbon\Carbon::parse($request->input('published_at')) : null;
 
@@ -261,12 +281,28 @@ class PostController extends Controller
      */
     public function destroy(Request $request)
     {
-        Post::where('uuid', $request->uuid)
-            ->where('user_id', Auth::user()->id)
-            ->delete();
+        $post = Post::where('uuid', $request->uuid)->first();
+
+        if (! $post) {
+            return abort(404);
+        }
+
+        $this->autorizar_post($post);
+
+        $post->delete();
 
         return redirect()->route('posts.index')->with('success', 'Post excluído!');
 
+    }
+
+    /**
+     * Garante que o usuário pode gerenciar o post (dono ou admin).
+     */
+    private function autorizar_post(Post $post): void
+    {
+        if (! Auth::user()->possui_papel(User::ROLE_ADMIN) && $post->user_id !== Auth::user()->id) {
+            abort(403);
+        }
     }
 
     /**

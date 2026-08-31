@@ -21,8 +21,13 @@
     <div class="p-6 flex flex-col flex-1">
       <div class="flex justify-between items-start gap-2 mb-4">
         <CategoryChip v-if="post.category" :category="post.category" />
-        <span class="text-on-surface-variant text-[10px] font-mono uppercase ml-auto pt-0.5">
-          {{ data_formatada }}
+        <span class="flex items-center gap-2 ml-auto pt-0.5">
+          <span class="text-on-surface-variant text-[10px] font-mono uppercase">
+            Por {{ nome_autor }}
+          </span>
+          <span class="text-on-surface-variant text-[10px] font-mono uppercase">
+            {{ data_formatada }}
+          </span>
         </span>
       </div>
 
@@ -81,6 +86,8 @@ const props = defineProps({
 
 const post_url = computed(() => `/post/show/${props.post.slug}`);
 const imagem_url = computed(() => url_da_imagem(props.post));
+// Autor removido (soft delete) chega como null → "Usuário removido"
+const nome_autor = computed(() => props.post.user?.name || "Usuário removido");
 const tempo_leitura_min = computed(() => {
   const texto = props.post.content || props.post.excerpt || "";
   return tempo_leitura(texto);
