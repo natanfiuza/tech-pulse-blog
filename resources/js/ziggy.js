@@ -1,11 +1,16 @@
 const Ziggy = {"url":"http:\/\/localhost:8000","port":8000,"defaults":{},"routes":{"sanctum.csrf-cookie":{"uri":"sanctum\/csrf-cookie","methods":["GET","HEAD"]},"ignition.healthCheck":{"uri":"_ignition\/health-check","methods":["GET","HEAD"]},"ignition.executeSolution":{"uri":"_ignition\/execute-solution","methods":["POST"]},"ignition.updateConfig":{"uri":"_ignition\/update-config","methods":["POST"]},"home":{"uri":"\/","methods":["GET","HEAD"]},"login":{"uri":"login","methods":["GET","HEAD"]},"logout":{"uri":"logout","methods":["GET","HEAD"]},"login.google":{"uri":"login\/google","methods":["GET","HEAD"]},"posts.show":{"uri":"post\/show\/fix\/{uuid}","methods":["GET","HEAD"],"parameters":["uuid"]},"tags.show":{"uri":"tags\/{slug}","methods":["GET","HEAD"],"parameters":["slug"]},"comments.store":{"uri":"comments","methods":["POST"]},"comments.destroy":{"uri":"comments\/{comment}","methods":["DELETE"],"parameters":["comment"],"bindings":{"comment":"id"}},"comments.vote":{"uri":"comments\/{comment}\/upvote","methods":["POST"],"parameters":["comment"],"bindings":{"comment":"id"}},"admin.home":{"uri":"admin\/home","methods":["GET","HEAD"]},"posts.index":{"uri":"admin\/posts","methods":["GET","HEAD"]},"posts.create":{"uri":"admin\/posts\/create","methods":["GET","HEAD"]},"posts.store":{"uri":"admin\/posts\/store","methods":["POST"]},"posts.edit":{"uri":"admin\/posts\/edit\/{uuid}","methods":["GET","HEAD"],"parameters":["uuid"]},"posts.update":{"uri":"admin\/posts\/update","methods":["POST"]},"posts.destroy":{"uri":"admin\/posts\/delete\/{uuid}","methods":["DELETE"],"parameters":["uuid"]},"categories.index":{"uri":"admin\/categories","methods":["GET","HEAD"]},"categories.store":{"uri":"admin\/categories\/store","methods":["POST"]},"categories.create":{"uri":"admin\/categories\/create","methods":["GET","HEAD"]},"categories.edit":{"uri":"admin\/categories\/edit\/{category}","methods":["GET","HEAD"],"parameters":["category"],"bindings":{"category":"id"}},"categories.update":{"uri":"admin\/categories\/update\/{category}","methods":["PUT"],"parameters":["category"],"bindings":{"category":"id"}},"categories.destroy":{"uri":"admin\/categories\/delete\/{category}","methods":["DELETE"],"parameters":["category"],"bindings":{"category":"id"}},"categories.show":{"uri":"categories\/{slug}","methods":["GET","HEAD"],"parameters":["slug"]}}};
-if (typeof window !== 'undefined' && typeof window.Ziggy !== 'undefined') {
-  Object.assign(Ziggy.routes, window.Ziggy.routes);
-  // Usa a URL base compartilhada pelo servidor (config('app.url')) em vez
-  // do valor local hardcoded — evita links com localhost:8000 em produção.
-  if (window.Ziggy.url) {
+if (typeof window !== 'undefined') {
+  if (typeof window.Ziggy !== 'undefined') {
+    Object.assign(Ziggy.routes, window.Ziggy.routes);
+  }
+  // Usa a origem ativa do navegador (ou window.Ziggy.url se existir)
+  // para evitar que links usem localhost:8000 em produção.
+  if (typeof window.Ziggy !== 'undefined' && window.Ziggy.url) {
     Ziggy.url = window.Ziggy.url;
     Ziggy.port = window.Ziggy.port;
+  } else if (window.location && window.location.origin) {
+    Ziggy.url = window.location.origin;
+    Ziggy.port = window.location.port ? parseInt(window.location.port, 10) : null;
   }
 }
 export { Ziggy };
