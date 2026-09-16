@@ -9,7 +9,7 @@ O **Tech Pulse Blog** é um blog pessoal que demonstra a integração entre **La
 ## Stack
 
 - **Backend:** PHP >= 8.1, Laravel 10, Sanctum (auth de API), Socialite (login Google), spatie/laravel-markdown + shiki-php, cviebrock/eloquent-sluggable
-- **Frontend:** Vue 3, Inertia.js 2, Vite 6, Bootstrap 5, markdown-it, highlight.js, mermaid, EasyMDE (editor), luxon, ziggy-js
+- **Frontend:** Vue 3, Inertia.js 2, Vite 6, Tailwind CSS v3.4, markdown-it, highlight.js, mermaid, EasyMDE (editor), luxon, ziggy-js
 - **Banco:** MySQL/PostgreSQL/SQLite (configurável via `.env`)
 
 ## Comandos
@@ -59,8 +59,8 @@ Ambiente: **Windows** (shell primário PowerShell).
 ## Frontend
 
 - Páginas principais: [resources/js/Pages/](resources/js/Pages/) — `Home.vue`, `Post.vue`, `Auth/Login.vue`, `Auth/Register.vue`, `Reader/Dashboard.vue`, além das páginas `Admin/` (inclui `Admin/Users.vue`).
-- **Design system:** os protótipos da versão 3 ("Midnight Pulse") em [doc/prototipos/versao_3/](doc/prototipos/versao_3/) são a fonte de verdade para mudanças visuais (telas: `DESIGN.md`, `code.html`, `screen.png`). Para mudanças de layout público, use o agente **TechPulse Layout** ([.github/agents/tech-pulse-layout.agent.md](.github/agents/tech-pulse-layout.agent.md)); para o admin, use o agente **TechPulse Admin** ([.github/agents/tech-pulse-admin.agent.md](.github/agents/tech-pulse-admin.agent.md)).
-- Documentação de apoio em [doc/](doc/) (bibliotecas, estrutura de categorias, protótipos).
+- **Design system:** os protótipos da versão 3 ("Midnight Pulse") em [docs/prototipos/versao_3/](docs/prototipos/versao_3/) são a fonte de verdade para mudanças visuais (telas: `DESIGN.md`, `code.html`, `screen.png`). Para mudanças de layout público, use o agente **TechPulse Layout** ([.github/agents/tech-pulse-layout.agent.md](.github/agents/tech-pulse-layout.agent.md)); para o admin, use o agente **TechPulse Admin** ([.github/agents/tech-pulse-admin.agent.md](.github/agents/tech-pulse-admin.agent.md)).
+- Documentação de apoio em [docs/](docs/) (bibliotecas, estrutura de categorias, protótipos).
 
 ## Modelos de Dados
 
