@@ -53,11 +53,12 @@
             <button
               type="submit"
               class="glow-hover w-full rounded-lg bg-primary py-3 px-4 font-medium text-on-primary transition-all duration-300 hover:bg-surface-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-60"
-              :disabled="form.processing"
+              :disabled="form.processing || (eh_publicado && !houve_alteracao)"
             >
-              Publicar
+              {{ eh_publicado ? 'Salvar Alteração' : 'Publicar' }}
             </button>
             <button
+              v-if="!eh_publicado"
               type="button"
               class="w-full rounded-lg border border-outline-variant/20 bg-surface py-3 px-4 font-medium text-on-surface transition-all duration-300 hover:bg-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-60"
               :disabled="form.processing"
@@ -212,6 +213,48 @@ function formatar_datetime_local(valor) {
     );
 }
 
+const eh_publicado = computed(() => props.post?.status === "publicado");
+
+const hashtags_iniciais = (props.post?.hashtags ?? []).map((tag) => tag.name);
+const published_at_inicial = formatar_datetime_local(props.post?.published_at);
+
+function arrays_sao_iguais(arr1, arr2) {
+    if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
+        return false;
+    }
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+    const ordenado1 = [...arr1].sort();
+    const ordenado2 = [...arr2].sort();
+    return ordenado1.every((val, idx) => val === ordenado2[idx]);
+}
+
+const houve_alteracao = computed(() => {
+    if ((form.title || "") !== (props.post?.title || "")) {
+        return true;
+    }
+    if ((original_content.value || "") !== (props.post?.content || "")) {
+        return true;
+    }
+    if ((form.excerpt || "") !== (props.post?.excerpt || "")) {
+        return true;
+    }
+    if ((form.category_id ?? null) !== (props.post?.category_id ?? null)) {
+        return true;
+    }
+    if ((form.published_at || "") !== (published_at_inicial || "")) {
+        return true;
+    }
+    if (!arrays_sao_iguais(form.hashtags, hashtags_iniciais)) {
+        return true;
+    }
+    if (form.image !== null) {
+        return true;
+    }
+    return false;
+});
+
 function codificar_conteudo() {
     try {
         const utf8_bytes = new TextEncoder().encode(original_content.value);
@@ -224,6 +267,10 @@ function codificar_conteudo() {
 }
 
 function submit(status) {
+    if (eh_publicado.value && !houve_alteracao.value) {
+        return;
+    }
+
     const encoded_content = codificar_conteudo();
     if (encoded_content === null) {
         return;
