@@ -73,6 +73,31 @@
                 {{ post.title }}
               </h2>
 
+              <!-- Badge com endereço e botão de cópia rápida -->
+              <div v-if="post.slug" class="mt-2 flex items-center">
+                <button
+                  type="button"
+                  class="group inline-flex items-center gap-1.5 rounded-lg border border-outline-variant/30 bg-surface-container-highest px-2.5 py-1 font-mono text-xs text-on-surface-variant transition-colors hover:border-primary/50 hover:bg-surface-container-high hover:text-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                  :title="`Copiar endereço: ${obter_url_completa(post)}`"
+                  @click="copiar_url_post(post)"
+                >
+                  <span
+                    class="material-symbols-outlined text-sm transition-colors"
+                    :class="uuid_post_copiado === post.uuid ? 'text-emerald-400' : 'text-primary group-hover:text-primary'"
+                    aria-hidden="true"
+                  >
+                    {{ uuid_post_copiado === post.uuid ? 'check' : 'content_copy' }}
+                  </span>
+                  <span class="max-w-xs truncate md:max-w-md">/post/show/{{ post.slug }}</span>
+                  <span
+                    v-if="uuid_post_copiado === post.uuid"
+                    class="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400"
+                  >
+                    Copiado!
+                  </span>
+                </button>
+              </div>
+
               <div v-if="post.hashtags && post.hashtags.length" class="mt-2 flex flex-wrap gap-2">
                 <span
                   v-for="tag in post.hashtags"
@@ -137,6 +162,12 @@ export default {
     props: {
         posts: { type: Array, default: () => [] },
     },
+    data() {
+        return {
+            uuid_post_copiado: null,
+            timeout_copia: null,
+        };
+    },
     setup() {
         const form = useForm({});
 
@@ -176,6 +207,56 @@ export default {
                 return "-";
             }
             return data.toLocaleDateString("pt-BR");
+        },
+        obter_url_completa(post) {
+            if (!post?.slug) {
+                return "";
+            }
+            const origem = typeof window !== "undefined" ? window.location.origin : "";
+            return `${origem}/post/show/${post.slug}`;
+        },
+        copiar_url_post(post) {
+            const url = this.obter_url_completa(post);
+            if (!url) {
+                return;
+            }
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        this.marcar_copiado(post.uuid);
+                    })
+                    .catch(() => {
+                        this.copiar_fallback(url, post.uuid);
+                    });
+            } else {
+                this.copiar_fallback(url, post.uuid);
+            }
+        },
+        copiar_fallback(texto, uuid) {
+            const elemento_temporario = document.createElement("textarea");
+            elemento_temporario.value = texto;
+            elemento_temporario.setAttribute("readonly", "");
+            elemento_temporario.style.position = "absolute";
+            elemento_temporario.style.left = "-9999px";
+            document.body.appendChild(elemento_temporario);
+            elemento_temporario.select();
+            try {
+                document.execCommand("copy");
+                this.marcar_copiado(uuid);
+            } finally {
+                document.body.removeChild(elemento_temporario);
+            }
+        },
+        marcar_copiado(uuid) {
+            this.uuid_post_copiado = uuid;
+            if (this.timeout_copia) {
+                clearTimeout(this.timeout_copia);
+            }
+            this.timeout_copia = setTimeout(() => {
+                if (this.uuid_post_copiado === uuid) {
+                    this.uuid_post_copiado = null;
+                }
+            }, 2000);
         },
     },
 };
