@@ -4,7 +4,7 @@
       class="flex min-h-[42px] flex-wrap items-center gap-2 rounded-lg border border-outline-variant/30 bg-surface-container-highest p-2 transition-colors focus-within:border-primary focus-within:ring-1 focus-within:ring-primary"
     >
       <span
-        v-for="(tag, index) in model_value"
+        v-for="(tag, index) in tags_ativas"
         :key="tag"
         class="inline-flex items-center gap-1 rounded bg-secondary-container px-2 py-1 text-xs font-medium text-secondary"
       >
@@ -64,22 +64,49 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 export default {
     name: "TagInput",
     props: {
         model_value: { type: Array, default: () => [] },
+        modelValue: { type: Array, default: () => [] },
         sugestoes: { type: Array, default: () => [] },
+        texto_pendente: { type: String, default: "" },
     },
-    emits: ["update:model_value"],
-    setup(props, { emit }) {
-        const texto = ref("");
+    emits: ["update:model_value", "update:modelValue", "update:texto_pendente"],
+    setup(props, { emit, expose }) {
+        const tags_ativas = computed(() => {
+            if (Array.isArray(props.model_value) && props.model_value.length > 0) {
+                return props.model_value;
+            }
+            if (Array.isArray(props.modelValue) && props.modelValue.length > 0) {
+                return props.modelValue;
+            }
+            return props.model_value || props.modelValue || [];
+        });
+
+        const texto = ref(props.texto_pendente || "");
         const focado = ref(false);
         const indice_sugestao = ref(-1);
 
+        watch(
+            () => props.texto_pendente,
+            (novo_valor) => {
+                if (novo_valor !== undefined && novo_valor !== texto.value) {
+                    texto.value = novo_valor;
+                }
+            }
+        );
+
+        watch(texto, (novo_texto) => {
+            emit("update:texto_pendente", novo_texto);
+        });
+
         const sugestoes_filtradas = computed(() => {
-            const ja_adicionadas = new Set(props.model_value.map((tag) => tag.toLowerCase().trim()));
+            const ja_adicionadas = new Set(
+                tags_ativas.value.map((tag) => String(tag).toLowerCase().trim())
+            );
             const consulta = texto.value.trim().toLowerCase();
             const lista = props.sugestoes.filter((sugestao) => {
                 const nome = sugestao.name.toLowerCase();
@@ -90,10 +117,11 @@ export default {
 
         function atualizar_sugestoes(valor) {
             emit("update:model_value", valor);
+            emit("update:modelValue", valor);
         }
 
         function remover(index) {
-            const nova_lista = [...props.model_value];
+            const nova_lista = [...tags_ativas.value];
             nova_lista.splice(index, 1);
             atualizar_sugestoes(nova_lista);
         }
@@ -107,7 +135,7 @@ export default {
                 ? valor
                 : String(valor).split(/[,;\n]/);
 
-            const nova_lista = [...props.model_value];
+            const nova_lista = [...tags_ativas.value];
             let alterou = false;
 
             for (const item of partes) {
@@ -116,7 +144,7 @@ export default {
                     continue;
                 }
                 const existe = nova_lista.some(
-                    (tag) => tag.toLowerCase() === limpo.toLowerCase()
+                    (tag) => String(tag).toLowerCase() === limpo.toLowerCase()
                 );
                 if (!existe) {
                     nova_lista.push(limpo);
@@ -130,6 +158,12 @@ export default {
 
             texto.value = "";
             indice_sugestao.value = -1;
+        }
+
+        function confirmar_texto() {
+            if (texto.value.trim()) {
+                adicionar(texto.value);
+            }
         }
 
         function adicionar_do_input() {
@@ -185,25 +219,31 @@ export default {
         }
 
         function ao_perder_foco() {
-            if (texto.value.trim()) {
-                adicionar(texto.value);
-            }
+            confirmar_texto();
             fechar_sugestoes();
         }
 
         function ao_backspace() {
-            if (!texto.value && props.model_value.length) {
-                remover(props.model_value.length - 1);
+            if (!texto.value && tags_ativas.value.length) {
+                remover(tags_ativas.value.length - 1);
             }
         }
+
+        expose({
+            confirmar_texto,
+            adicionar,
+            remover,
+        });
 
         return {
             texto,
             focado,
             indice_sugestao,
             sugestoes_filtradas,
+            tags_ativas,
             remover,
             adicionar,
+            confirmar_texto,
             adicionar_do_input,
             ao_keydown_delimitador,
             ao_tab,

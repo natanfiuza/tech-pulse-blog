@@ -102,7 +102,11 @@
             <!-- Tags -->
             <div>
               <label for="post_tags" class="mb-2 block font-headline text-sm font-bold text-on-surface">Tags</label>
-              <TagInput v-model:model_value="form.hashtags" :sugestoes="hashtags_existentes" />
+              <TagInput
+                ref="tag_input_ref"
+                v-model:model_value="form.hashtags"
+                :sugestoes="hashtags_existentes"
+              />
               <p v-if="form.errors.hashtags" class="mt-1 text-sm text-error" role="alert">
                 {{ form.errors.hashtags }}
               </p>
@@ -151,6 +155,8 @@ const props = defineProps({
     hashtags_existentes: { type: Array, default: () => [] },
 });
 
+const tag_input_ref = ref(null);
+
 // Conteúdo real do editor (markdown, antes da codificação base64)
 const original_content = ref("");
 
@@ -191,6 +197,10 @@ function codificar_conteudo() {
 }
 
 function submit(status) {
+    if (tag_input_ref.value?.confirmar_texto) {
+        tag_input_ref.value.confirmar_texto();
+    }
+
     const encoded_content = codificar_conteudo();
     if (encoded_content === null) {
         return;
