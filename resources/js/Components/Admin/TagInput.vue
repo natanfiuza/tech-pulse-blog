@@ -25,8 +25,12 @@
         placeholder="Adicionar tag..."
         aria-label="Adicionar tag"
         @focus="focado = true"
-        @blur="fechar_sugestoes"
+        @blur="ao_perder_foco"
+        @input="ao_input"
+        @paste="ao_colar"
         @keydown.enter.prevent="adicionar_do_input"
+        @keydown.tab="ao_tab"
+        @keydown="ao_keydown_delimitador"
         @keydown.down.prevent="navegar_sugestoes(1)"
         @keydown.up.prevent="navegar_sugestoes(-1)"
         @keydown.esc="fechar_sugestoes"
@@ -94,17 +98,36 @@ export default {
             atualizar_sugestoes(nova_lista);
         }
 
-        function adicionar(nome) {
-            const limpo = nome.trim();
-            if (!limpo) {
+        function adicionar(valor) {
+            if (!valor) {
                 return;
             }
-            const existe = props.model_value.some(
-                (tag) => tag.toLowerCase() === limpo.toLowerCase()
-            );
-            if (!existe) {
-                atualizar_sugestoes([...props.model_value, limpo]);
+
+            const partes = Array.isArray(valor)
+                ? valor
+                : String(valor).split(/[,;\n]/);
+
+            const nova_lista = [...props.model_value];
+            let alterou = false;
+
+            for (const item of partes) {
+                const limpo = item.trim();
+                if (!limpo) {
+                    continue;
+                }
+                const existe = nova_lista.some(
+                    (tag) => tag.toLowerCase() === limpo.toLowerCase()
+                );
+                if (!existe) {
+                    nova_lista.push(limpo);
+                    alterou = true;
+                }
             }
+
+            if (alterou) {
+                atualizar_sugestoes(nova_lista);
+            }
+
             texto.value = "";
             indice_sugestao.value = -1;
         }
@@ -114,6 +137,36 @@ export default {
                 adicionar(sugestoes_filtradas.value[indice_sugestao.value].name);
             } else if (texto.value.trim()) {
                 adicionar(texto.value);
+            }
+        }
+
+        function ao_keydown_delimitador(evento) {
+            if (evento.key === "," || evento.key === ";") {
+                evento.preventDefault();
+                if (texto.value.trim()) {
+                    adicionar(texto.value);
+                }
+            }
+        }
+
+        function ao_tab(evento) {
+            if (texto.value.trim() || indice_sugestao.value >= 0) {
+                evento.preventDefault();
+                adicionar_do_input();
+            }
+        }
+
+        function ao_input() {
+            if (texto.value.includes(",") || texto.value.includes(";") || texto.value.includes("\n")) {
+                adicionar(texto.value);
+            }
+        }
+
+        function ao_colar(evento) {
+            const texto_colado = evento.clipboardData?.getData("text") || "";
+            if (texto_colado.includes(",") || texto_colado.includes(";") || texto_colado.includes("\n")) {
+                evento.preventDefault();
+                adicionar(texto_colado);
             }
         }
 
@@ -131,6 +184,13 @@ export default {
             indice_sugestao.value = -1;
         }
 
+        function ao_perder_foco() {
+            if (texto.value.trim()) {
+                adicionar(texto.value);
+            }
+            fechar_sugestoes();
+        }
+
         function ao_backspace() {
             if (!texto.value && props.model_value.length) {
                 remover(props.model_value.length - 1);
@@ -145,8 +205,13 @@ export default {
             remover,
             adicionar,
             adicionar_do_input,
+            ao_keydown_delimitador,
+            ao_tab,
+            ao_input,
+            ao_colar,
             navegar_sugestoes,
             fechar_sugestoes,
+            ao_perder_foco,
             ao_backspace,
         };
     },
