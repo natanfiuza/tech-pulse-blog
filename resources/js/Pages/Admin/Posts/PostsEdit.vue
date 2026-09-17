@@ -103,7 +103,12 @@
             <!-- Tags -->
             <div>
               <label for="post_tags" class="mb-2 block font-headline text-sm font-bold text-on-surface">Tags</label>
-              <TagInput v-model:model_value="form.hashtags" :sugestoes="hashtags_existentes" />
+              <TagInput
+                ref="tag_input_ref"
+                v-model:model_value="form.hashtags"
+                v-model:texto_pendente="texto_pendente_tag"
+                :sugestoes="hashtags_existentes"
+              />
               <p v-if="form.errors.hashtags" class="mt-1 text-sm text-error" role="alert">
                 {{ form.errors.hashtags }}
               </p>
@@ -154,6 +159,9 @@ const props = defineProps({
     hashtags_existentes: { type: Array, default: () => [] },
 });
 
+const tag_input_ref = ref(null);
+const texto_pendente_tag = ref("");
+
 // Conteúdo real do editor (markdown, antes da codificação base64)
 const original_content = ref(props.post?.content || "");
 
@@ -163,7 +171,7 @@ const form = useForm({
     category_id: props.post?.category_id ?? null,
     status: props.post?.status || "publicado",
     published_at: formatar_datetime_local(props.post?.published_at),
-    hashtags: (props.post?.hashtags ?? []).map((tag) => tag.name),
+    hashtags: (props.post?.hashtags ?? []).map((tag) => (typeof tag === "object" && tag !== null ? tag.name : tag)),
     image: null,
 });
 
@@ -215,7 +223,7 @@ function formatar_datetime_local(valor) {
 
 const eh_publicado = computed(() => props.post?.status === "publicado");
 
-const hashtags_iniciais = (props.post?.hashtags ?? []).map((tag) => tag.name);
+const hashtags_iniciais = (props.post?.hashtags ?? []).map((tag) => (typeof tag === "object" && tag !== null ? tag.name : tag));
 const published_at_inicial = formatar_datetime_local(props.post?.published_at);
 
 function arrays_sao_iguais(arr1, arr2) {
@@ -225,8 +233,8 @@ function arrays_sao_iguais(arr1, arr2) {
     if (arr1.length !== arr2.length) {
         return false;
     }
-    const ordenado1 = [...arr1].sort();
-    const ordenado2 = [...arr2].sort();
+    const ordenado1 = [...arr1].map((val) => String(val).trim().toLowerCase()).sort();
+    const ordenado2 = [...arr2].map((val) => String(val).trim().toLowerCase()).sort();
     return ordenado1.every((val, idx) => val === ordenado2[idx]);
 }
 
@@ -249,6 +257,9 @@ const houve_alteracao = computed(() => {
     if (!arrays_sao_iguais(form.hashtags, hashtags_iniciais)) {
         return true;
     }
+    if ((texto_pendente_tag.value || "").trim() !== "") {
+        return true;
+    }
     if (form.image !== null) {
         return true;
     }
@@ -267,6 +278,10 @@ function codificar_conteudo() {
 }
 
 function submit(status) {
+    if (tag_input_ref.value?.confirmar_texto) {
+        tag_input_ref.value.confirmar_texto();
+    }
+
     if (eh_publicado.value && !houve_alteracao.value) {
         return;
     }
