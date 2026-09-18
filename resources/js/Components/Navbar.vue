@@ -23,6 +23,15 @@
         </div>
       </div>
       <div class="flex items-center gap-3 sm:gap-4">
+        <button
+          type="button"
+          class="text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-all duration-300 p-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          :aria-label="label_tema"
+          :title="label_tema"
+          @click="alternar_tema"
+        >
+          <span class="material-symbols-outlined">{{ icone_tema }}</span>
+        </button>
         <Link
           :href="conta_link"
           class="text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-all duration-300 p-2 rounded-full"
@@ -42,8 +51,9 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
+import { use_theme } from "@/Composables/use_theme";
 
 const props = defineProps({
   categorias: {
@@ -71,6 +81,20 @@ const conta_label = computed(() => {
   return usuario.value.role === "leitor"
     ? "Ir para minha conta"
     : "Ir para o painel administrativo";
+});
+
+const { tema_atual, alternar_tema, inicializar_tema } = use_theme();
+
+onMounted(() => {
+  inicializar_tema();
+});
+
+const icone_tema = computed(() => {
+  return tema_atual.value === "dark" ? "light_mode" : "dark_mode";
+});
+
+const label_tema = computed(() => {
+  return tema_atual.value === "dark" ? "Ativar modo claro" : "Ativar modo escuro";
 });
 
 const link_classe = (slug) => {
