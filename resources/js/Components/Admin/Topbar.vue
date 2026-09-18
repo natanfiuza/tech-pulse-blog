@@ -36,6 +36,15 @@
       <div class="flex items-center gap-3 border-l border-outline-variant/20 pl-3 md:gap-4 md:pl-6">
         <button
           type="button"
+          :aria-label="label_tema"
+          :title="label_tema"
+          class="rounded-lg p-1.5 text-on-surface-variant transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          @click="alternar_tema"
+        >
+          <span class="material-symbols-outlined">{{ icone_tema }}</span>
+        </button>
+        <button
+          type="button"
           aria-label="Notificações"
           class="rounded-lg p-1.5 text-on-surface-variant transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
         >
@@ -60,11 +69,36 @@
 </template>
 
 <script>
+import { computed, onMounted } from "vue";
+import { use_theme } from "@/Composables/use_theme";
+
 export default {
     name: "Topbar",
     props: {
         breadcrumb: { type: String, default: "Admin" },
     },
     emits: ["toggle-sidebar"],
+    setup() {
+        const { tema_atual, alternar_tema, inicializar_tema } = use_theme();
+
+        onMounted(() => {
+            inicializar_tema();
+        });
+
+        const icone_tema = computed(() => {
+            return tema_atual.value === "dark" ? "light_mode" : "dark_mode";
+        });
+
+        const label_tema = computed(() => {
+            return tema_atual.value === "dark" ? "Ativar modo claro" : "Ativar modo escuro";
+        });
+
+        return {
+            tema_atual,
+            alternar_tema,
+            icone_tema,
+            label_tema,
+        };
+    },
 };
 </script>

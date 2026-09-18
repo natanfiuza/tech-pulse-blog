@@ -1,0 +1,47 @@
+# 🚨 Relatório do Linter GitPR
+
+## ⚠️ Avisos
+
+- 👀 Lembrete: Você criou/modificou a função na linha 23 de app/Http/Controllers/ContentImageController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 34 de app/Http/Controllers/ContentImageController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 78 de app/Http/Controllers/ContentImageController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 43 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 59 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 77 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 98 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 118 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 135 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 164 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 179 de app/Services/ImagensDeConteudo.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 19 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 24 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 45 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 58 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 71 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 84 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 96 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 108 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 131 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 138 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 145 de tests/Feature/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 22 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 35 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 53 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 64 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 72 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 83 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 104 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 117 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 132 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 152 de tests/Feature/LimpezaDeImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 16 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 23 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 32 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 40 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 49 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 63 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 70 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 78 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 85 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 95 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 105 de tests/Unit/ImagensDeConteudoTest.php. Garantiu que o DocBlock está atualizado?
