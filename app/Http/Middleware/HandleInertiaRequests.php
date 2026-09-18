@@ -43,6 +43,10 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             // Compartilhe dados globalmente aqui, se necessário. Exemplo:
             'appName' => config('app.name'),
+            // Domínio de produção gravado nas URLs das imagens de conteúdo. O
+            // frontend precisa dele para trocar a origem pela do navegador na
+            // renderização — ver normalizar_origem_conteudo() em helpers.js.
+            'techpulse_url_publica' => config('techpulse.url_publica'),
             'auth' => [
                 'user' => $request->user() ? [ // Passa informações do usuário logado
                     'id' => $request->user()->id,

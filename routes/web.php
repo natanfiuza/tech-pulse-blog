@@ -6,12 +6,14 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContentImageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Services\ImagensDeConteudo;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +49,14 @@ Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.sho
 Route::get('post/show/fix/{uuid}', [PostController::class, 'show'])->name('posts.show'); // Para exibir um post
 Route::get('/tags/{slug}', [TagController::class, 'show'])->name('tags.show');
 
+// Imagens de conteúdo do post (públicas — o conteúdo do blog é público).
+// O {slug} é decorativo: a leitura resolve o arquivo apenas pelo {uuid},
+// porque o slug do post muda quando o título muda.
+Route::get(ImagensDeConteudo::ROTA.'/{slug}/{uuid}', [ContentImageController::class, 'show'])
+    ->name('posts.content_image')
+    ->where('slug', '[A-Za-z0-9-]*')
+    ->where('uuid', '[0-9a-fA-F-]{36}');
+
 // Comentários (somente usuários logados)
 Route::middleware(['auth'])->group(function () {
     Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
@@ -67,6 +77,9 @@ Route::middleware(['auth', 'role:autor,admin'])->prefix('admin')->group(function
         Route::get('/edit/{uuid}', [PostController::class, 'edit'])->name('posts.edit');
         Route::post('/update', [PostController::class, 'update'])->name('posts.update');
         Route::delete('/delete/{uuid}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+        // Upload imediato das imagens coladas/arrastadas no editor.
+        Route::post('/content-images', [ContentImageController::class, 'store'])->name('posts.content_images.store');
     });
 });
 

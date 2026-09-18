@@ -26,7 +26,7 @@
           <div
             class="overflow-hidden rounded-xl border border-outline-variant/20 bg-surface-container-high shadow-2xl"
           >
-            <MarkdownEditor v-model="original_content" />
+            <MarkdownEditor v-model="original_content" :titulo="form.title" />
           </div>
           <p v-if="form.errors.content" class="text-sm text-error" role="alert">{{ form.errors.content }}</p>
 
