@@ -6,7 +6,7 @@
         <div>
           <h1 class="font-headline text-2xl font-extrabold text-on-surface md:text-3xl">Categorias</h1>
           <p class="mt-1 text-sm text-on-surface-variant">
-            {{ categories.length }} categoria(s) encontrada(s)
+            {{ categories_filtradas.length }} categoria(s) encontrada(s)
           </p>
         </div>
         <Link
@@ -38,16 +38,17 @@
 
       <!-- Lista vazia -->
       <div
-        v-if="categories.length === 0"
+        v-if="categories_filtradas.length === 0"
         class="rounded-xl border border-dashed border-outline-variant/30 bg-surface-container-low p-12 text-center text-on-surface-variant"
       >
-        Nenhuma categoria encontrada.
+        <span v-if="termo_busca">Nenhuma categoria encontrada para "{{ termo_busca }}".</span>
+        <span v-else>Nenhuma categoria encontrada.</span>
       </div>
 
       <!-- Lista de categorias -->
       <div class="space-y-4">
         <article
-          v-for="category in categories"
+          v-for="category in categories_filtradas"
           :key="category.id"
           class="rounded-xl border border-outline-variant/20 bg-surface-container-low p-5 shadow-2xl transition-colors hover:border-primary/30"
         >
@@ -103,6 +104,8 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
+import { computed } from "vue";
+import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 export default {
     components: {
@@ -112,8 +115,13 @@ export default {
     props: {
         categories: { type: Array, default: () => [] },
     },
-    setup() {
+    setup(props) {
         const form = useForm({});
+        const { termo_busca, filtrar_categorias } = use_admin_busca();
+
+        const categories_filtradas = computed(() => {
+            return filtrar_categorias(props.categories);
+        });
 
         function excluir(category) {
             if (!window.confirm(`Excluir a categoria "${category.name}"? Essa ação não pode ser desfeita.`)) {
@@ -122,7 +130,11 @@ export default {
             form.delete(route("categories.destroy", { category: category.id }));
         }
 
-        return { excluir };
+        return {
+            excluir,
+            termo_busca,
+            categories_filtradas,
+        };
     },
     computed: {
         success_message() {
