@@ -27,9 +27,10 @@
           aria-hidden="true"
         >search</span>
         <input
+          v-model="termo_busca"
           type="search"
           aria-label="Buscar"
-          placeholder="Buscar..."
+          :placeholder="placeholder_busca"
           class="w-64 rounded-full border border-outline-variant/20 bg-surface-container-high py-2 pr-4 pl-10 text-sm text-on-surface transition-colors placeholder:text-on-surface-variant/60 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
       </div>
@@ -70,7 +71,9 @@
 
 <script>
 import { computed, onMounted } from "vue";
+import { usePage } from "@inertiajs/vue3";
 import { use_theme } from "@/Composables/use_theme";
+import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 export default {
     name: "Topbar",
@@ -79,10 +82,22 @@ export default {
     },
     emits: ["toggle-sidebar"],
     setup() {
+        const page = usePage();
         const { tema_atual, alternar_tema, inicializar_tema } = use_theme();
+        const { termo_busca } = use_admin_busca();
 
         onMounted(() => {
             inicializar_tema();
+        });
+
+        const placeholder_busca = computed(() => {
+            if (page.component === "Admin/Posts/PostsIndex") {
+                return "Buscar posts...";
+            }
+            if (page.component === "Admin/Categories/CategoriesIndex") {
+                return "Buscar categorias...";
+            }
+            return "Buscar...";
         });
 
         const icone_tema = computed(() => {
@@ -98,6 +113,8 @@ export default {
             alternar_tema,
             icone_tema,
             label_tema,
+            termo_busca,
+            placeholder_busca,
         };
     },
 };

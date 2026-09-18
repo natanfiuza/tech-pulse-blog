@@ -101,3 +101,21 @@ export function normalizar_origem_conteudo(texto, url_publica) {
 
     return texto.split(alvo).join(substituto);
 }
+
+/**
+ * Normaliza um texto para busca removendo acentuação e convertendo para minúsculas.
+ *
+ * @param {string} texto - Texto a ser normalizado.
+ * @returns {string} Texto normalizado em minúsculas e sem acentos.
+ */
+export function normalizar_texto(texto) {
+    if (!texto) {
+        return "";
+    }
+    return String(texto)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+

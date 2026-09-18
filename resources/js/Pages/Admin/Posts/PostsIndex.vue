@@ -6,7 +6,7 @@
         <div>
           <h1 class="font-headline text-2xl font-extrabold text-on-surface md:text-3xl">Posts</h1>
           <p class="mt-1 text-sm text-on-surface-variant">
-            {{ posts.length }} post(s) encontrado(s)
+            {{ posts_filtrados.length }} post(s) encontrado(s)
           </p>
         </div>
         <Link
@@ -38,16 +38,17 @@
 
       <!-- Lista vazia -->
       <div
-        v-if="posts.length === 0"
+        v-if="posts_filtrados.length === 0"
         class="rounded-xl border border-dashed border-outline-variant/30 bg-surface-container-low p-12 text-center text-on-surface-variant"
       >
-        Nenhum post encontrado.
+        <span v-if="termo_busca">Nenhum post encontrado para "{{ termo_busca }}".</span>
+        <span v-else>Nenhum post encontrado.</span>
       </div>
 
       <!-- Lista de posts -->
       <div class="space-y-4">
         <article
-          v-for="post in posts"
+          v-for="post in posts_filtrados"
           :key="post.uuid"
           class="rounded-xl border border-outline-variant/20 bg-surface-container-low p-5 shadow-2xl transition-colors hover:border-primary/30"
         >
@@ -141,6 +142,8 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
+import { computed } from "vue";
+import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 const rotulos_status = {
     publicado: "Publicado",
@@ -168,8 +171,13 @@ export default {
             timeout_copia: null,
         };
     },
-    setup() {
+    setup(props) {
         const form = useForm({});
+        const { termo_busca, filtrar_posts } = use_admin_busca();
+
+        const posts_filtrados = computed(() => {
+            return filtrar_posts(props.posts);
+        });
 
         function excluir(post) {
             if (!window.confirm(`Excluir o post "${post.title}"? Essa ação não pode ser desfeita.`)) {
@@ -178,7 +186,11 @@ export default {
             form.delete(route("posts.destroy", { uuid: post.uuid }));
         }
 
-        return { excluir };
+        return {
+            excluir,
+            termo_busca,
+            posts_filtrados,
+        };
     },
     computed: {
         success_message() {

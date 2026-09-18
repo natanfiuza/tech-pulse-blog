@@ -20,6 +20,7 @@
 <script>
 import Topbar from "@/Components/Admin/Topbar.vue";
 import Sidebar from "@/Components/Admin/Sidebar.vue";
+import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 const rotulos_breadcrumb = {
     "Admin/AdminHome": "Dashboard",
@@ -48,11 +49,14 @@ export default {
         },
     },
     created() {
-        // Fecha a sidebar ao navegar (útil no mobile)
+        const { limpar_busca } = use_admin_busca();
+
+        // Fecha a sidebar e reseta o termo de busca ao navegar
         this.$watch(
             () => this.$page.url,
             () => {
                 this.sidebar_open = false;
+                limpar_busca();
             }
         );
     },
