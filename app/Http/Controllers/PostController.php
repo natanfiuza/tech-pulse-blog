@@ -7,6 +7,7 @@ use App\Models\Hashtag;
 use App\Models\Post;
 use App\Models\PostView;
 use App\Models\User;
+use App\Services\ImagensDeConteudo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -237,6 +238,9 @@ class PostController extends Controller
         $status = $this->normalizar_status($request->input('status', 'publicado'), $request->input('published_at'));
         $published_at = $request->input('published_at') ? \Carbon\Carbon::parse($request->input('published_at')) : null;
 
+        // Guardado antes da atribuição: é a base do diff das imagens de conteúdo.
+        $conteudo_anterior = $post->content;
+
         $post->title = $request->title;
         $post->content = base64_decode($request->content);
         $post->excerpt = $request->excerpt;
@@ -244,6 +248,10 @@ class PostController extends Controller
         $post->status = $status;
         $post->published_at = $published_at;
         $post->update();
+
+        // Imagens que saíram do texto somem do disco. Só depois do update():
+        // se o save falhar, nenhuma imagem é perdida.
+        app(ImagensDeConteudo::class)->sincronizar($post, $conteudo_anterior, $post->content);
 
         $this->sincronizar_hashtags($post, $request->input('hashtags', []));
 
@@ -290,6 +298,10 @@ class PostController extends Controller
         $this->autorizar_post($post);
 
         $post->delete();
+
+        // Depois do delete, para que o próprio post não conte como referência
+        // das imagens que ele usava. As que outro post ainda referenciar ficam.
+        app(ImagensDeConteudo::class)->remover_todas($post);
 
         return redirect()->route('posts.index')->with('success', 'Post excluído!');
 

@@ -126,13 +126,13 @@
 
 <script setup>
 import { computed, ref, onMounted, watch, nextTick } from "vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 import { DateTime } from "luxon";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import "highlight.js/styles/night-owl.css";
 import mermaid from "mermaid";
-import { tempo_leitura, url_da_imagem } from "@/helpers";
+import { normalizar_origem_conteudo, tempo_leitura, url_da_imagem } from "@/helpers";
 import Navbar from "@/Components/Navbar.vue";
 import Footer from "@/Components/Footer.vue";
 import CategoryChip from "@/Components/CategoryChip.vue";
@@ -146,6 +146,11 @@ const props = defineProps({
     required: true,
   },
 });
+
+// Domínio de produção gravado nas URLs das imagens de conteúdo (prop
+// compartilhada pelo HandleInertiaRequests).
+const page = usePage();
+const techpulse_url_publica = computed(() => page.props.techpulse_url_publica || "");
 
 // --- Configuração do markdown-it com suporte a mermaid ---
 const md = new MarkdownIt({
@@ -171,6 +176,26 @@ md.renderer.rules.fence = (tokens, idx, options, env, self) => {
   }
 
   return defaultFenceRenderer(tokens, idx, options, env, self);
+};
+
+// As imagens de conteúdo são gravadas com a URL absoluta de produção; o
+// navegador troca a origem na renderização. Feito na regra do token (e não no
+// markdown antes de renderizar) para não mexer em URLs dentro de code blocks.
+const regra_imagem_padrao =
+  md.renderer.rules.image ||
+  function (tokens, idx, options, env, self) {
+    return self.renderToken(tokens, idx, options);
+  };
+
+md.renderer.rules.image = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  const src = token.attrGet("src");
+
+  if (src) {
+    token.attrSet("src", normalizar_origem_conteudo(src, techpulse_url_publica.value));
+  }
+
+  return regra_imagem_padrao(tokens, idx, options, env, self);
 };
 
 // --- Propriedades derivadas ---

@@ -28,6 +28,8 @@ phpunit                   # Testes (PHPUnit 10)
 
 Ambiente: **Windows** (shell primário PowerShell).
 
+**Testes:** rode **arquivo por arquivo** (`phpunit tests/Feature/AlgumTest.php`). Invocar `phpunit` sozinho derruba o carregamento da suíte inteira: `tests/Feature/Auth/*` e `tests/Feature/ProfileTest.php` estão em sintaxe do **Pest**, que não está instalado (`Call to undefined function test()`). O schema de teste é sqlite `:memory:` ([phpunit.xml](phpunit.xml)) e o `RefreshDatabase` depende de `doctrine/dbal` (dev).
+
 ## Arquitetura e Rotas
 
 ### Web ([routes/web.php](routes/web.php))
@@ -36,6 +38,7 @@ Ambiente: **Windows** (shell primário PowerShell).
 - `GET /login/google` e `/login/google/callback` — login via Google (SocialiteController)
 - `GET post/show/{slug}` e `post/show/fix/{uuid}` — exibição do post (PostController; nota: ambas usam `name('posts.show')` — duplicação conhecida)
 - `GET post/image/{filename}` — serve imagens (ImageController)
+- `GET post/content/images/{slug}/{uuid}` — serve as imagens de conteúdo do post (ContentImageController; o `{slug}` é decorativo, ver convenções)
 - `GET /register`, `POST /register` — cadastro self-service (RegisteredUserController)
 - `GET /minha-conta` — dashboard do leitor (DashboardController)
 - Grupo `admin` (requer auth + papel): `admin.home`/posts exigem `role:autor,admin`; categorias e `/admin/users` exigem `role:admin`
@@ -47,8 +50,9 @@ Ambiente: **Windows** (shell primário PowerShell).
 ## Convenções e Peculiaridades Importantes
 
 - **Idioma:** código, comentários, mensagens de validação e UI em **português (pt-BR)**. Mantenha o padrão.
-- **Conteúdo do post é base64:** o campo `content` é salvo no banco já codificado em base64; os controllers fazem `base64_decode($request->content)` no store/update (PostController.php:82, 147).
-- **Imagens:** salvas em `storage/app/public/images` com **nome = uuid do post, sem extensão**; exibidas via rota `post/image/{filename}` (ImageController). Ative o link simbólico com `php artisan storage:link` se necessário.
+- **Conteúdo do post é base64 no transporte, não no banco:** o frontend codifica o `content` com `btoa` antes de enviar e os controllers fazem `base64_decode($request->content)` (PostController.php:112, 245), então o banco guarda **markdown puro**.
+- **Imagens de capa:** salvas em `storage/app/public/images` com **nome = uuid do post, sem extensão**; exibidas via rota `post/image/{filename}` (ImageController). Ative o link simbólico com `php artisan storage:link` se necessário.
+- **Imagens de conteúdo** (embutidas no markdown): salvas em `storage/app/data/post_content_images/{uuid}`, sem extensão, e servidas em `post/content/images/{slug}/{uuid}`. O `{slug}` é **decorativo** — a leitura resolve só pelo `{uuid}`, porque o slug do post muda quando o título muda. Colar ou arrastar um arquivo no editor ([MarkdownEditor.vue](resources/js/Components/Admin/MarkdownEditor.vue)) envia na hora para `POST admin/posts/content-images` e insere o markdown na posição do cursor. Os tipos/tamanho são os mesmos da capa (PNG/JPG/WebP, 5 MB). A URL gravada é **absoluta** (domínio de `config('techpulse.url_publica')`, porque o app Flutter consome a API); o frontend troca a origem pela do navegador com `normalizar_origem_conteudo()` ([helpers.js](resources/js/helpers.js)). Ao salvar, imagem que saiu do texto é **apagada do disco** — `app/Services/ImagensDeConteudo.php` faz o diff e só apaga se nenhum outro post ainda referenciar o uuid. Ver [docs/adr/0002-imagens-de-conteudo.md](docs/adr/0002-imagens-de-conteudo.md).
 - **Slugs:** gerados pelo helper global `criar_slug()` (app/helpers.php, autoload via composer) e garantidos únicos no `save()` sobrescrito do modelo `Post` (adiciona sufixo `-2`, `-3`...).
 - **IDs de API:** a API expõe `uuid` (não o `id` numérico) como identificador público dos posts; links externos usam o domínio de produção **hardcoded** `https://tech-pulse.natanfiuza.dev.br/` nas respostas de API.
 - **Auth e perfis:** registro self-service em `/register` (novos usuários nascem como `leitor`). Papéis: `leitor`, `autor`, `admin` (coluna `role`). Autor vê/edita/exclui apenas os próprios posts; admin vê tudo e gerencia usuários em `/admin/users` (promover/diminuir, excluir com **soft delete** — conteúdo preservado, exibido como "Usuário removido"). `CreateUsersSeeder` cria os admins iniciais. Redirect pós-login/cadastro pelo helper `caminho_inicial_do_usuario()` (leitor → `/minha-conta`; autor/admin → `/admin/home`).
@@ -64,7 +68,7 @@ Ambiente: **Windows** (shell primário PowerShell).
 
 ## Modelos de Dados
 
-- **Post:** `id`, `user_id`, `uuid`, `title`, `slug` (único), `image` (path), `excerpt`, `content` (longText, base64)
+- **Post:** `id`, `user_id`, `uuid`, `title`, `slug` (único), `image` (path da capa), `excerpt`, `content` (longText, markdown puro)
 - **Category:** `id`, `name`, `slug` (único), `description`, `scope`, `possible_contents`, `post_suggestions`, `parent_id` (recursivo, nullable)
 - **User:** `role` (`leitor`/`autor`/`admin`), campos do Socialite (Google), soft delete (`deleted_at`)
 - **PostView:** histórico de visualizações por usuário logado (`user_id`, `post_id`, `viewed_at`; único por par)

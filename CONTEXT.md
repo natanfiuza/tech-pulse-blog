@@ -10,6 +10,14 @@ Blog pessoal de tecnologia (Laravel + Inertia + Vue 3) que publica artigos sobre
 Conteúdo publicado no blog escrito em markdown, com título, resumo (excerpt), imagem de capa e autor. Todo post gera uma URL pública única pelo slug.
 _Avoid_: artigo (usar no plural do menu), postagem, story
 
+**Imagem de Conteúdo**:
+Imagem embutida no texto do post, colocada pelo autor exatamente onde ela deve aparecer na leitura. Pertence ao texto, não aos metadados do post: sai do blog junto com o trecho que a continha e deixa de existir quando nenhum post a referencia mais.
+_Avoid_: anexo, mídia, upload, arquivo
+
+**Imagem de Capa**:
+Imagem única do post que o representa nas listagens e no topo do artigo. É metadado do post, não faz parte do texto.
+_Avoid_: imagem de destaque (colide com **Destaque**), thumbnail, banner
+
 **Destaque**:
 Post em evidência exibido no topo da página principal. É selecionado automaticamente: o post mais recente é o destaque.
 _Avoid_: featured, post fixado

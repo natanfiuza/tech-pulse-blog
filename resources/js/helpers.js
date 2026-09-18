@@ -58,3 +58,46 @@ export function url_da_imagem(post) {
     }
     return "/post/image/" + imagem.split("/").pop();
 }
+
+/**
+ * Troca a origem das imagens de conteúdo pela origem do navegador.
+ *
+ * O banco guarda a URL absoluta com o domínio de produção (o app Flutter
+ * consome a API e precisa dela), mas o navegador pode estar em outra origem
+ * (desenvolvimento, staging). Sem a troca, a página local tentaria carregar as
+ * imagens do servidor de produção.
+ *
+ * Só as URLs do domínio configurado que terminam no caminho das imagens de
+ * conteúdo são reescritas — uma imagem externa que por acaso use o mesmo
+ * caminho não é tocada.
+ *
+ * @param {string} texto - Markdown ou HTML contendo as URLs.
+ * @param {string} url_publica - Domínio de produção (props.techpulse_url_publica).
+ *
+ * @returns {string} O mesmo texto, com a origem das imagens de conteúdo normalizada.
+ *
+ * @example
+ * // Em localhost, devolve "/post/content/images/meu-post/<uuid>" com a
+ * // origem local no lugar de "https://tech-pulse.natanfiuza.dev.br".
+ * normalizar_origem_conteudo(markdown, "https://tech-pulse.natanfiuza.dev.br");
+ */
+export function normalizar_origem_conteudo(texto, url_publica) {
+    if (!texto || !url_publica || typeof window === "undefined") {
+        return texto;
+    }
+
+    const origem = window.location.origin;
+    const origem_publica = String(url_publica).replace(/\/+$/, "");
+
+    // Já estamos na origem de produção: nada a reescrever.
+    if (!origem_publica || origem === origem_publica) {
+        return texto;
+    }
+
+    // split/join com separador string é literal, então o domínio não precisa
+    // ser escapado para regex.
+    const alvo = origem_publica + "/post/content/images/";
+    const substituto = origem + "/post/content/images/";
+
+    return texto.split(alvo).join(substituto);
+}
