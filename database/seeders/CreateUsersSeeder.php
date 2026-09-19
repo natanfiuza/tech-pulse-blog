@@ -18,7 +18,9 @@ class CreateUsersSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'techpulse@natanfiuza.dev.br',
             'password' => bcrypt('techpulse'),
-
+            'role' => User::ROLE_ADMIN,
         ]);
+
+        $user->obter_ou_criar_perfil();
     }
 }

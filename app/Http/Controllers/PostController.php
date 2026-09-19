@@ -128,7 +128,7 @@ class PostController extends Controller
     public function show(Request $request) // Recebe o slug como parâmetro
     {
         $query = Post::publicado()
-            ->with(['category', 'hashtags', 'comments' => function ($query_comments) {
+            ->with(['user.profile', 'category', 'hashtags', 'comments' => function ($query_comments) {
                 $query_comments->with([
                     'user',
                     'children' => function ($query_children) {

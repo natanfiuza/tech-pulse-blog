@@ -15,6 +15,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'uuid',
         'title',
         'slug',
@@ -153,6 +154,10 @@ class Post extends Model
      */
     public function save(array $options = [])
     {
+        if (empty($this->uuid)) {
+            $this->uuid = (string) Str::uuid();
+        }
+
         if (empty(trim($this->slug)) || $this->isDirty('title')) { // Slug vazio ou título foi alterado
             $this->slug = criar_slug($this->title);
         }

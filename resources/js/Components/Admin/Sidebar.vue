@@ -42,13 +42,25 @@
 
     <!-- Navegação do rodapé -->
     <div class="mt-auto space-y-2 border-t border-outline-variant/20 px-2 pt-4">
-      <div
-        class="flex cursor-default items-center gap-3 rounded-lg px-4 py-3 text-on-surface-variant/60"
-        title="Perfil (em breve)"
+      <Link
+        href="/admin/perfil"
+        class="flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        :class="
+          perfil_ativo
+            ? 'bg-secondary-container text-on-surface'
+            : 'text-on-surface-variant hover:bg-secondary-container hover:text-on-surface'
+        "
+        title="Meu Perfil"
       >
-        <span class="material-symbols-outlined">account_circle</span>
-        <span class="font-body text-sm font-medium">Perfil</span>
-      </div>
+        <img
+          v-if="usuario_logado?.avatar_url"
+          :src="usuario_logado.avatar_url"
+          :alt="usuario_logado.name"
+          class="h-6 w-6 rounded-full object-cover border border-outline-variant/50 shrink-0"
+        />
+        <span v-else class="material-symbols-outlined shrink-0">account_circle</span>
+        <span class="font-body text-sm font-medium truncate">Perfil</span>
+      </Link>
       <Link
         href="/logout"
         class="flex items-center gap-3 rounded-lg px-4 py-3 text-error/80 transition-all duration-300 hover:bg-error/10 hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60"
@@ -98,6 +110,12 @@ export default {
                     active: componente.startsWith("Admin/Categories"),
                 },
             ];
+        },
+        usuario_logado() {
+            return this.$page.props.auth?.user;
+        },
+        perfil_ativo() {
+            return this.$page.component === "Admin/Profile/Edit";
         },
     },
     mounted() {

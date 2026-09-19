@@ -31,4 +31,15 @@ return [
 
     'imagens_conteudo' => 'data/post_content_images',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Pasta das fotos de perfil de usuários
+    |--------------------------------------------------------------------------
+    |
+    | Caminho relativo à raiz do disco "local" (storage/app). Os arquivos são
+    | gravados flat, com nome = uuid do usuário e sem extensão.
+    |
+    */
+    'imagens_perfil' => 'data/user_profile_images',
+
 ];

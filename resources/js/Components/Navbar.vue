@@ -34,10 +34,17 @@
         </button>
         <Link
           :href="conta_link"
-          class="text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-all duration-300 p-2 rounded-full"
+          class="text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-all duration-300 p-1.5 rounded-full flex items-center justify-center"
           :aria-label="conta_label"
+          :title="conta_label"
         >
-          <span class="material-symbols-outlined">account_circle</span>
+          <img
+            v-if="usuario?.avatar_url"
+            :src="usuario.avatar_url"
+            :alt="usuario.name"
+            class="w-7 h-7 rounded-full object-cover border border-outline-variant/40"
+          />
+          <span v-else class="material-symbols-outlined">account_circle</span>
         </Link>
         <Link
           href="/#newsletter"

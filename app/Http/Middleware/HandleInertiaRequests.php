@@ -50,10 +50,13 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user() ? [ // Passa informações do usuário logado
                     'id' => $request->user()->id,
+                    'uuid' => $request->user()->uuid,
                     'name' => $request->user()->name,
                     'email' => $request->user()->email,
                     'avatar' => $request->user()->avatar,
+                    'avatar_url' => $request->user()->avatar_url,
                     'role' => $request->user()->role,
+                    'username' => $request->user()->profile?->username,
                     // Outras informações
                 ] : null,
             ],
