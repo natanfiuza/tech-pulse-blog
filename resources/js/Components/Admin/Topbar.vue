@@ -58,12 +58,6 @@
         >
           <span class="material-symbols-outlined">help_outline</span>
         </button>
-        <span
-          class="ml-1 flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant/30 bg-surface-container-high text-on-surface-variant"
-          aria-hidden="true"
-        >
-          <span class="material-symbols-outlined text-sm">account_circle</span>
-        </span>
       </div>
     </div>
   </header>

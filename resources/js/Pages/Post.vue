@@ -36,14 +36,44 @@
             class="flex flex-wrap items-center gap-x-4 gap-y-3 text-on-surface-variant font-medium text-sm relative"
           >
             <div class="flex items-center gap-3">
-              <img
-                src="/assets/img/natanfiuza.jpeg"
-                alt="Nataniel Fiuza"
-                class="w-12 h-12 rounded-full border-2 border-surface-container-high object-cover block"
-              />
+              <Link v-if="url_perfil_autor" :href="url_perfil_autor" class="shrink-0">
+                <img
+                  v-if="avatar_autor"
+                  :src="avatar_autor"
+                  :alt="nome_autor"
+                  class="w-12 h-12 rounded-full border-2 border-surface-container-high object-cover block hover:border-primary/50 transition-colors"
+                />
+                <div
+                  v-else
+                  class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-lg"
+                >
+                  {{ nome_autor.charAt(0) }}
+                </div>
+              </Link>
+              <template v-else>
+                <img
+                  v-if="avatar_autor"
+                  :src="avatar_autor"
+                  :alt="nome_autor"
+                  class="w-12 h-12 rounded-full border-2 border-surface-container-high object-cover block"
+                />
+                <div
+                  v-else
+                  class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-lg"
+                >
+                  {{ nome_autor.charAt(0) }}
+                </div>
+              </template>
               <div class="flex flex-col">
-                <span class="text-white font-bold">Nataniel Fiuza</span>
-                <span>Desenvolvedor &amp; Autor</span>
+                <Link
+                  v-if="url_perfil_autor"
+                  :href="url_perfil_autor"
+                  class="text-white font-bold hover:text-primary transition-colors"
+                >
+                  {{ nome_autor }}
+                </Link>
+                <span v-else class="text-white font-bold">{{ nome_autor }}</span>
+                <span>Autor</span>
               </div>
             </div>
             <div class="h-8 w-px bg-outline-variant"></div>
@@ -71,6 +101,9 @@
           class="article-content"
           ref="postContentContainer"
         ></article>
+
+        <!-- Caixa de Autor -->
+        <AuthorBox :user="post.user" />
 
         <!-- Discussão -->
         <CommentSection
@@ -126,7 +159,7 @@
 
 <script setup>
 import { computed, ref, onMounted, watch, nextTick } from "vue";
-import { Head, usePage } from "@inertiajs/vue3";
+import { Head, Link, usePage } from "@inertiajs/vue3";
 import { DateTime } from "luxon";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
@@ -139,6 +172,7 @@ import CategoryChip from "@/Components/CategoryChip.vue";
 import HashtagChip from "@/Components/HashtagChip.vue";
 import SidebarPanel from "@/Components/SidebarPanel.vue";
 import CommentSection from "@/Components/CommentSection.vue";
+import AuthorBox from "@/Components/AuthorBox.vue";
 
 const props = defineProps({
   post: {
@@ -199,6 +233,27 @@ md.renderer.rules.image = (tokens, idx, options, env, self) => {
 };
 
 // --- Propriedades derivadas ---
+const nome_autor = computed(() => {
+  if (!props.post?.user) return "Usuário removido";
+  const profile = props.post.user.profile;
+  if (profile && profile.show_name === false && profile.username) {
+    return profile.username;
+  }
+  return props.post.user.name || "Autor";
+});
+
+const avatar_autor = computed(() => {
+  return props.post?.user?.avatar_url || props.post?.user?.avatar || "";
+});
+
+const url_perfil_autor = computed(() => {
+  const profile = props.post?.user?.profile;
+  if (profile && profile.public_profile_enabled !== false && profile.username) {
+    return `/${profile.username}`;
+  }
+  return null;
+});
+
 const read_time = computed(() => {
   return props.post?.content ? tempo_leitura(props.post.content) : 1;
 });

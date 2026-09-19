@@ -11,8 +11,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserProfileImageController;
 use App\Services\ImagensDeConteudo;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +48,9 @@ Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])-
 Route::get('/login/google/callback', [SocialiteController::class, 'handle_google_callback']);
 
 Route::get('post/image/{filename}', [ImageController::class, 'show']);
+Route::get('user/avatar/{uuid}', [UserProfileImageController::class, 'show'])
+    ->name('user.avatar')
+    ->where('uuid', '[0-9a-fA-F-]{36}');
 Route::get('post/show/{slug}', [PostController::class, 'show'])->name('posts.show'); // Para exibir um post
 Route::get('post/show/fix/{uuid}', [PostController::class, 'show'])->name('posts.show'); // Para exibir um post
 Route::get('/tags/{slug}', [TagController::class, 'show'])->name('tags.show');
@@ -66,10 +72,15 @@ Route::middleware(['auth'])->group(function () {
 
 // Dashboard pessoal do leitor
 Route::get('/minha-conta', [DashboardController::class, 'index'])->middleware('auth')->name('minha_conta');
+Route::get('/minha-conta/perfil', [UserProfileController::class, 'edit_reader'])->middleware('auth')->name('reader.profile.edit');
+Route::match(['put', 'post'], '/minha-conta/perfil', [UserProfileController::class, 'update'])->middleware('auth')->name('reader.profile.update');
 
 // Admin: autores e admins (posts são filtrados por dono no PostController)
 Route::middleware(['auth', 'role:autor,admin'])->prefix('admin')->group(function () {
     Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
+    Route::get('/perfil', [UserProfileController::class, 'edit_admin'])->name('admin.profile.edit');
+    Route::match(['put', 'post'], '/perfil', [UserProfileController::class, 'update'])->name('admin.profile.update');
+
     Route::prefix('/posts')->group(function () {
         Route::get('', [PostController::class, 'index'])->name('posts.index');
         Route::get('/create', [PostController::class, 'create'])->name('posts.create');
@@ -103,3 +114,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     });
 });
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+
+// Perfil público do autor/usuário (deve ser a última rota declarada para não conflitar com rotas de primeiro nível)
+Route::get('/{username}', [PublicProfileController::class, 'show'])
+    ->name('profiles.show')
+    ->where('username', '[a-zA-Z0-9_\-\.]+');

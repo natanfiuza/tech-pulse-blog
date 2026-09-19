@@ -17,28 +17,38 @@
         <div
           class="absolute -top-20 -right-20 w-56 h-56 bg-primary/20 rounded-full blur-[100px] pointer-events-none"
         ></div>
-        <div class="relative flex items-center gap-5">
-          <img
-            v-if="usuario?.avatar"
-            :src="usuario.avatar"
-            alt="Foto de perfil"
-            class="w-16 h-16 rounded-full object-cover border border-outline-variant/30"
-          />
-          <div
-            v-else
-            class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black text-xl"
-          >
-            {{ inicial }}
-          </div>
-          <div class="min-w-0">
-            <h2 class="text-xl font-bold truncate">{{ usuario?.name }}</h2>
-            <p class="text-sm text-on-surface-variant truncate">{{ usuario?.email }}</p>
-            <span
-              class="mt-2 inline-block rounded-full bg-primary/20 px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary"
+        <div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+          <div class="flex items-center gap-5">
+            <img
+              v-if="usuario?.avatar_url || usuario?.avatar"
+              :src="usuario.avatar_url || usuario.avatar"
+              alt="Foto de perfil"
+              class="w-16 h-16 rounded-full object-cover border border-outline-variant/30 shrink-0"
+            />
+            <div
+              v-else
+              class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black text-xl shrink-0"
             >
-              Leitor
-            </span>
+              {{ inicial }}
+            </div>
+            <div class="min-w-0">
+              <h2 class="text-xl font-bold truncate">{{ usuario?.name }}</h2>
+              <p class="text-sm text-on-surface-variant truncate">{{ usuario?.email }}</p>
+              <span
+                class="mt-2 inline-block rounded-full bg-primary/20 px-3 py-0.5 text-[10px] font-bold uppercase tracking-widest text-primary"
+              >
+                Leitor
+              </span>
+            </div>
           </div>
+
+          <Link
+            href="/minha-conta/perfil"
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface border border-outline-variant/30 px-4 py-2.5 text-xs font-semibold transition-all self-start sm:self-auto"
+          >
+            <span class="material-symbols-outlined text-sm">settings</span>
+            <span>Editar Perfil</span>
+          </Link>
         </div>
       </section>
 

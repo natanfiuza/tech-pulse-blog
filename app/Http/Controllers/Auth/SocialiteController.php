@@ -26,16 +26,30 @@ class SocialiteController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
+            $avatar_url = (string) $googleUser->getAvatar();
+            $ja_existia = User::where('google_id', $googleUser->getId())->exists();
+
             // Encontra ou cria o usuário no banco de dados
             $user = User::updateOrCreate(
                 ['google_id' => $googleUser->getId()], // Condição para encontrar
                 [                                      // Dados para atualizar ou criar
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
-                    'avatar' => $googleUser->getAvatar(),
+                    'avatar' => $avatar_url,
                     'password' => null, // Ou Hash::make(Str::random(24)) se precisar de senha
                 ]
             );
+
+            // Garante perfil e persiste avatar na pasta de imagens do perfil
+            $user->obter_ou_criar_perfil();
+            $avatar_service = app(\App\Services\AvatarService::class);
+            if (! $ja_existia || ! $avatar_service->existe($user->uuid)) {
+                if (! empty($avatar_url)) {
+                    $avatar_service->salvar_avatar_google($user, $avatar_url);
+                } else {
+                    $avatar_service->gerar_e_salvar_avatar_padrao($user);
+                }
+            }
 
             // Faz o login do usuário
             Auth::login($user, true); // O 'true' ativa o "lembrar-me"
