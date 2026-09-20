@@ -300,4 +300,3 @@ final class NewsletterTranslations
         return in_array($cleaned, self::LANGS, true) ? $cleaned : 'pt_br';
     }
 }
-

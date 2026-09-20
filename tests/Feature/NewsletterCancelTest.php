@@ -90,4 +90,3 @@ class NewsletterCancelTest extends TestCase
         $this->assertNotNull($subscriber->fresh()->date_canceled);
     }
 }
-

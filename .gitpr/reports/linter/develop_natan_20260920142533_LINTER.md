@@ -1,0 +1,55 @@
+# 🚨 Relatório do Linter GitPR
+
+## ⚠️ Avisos
+
+- 👀 Lembrete: Você criou/modificou a função na linha 29 de app/Console/Commands/NewsletterSendCommand.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 22 de app/Http/Controllers/NewsletterController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 66 de app/Http/Controllers/NewsletterController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 95 de app/Http/Controllers/NewsletterController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 148 de app/Http/Controllers/NewsletterController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 195 de app/Http/Controllers/NewsletterController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 240 de app/Http/Controllers/NewsletterController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 18 de app/Mail/CancelLinkMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 26 de app/Mail/CancelLinkMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 33 de app/Mail/CancelLinkMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 18 de app/Mail/ConfirmationMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 26 de app/Mail/ConfirmationMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 33 de app/Mail/ConfirmationMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 19 de app/Mail/NewsletterMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 36 de app/Mail/NewsletterMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 47 de app/Mail/NewsletterMail.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 28 de app/Models/NewsletterConfirmation.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 32 de app/Models/NewsletterSubscriber.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 19 de app/Support/NewsletterContent.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 45 de app/Support/NewsletterContent.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 69 de app/Support/NewsletterContent.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 77 de app/Support/NewsletterContent.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 89 de app/Support/NewsletterContent.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 265 de app/Support/NewsletterTranslations.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 277 de app/Support/NewsletterTranslations.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 292 de app/Support/NewsletterTranslations.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 12 de database/migrations/2026_09_20_000001_create_newsletter_confirmations_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 27 de database/migrations/2026_09_20_000001_create_newsletter_confirmations_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 12 de database/migrations/2026_09_20_000002_create_newsletter_subscribers_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 31 de database/migrations/2026_09_20_000002_create_newsletter_subscribers_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 17 de tests/Feature/NewsletterCancelTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 41 de tests/Feature/NewsletterCancelTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 55 de tests/Feature/NewsletterCancelTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 75 de tests/Feature/NewsletterCancelTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 16 de tests/Feature/NewsletterConfirmTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 35 de tests/Feature/NewsletterConfirmTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 46 de tests/Feature/NewsletterConfirmTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 66 de tests/Feature/NewsletterConfirmTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 97 de tests/Feature/NewsletterConfirmTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 115 de tests/Feature/NewsletterConfirmTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 19 de tests/Feature/NewsletterSendCommandTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 30 de tests/Feature/NewsletterSendCommandTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 36 de tests/Feature/NewsletterSendCommandTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 77 de tests/Feature/NewsletterSendCommandTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 99 de tests/Feature/NewsletterSendCommandTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 121 de tests/Feature/NewsletterSendCommandTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 17 de tests/Feature/NewsletterSubscribeTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 39 de tests/Feature/NewsletterSubscribeTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 64 de tests/Feature/NewsletterSubscribeTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 87 de tests/Feature/NewsletterSubscribeTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 109 de tests/Feature/NewsletterSubscribeTest.php. Garantiu que o DocBlock está atualizado?

@@ -90,7 +90,7 @@ export default {
     computed: {
         menu_items() {
             const componente = this.$page.component;
-            return [
+            const items = [
                 {
                     label: "Dashboard",
                     icon: "dashboard",
@@ -103,13 +103,18 @@ export default {
                     href: "/admin/posts",
                     active: componente.startsWith("Admin/Posts"),
                 },
-                {
+            ];
+
+            if (this.usuario_logado?.role === "admin") {
+                items.push({
                     label: "Categorias",
                     icon: "category",
                     href: "/admin/categories",
                     active: componente.startsWith("Admin/Categories"),
-                },
-            ];
+                });
+            }
+
+            return items;
         },
         usuario_logado() {
             return this.$page.props.auth?.user;

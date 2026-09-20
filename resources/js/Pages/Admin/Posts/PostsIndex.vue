@@ -18,6 +18,31 @@
         </Link>
       </div>
 
+      <!-- Filtros de Status -->
+      <div class="mb-6 flex flex-wrap items-center gap-2 border-b border-outline-variant/20 pb-4">
+        <button
+          v-for="aba in abas_status"
+          :key="aba.chave"
+          type="button"
+          class="inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+          :class="
+            status_ativo === aba.chave
+              ? 'bg-primary text-on-primary shadow-lg shadow-primary/25'
+              : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface border border-outline-variant/20'
+          "
+          @click="selecionar_status(aba.chave)"
+        >
+          <span class="material-symbols-outlined text-sm" aria-hidden="true">{{ aba.icone }}</span>
+          <span>{{ aba.rotulo }}</span>
+          <span
+            class="rounded-full px-1.5 py-0.5 font-mono text-[10px]"
+            :class="status_ativo === aba.chave ? 'bg-black/20 text-on-primary' : 'bg-surface-container-highest text-on-surface-variant'"
+          >
+            {{ aba.contagem }}
+          </span>
+        </button>
+      </div>
+
       <!-- Mensagens flash -->
       <div
         v-if="success_message"
@@ -42,7 +67,8 @@
         class="rounded-xl border border-dashed border-outline-variant/30 bg-surface-container-low p-12 text-center text-on-surface-variant"
       >
         <span v-if="termo_busca">Nenhum post encontrado para "{{ termo_busca }}".</span>
-        <span v-else>Nenhum post encontrado.</span>
+        <span v-else-if="status_ativo !== 'todos'">Nenhum post com status "{{ status_label(status_ativo) }}" encontrado.</span>
+        <span v-else>Nenhum post cadastrado.</span>
       </div>
 
       <!-- Lista de posts -->
@@ -112,6 +138,9 @@
               <p class="mt-3 font-mono text-xs text-on-surface-variant">
                 Por <span class="text-on-surface">{{ nome_autor(post) }}</span> · Atualizado em
                 {{ formatar_data(post.updated_at) }}
+                <span v-if="post.published_at && post.status === 'agendado'">
+                  · Agendado para {{ formatar_data_hora(post.published_at) }}
+                </span>
               </p>
             </div>
 
@@ -156,7 +185,7 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import ModalConfirmacao from "@/Components/ModalConfirmacao.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 const rotulos_status = {
@@ -179,6 +208,7 @@ export default {
     },
     props: {
         posts: { type: Array, default: () => [] },
+        status_filtro: { type: String, default: null },
     },
     data() {
         return {
@@ -192,8 +222,65 @@ export default {
         const post_para_excluir = ref(null);
         const { termo_busca, filtrar_posts } = use_admin_busca();
 
+        const status_ativo = ref("todos");
+
+        function sincronizar_status_url() {
+            const parametros = new URLSearchParams(window.location.search);
+            const status_param = parametros.get("status") || props.status_filtro;
+            if (status_param && ["publicado", "rascunho", "agendado"].includes(status_param)) {
+                status_ativo.value = status_param;
+            } else {
+                status_ativo.value = "todos";
+            }
+        }
+
+        onMounted(() => {
+            sincronizar_status_url();
+        });
+
+        watch(
+            () => props.status_filtro,
+            (novo_status) => {
+                if (novo_status && ["publicado", "rascunho", "agendado"].includes(novo_status)) {
+                    status_ativo.value = novo_status;
+                }
+            }
+        );
+
+        const abas_status = computed(() => {
+            const todos = props.posts.length;
+            const publicados = props.posts.filter((p) => p.status === "publicado").length;
+            const rascunhos = props.posts.filter((p) => p.status === "rascunho").length;
+            const agendados = props.posts.filter((p) => p.status === "agendado").length;
+
+            return [
+                { chave: "todos", rotulo: "Todos", icone: "list", contagem: todos },
+                { chave: "publicado", rotulo: "Publicados", icone: "article", contagem: publicados },
+                { chave: "rascunho", rotulo: "Rascunhos", icone: "edit_note", contagem: rascunhos },
+                { chave: "agendado", rotulo: "Agendados", icone: "schedule", contagem: agendados },
+            ];
+        });
+
+        function selecionar_status(chave) {
+            status_ativo.value = chave;
+            const url = new URL(window.location.href);
+            if (chave === "todos") {
+                url.searchParams.delete("status");
+            } else {
+                url.searchParams.set("status", chave);
+            }
+            window.history.replaceState({}, "", url.toString());
+        }
+
+        const posts_por_status = computed(() => {
+            if (status_ativo.value === "todos") {
+                return props.posts;
+            }
+            return props.posts.filter((p) => p.status === status_ativo.value);
+        });
+
         const posts_filtrados = computed(() => {
-            return filtrar_posts(props.posts);
+            return filtrar_posts(posts_por_status.value);
         });
 
         function abrir_modal_exclusao(post) {
@@ -226,6 +313,9 @@ export default {
             confirmar_exclusao,
             termo_busca,
             posts_filtrados,
+            status_ativo,
+            abas_status,
+            selecionar_status,
         };
     },
     computed: {
@@ -255,6 +345,16 @@ export default {
                 return "-";
             }
             return data.toLocaleDateString("pt-BR");
+        },
+        formatar_data_hora(valor) {
+            if (!valor) {
+                return "-";
+            }
+            const data = new Date(valor);
+            if (Number.isNaN(data.getTime())) {
+                return "-";
+            }
+            return `${data.toLocaleDateString("pt-BR")} às ${String(data.getHours()).padStart(2, "0")}:${String(data.getMinutes()).padStart(2, "0")}`;
         },
         obter_url_completa(post) {
             if (!post?.slug) {

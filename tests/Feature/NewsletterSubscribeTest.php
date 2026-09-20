@@ -115,4 +115,3 @@ class NewsletterSubscribeTest extends TestCase
         $response->assertSessionHasErrors('email');
     }
 }
-
