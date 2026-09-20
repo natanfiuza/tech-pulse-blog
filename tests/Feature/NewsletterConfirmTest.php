@@ -144,4 +144,3 @@ class NewsletterConfirmTest extends TestCase
         $this->assertEquals('en', $subscriber->lang);
     }
 }
-

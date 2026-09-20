@@ -41,4 +41,3 @@ class ConfirmationMail extends Mailable
         );
     }
 }
-

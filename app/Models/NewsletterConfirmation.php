@@ -30,4 +30,3 @@ class NewsletterConfirmation extends Model
         return $query->where('created_at', '>=', now()->subHours(24));
     }
 }
-

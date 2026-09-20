@@ -125,4 +125,3 @@ class NewsletterSendCommandTest extends TestCase
         ])->assertFailed();
     }
 }
-

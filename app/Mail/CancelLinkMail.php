@@ -41,4 +41,3 @@ class CancelLinkMail extends Mailable
         );
     }
 }
-

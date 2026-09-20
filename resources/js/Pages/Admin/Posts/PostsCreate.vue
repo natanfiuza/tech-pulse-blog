@@ -52,10 +52,11 @@
           <div class="flex flex-col gap-3 rounded-xl border border-outline-variant/20 bg-surface-container-low p-5 shadow-2xl">
             <button
               type="submit"
-              class="glow-hover w-full rounded-lg bg-primary py-3 px-4 font-medium text-on-primary transition-all duration-300 hover:bg-surface-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-60"
+              class="glow-hover flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 px-4 font-medium text-on-primary transition-all duration-300 hover:bg-surface-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-60"
               :disabled="form.processing"
             >
-              Publicar
+              <span class="material-symbols-outlined text-base">{{ eh_agendamento ? 'schedule' : 'send' }}</span>
+              <span>{{ eh_agendamento ? 'Agendar Post' : 'Publicar' }}</span>
             </button>
             <button
               type="button"
@@ -133,7 +134,11 @@
               <p v-if="form.errors.published_at" class="mt-1 text-sm text-error" role="alert">
                 {{ form.errors.published_at }}
               </p>
-              <p class="mt-2 text-xs text-on-surface-variant">Deixe em branco para publicar imediatamente.</p>
+              <div v-if="eh_agendamento" class="mt-2 flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-400">
+                <span class="material-symbols-outlined text-sm" aria-hidden="true">schedule</span>
+                <span>O post será publicado automaticamente na data programada.</span>
+              </div>
+              <p v-else class="mt-2 text-xs text-on-surface-variant">Deixe em branco para publicar imediatamente.</p>
             </div>
           </div>
         </div>
@@ -168,6 +173,12 @@ const form = useForm({
     published_at: "",
     hashtags: [],
     image: null,
+});
+
+const eh_agendamento = computed(() => {
+    if (!form.published_at) return false;
+    const data = new Date(form.published_at);
+    return !Number.isNaN(data.getTime()) && data.getTime() > Date.now();
 });
 
 // Achata a árvore de categorias (raízes com children.children) para o select
@@ -206,11 +217,16 @@ function submit(status) {
         return;
     }
 
+    let status_final = status;
+    if (status === "publicado" && eh_agendamento.value) {
+        status_final = "agendado";
+    }
+
     form
         .transform((data) => ({
             ...data,
             content: encoded_content,
-            status,
+            status: status_final,
         }))
         .post(route("posts.store"), {
             forceFormData: form.image instanceof File,

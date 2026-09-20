@@ -34,4 +34,3 @@ class NewsletterSubscriber extends Model
         return $query->where('is_canceled', false);
     }
 }
-

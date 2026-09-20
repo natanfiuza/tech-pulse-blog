@@ -76,6 +76,14 @@ class Post extends Model
     }
 
     /**
+     * Relacionamento: post tem várias visualizações registradas.
+     */
+    public function views(): HasMany
+    {
+        return $this->hasMany(PostView::class);
+    }
+
+    /**
      * Define o atributo 'slug'.
      *
      * Este método define o valor do atributo 'slug' da instância do modelo.

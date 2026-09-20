@@ -19,7 +19,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = Post::query();
 
@@ -32,7 +32,10 @@ class PostController extends Controller
             ->with('category', 'hashtags', 'user')
             ->get();
 
-        return Inertia::render('Admin/Posts/PostsIndex', ['posts' => $posts]);
+        return Inertia::render('Admin/Posts/PostsIndex', [
+            'posts' => $posts,
+            'status_filtro' => $request->query('status'),
+        ]);
     }
 
     /**
@@ -51,29 +54,34 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $status_solicitado = $request->input('status', 'publicado');
+        $regra_published_at = 'nullable|date';
+        if ($status_solicitado === 'agendado') {
+            $regra_published_at = 'required|date|after:now';
+        }
+
         $mensagens = [
             'title.required' => __('Título não foi informado.'),
             'content.required' => __('Conteúdo não foi informado.'),
             'excerpt.required' => __('Resumo não foi informado.'),
             'category_id.exists' => __('Categoria inválida.'),
             'status.in' => __('Status inválido.'),
+            'published_at.required' => __('Informe a data e hora para o agendamento.'),
             'published_at.date' => __('Data de publicação inválida.'),
+            'published_at.after' => __('A data de agendamento deve ser futura.'),
             'image.mimes' => __('A imagem deve ser PNG, JPG ou WebP.'),
             'image.max' => __('A imagem deve ter no máximo 5MB.'),
-
         ];
 
         $request->validate([
-
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'excerpt' => 'required|string',
             'category_id' => 'nullable|integer|exists:categories,id',
             'status' => 'nullable|in:rascunho,publicado,agendado',
-            'published_at' => 'nullable|date',
+            'published_at' => $regra_published_at,
             'hashtags' => 'nullable|array',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
-
         ], $mensagens);
 
         $uuid = Str::uuid()->toString();
@@ -204,16 +212,23 @@ class PostController extends Controller
     // public function update(Request $request)
     public function update(Request $request)
     {
+        $status_solicitado = $request->input('status', 'publicado');
+        $regra_published_at = 'nullable|date';
+        if ($status_solicitado === 'agendado') {
+            $regra_published_at = 'required|date|after:now';
+        }
+
         $mensagens = [
             'title.required' => __('Título não foi informado.'),
             'content.required' => __('Conteúdo não foi informado.'),
             'excerpt.required' => __('Resumo não foi informado.'),
             'category_id.exists' => __('Categoria inválida.'),
             'status.in' => __('Status inválido.'),
+            'published_at.required' => __('Informe a data e hora para o agendamento.'),
             'published_at.date' => __('Data de publicação inválida.'),
+            'published_at.after' => __('A data de agendamento deve ser futura.'),
             'image.mimes' => __('A imagem deve ser PNG, JPG ou WebP.'),
             'image.max' => __('A imagem deve ter no máximo 5MB.'),
-
         ];
 
         $request->validate([
@@ -222,7 +237,7 @@ class PostController extends Controller
             'excerpt' => 'nullable|string',
             'category_id' => 'nullable|integer|exists:categories,id',
             'status' => 'nullable|in:rascunho,publicado,agendado',
-            'published_at' => 'nullable|date',
+            'published_at' => $regra_published_at,
             'hashtags' => 'nullable|array',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
         ], $mensagens);
@@ -329,11 +344,15 @@ class PostController extends Controller
     {
         $status = $status ?: 'publicado';
 
-        if ($status === 'publicado' && $published_at && \Carbon\Carbon::parse($published_at)->isFuture()) {
+        if ($status === 'rascunho') {
+            return 'rascunho';
+        }
+
+        if ($published_at && \Carbon\Carbon::parse($published_at)->isFuture()) {
             return 'agendado';
         }
 
-        if ($status === 'agendado' && ! $published_at) {
+        if ($status === 'agendado' && (! $published_at || \Carbon\Carbon::parse($published_at)->isPast())) {
             return 'publicado';
         }
 

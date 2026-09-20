@@ -110,4 +110,3 @@ class NewsletterSendCommand extends Command
         return self::SUCCESS;
     }
 }
-

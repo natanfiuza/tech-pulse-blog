@@ -52,10 +52,11 @@
           <div class="flex flex-col gap-3 rounded-xl border border-outline-variant/20 bg-surface-container-low p-5 shadow-2xl">
             <button
               type="submit"
-              class="glow-hover w-full rounded-lg bg-primary py-3 px-4 font-medium text-on-primary transition-all duration-300 hover:bg-surface-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-60"
+              class="glow-hover flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 px-4 font-medium text-on-primary transition-all duration-300 hover:bg-surface-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 disabled:cursor-not-allowed disabled:opacity-60"
               :disabled="form.processing || (eh_publicado && !houve_alteracao)"
             >
-              {{ eh_publicado ? 'Salvar Alteração' : 'Publicar' }}
+              <span class="material-symbols-outlined text-base">{{ icone_acao_principal }}</span>
+              <span>{{ rotulo_acao_principal }}</span>
             </button>
             <button
               v-if="!eh_publicado"
@@ -135,7 +136,11 @@
               <p v-if="form.errors.published_at" class="mt-1 text-sm text-error" role="alert">
                 {{ form.errors.published_at }}
               </p>
-              <p class="mt-2 text-xs text-on-surface-variant">Deixe em branco para publicar imediatamente.</p>
+              <div v-if="eh_agendamento || (eh_agendado && form.published_at)" class="mt-2 flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-400">
+                <span class="material-symbols-outlined text-sm" aria-hidden="true">schedule</span>
+                <span>O post será publicado automaticamente na data programada.</span>
+              </div>
+              <p v-else class="mt-2 text-xs text-on-surface-variant">Deixe em branco para publicar imediatamente.</p>
             </div>
           </div>
         </div>
@@ -222,6 +227,33 @@ function formatar_datetime_local(valor) {
 }
 
 const eh_publicado = computed(() => props.post?.status === "publicado");
+const eh_agendado = computed(() => props.post?.status === "agendado");
+
+const eh_agendamento = computed(() => {
+    if (!form.published_at) return false;
+    const data = new Date(form.published_at);
+    return !Number.isNaN(data.getTime()) && data.getTime() > Date.now();
+});
+
+const rotulo_acao_principal = computed(() => {
+    if (eh_publicado.value) {
+        return "Salvar Alteração";
+    }
+    if (eh_agendamento.value || eh_agendado.value) {
+        return "Salvar Agendamento";
+    }
+    return "Publicar";
+});
+
+const icone_acao_principal = computed(() => {
+    if (eh_publicado.value) {
+        return "check_circle";
+    }
+    if (eh_agendamento.value || eh_agendado.value) {
+        return "schedule";
+    }
+    return "send";
+});
 
 const hashtags_iniciais = (props.post?.hashtags ?? []).map((tag) => (typeof tag === "object" && tag !== null ? tag.name : tag));
 const published_at_inicial = formatar_datetime_local(props.post?.published_at);
@@ -291,11 +323,16 @@ function submit(status) {
         return;
     }
 
+    let status_final = status;
+    if (status === "publicado" && eh_agendamento.value) {
+        status_final = "agendado";
+    }
+
     form
         .transform((data) => ({
             ...data,
             content: encoded_content,
-            status,
+            status: status_final,
         }))
         .post(route("posts.update", { uuid: props.post.uuid }), {
             forceFormData: form.image instanceof File,

@@ -91,4 +91,3 @@ final class NewsletterContent
         Storage::disk('local')->put('newsletter/last_sent.txt', $edition);
     }
 }
-
