@@ -10,6 +10,7 @@ use App\Http\Controllers\ContentImageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\TagController;
@@ -46,6 +47,14 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])->name('login.google');
 // Rota de callback que o Google chamará após a autenticação
 Route::get('/login/google/callback', [SocialiteController::class, 'handle_google_callback']);
+
+// Newsletter
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/send-cancel-link', [NewsletterController::class, 'send_cancel_link'])->name('newsletter.send-cancel-link');
+Route::get('/newsletter/confirm/{uuid}', [NewsletterController::class, 'confirm'])->name('newsletter.confirm');
+Route::post('/newsletter/confirm/{uuid}', [NewsletterController::class, 'confirm_submit'])->name('newsletter.confirm.submit');
+Route::get('/newsletter/cancel/{uuid}', [NewsletterController::class, 'cancel'])->name('newsletter.cancel');
+Route::post('/newsletter/unsubscribe/{uuid}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 
 Route::get('post/image/{filename}', [ImageController::class, 'show']);
 Route::get('user/avatar/{uuid}', [UserProfileImageController::class, 'show'])

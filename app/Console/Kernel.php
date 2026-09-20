@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Disparo semanal da newsletter toda segunda-feira pela manhã
+        $schedule->command('newsletter:send')->mondays()->at('08:00');
     }
 
     /**

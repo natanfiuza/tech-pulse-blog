@@ -90,32 +90,7 @@
         <aside class="w-full lg:w-96 space-y-12" aria-label="Conteúdo complementar">
           <!-- Newsletter -->
           <SidebarPanel id="newsletter" titulo="Boletim Informativo">
-            <p class="text-sm text-on-surface-variant mb-6 leading-relaxed">
-              Receba os pulsos de tecnologia e hacks de programação diretamente no seu
-              e-mail, toda segunda-feira.
-            </p>
-            <form class="space-y-4" @submit.prevent="inscrever_newsletter">
-              <label for="newsletter_email" class="sr-only">Seu e-mail</label>
-              <input
-                id="newsletter_email"
-                v-model="email_newsletter"
-                type="email"
-                required
-                placeholder="seu@email.com"
-                class="w-full bg-surface-dim border border-outline-variant/30 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-on-surface-variant/50"
-              />
-              <button
-                type="submit"
-                class="w-full bg-primary text-white font-bold py-3 rounded-lg text-sm glow-hover transition-all"
-              >
-                {{ inscrito ? "Inscrito!" : "Inscrever Agora" }}
-              </button>
-            </form>
-            <p class="text-[10px] text-on-surface-variant/40 mt-4 text-center">
-              {{ inscrito
-                ? "Pronto! Você receberá as próximas edições no seu e-mail."
-                : "Respeitamos sua privacidade. Cancele a qualquer momento." }}
-            </p>
+            <NewsletterBox current_lang="pt_br" />
           </SidebarPanel>
 
           <!-- Tags populares -->
@@ -177,6 +152,7 @@ import Footer from "@/Components/Footer.vue";
 import PostCard from "@/Components/PostCard.vue";
 import SidebarPanel from "@/Components/SidebarPanel.vue";
 import HashtagChip from "@/Components/HashtagChip.vue";
+import NewsletterBox from "@/Components/NewsletterBox.vue";
 
 const props = defineProps({
   posts: {
@@ -216,13 +192,6 @@ const tags_populares = computed(() => {
     .sort((a, b) => b.count - a.count)
     .slice(0, 10);
 });
-
-const email_newsletter = ref("");
-const inscrito = ref(false);
-
-const inscrever_newsletter = () => {
-  inscrito.value = true;
-};
 
 const chip_classe = (ativa) => {
   if (ativa) {
