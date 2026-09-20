@@ -92,11 +92,11 @@
                 </select>
                 <button
                   type="button"
-                  class="inline-flex items-center gap-1.5 rounded-lg border border-error/30 bg-error/10 px-3 py-2 text-sm font-medium text-error transition-colors hover:bg-error/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60"
-                  @click="excluir(usuario)"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-error/30 bg-error/10 px-3 py-2 text-sm font-medium text-error transition-colors hover:bg-error/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60 cursor-pointer"
+                  @click="abrir_modal_exclusao(usuario)"
                 >
-                  <span class="material-symbols-outlined text-base" aria-hidden="true">delete</span>
-                  Excluir
+                  <span class="material-symbols-outlined text-base" aria-hidden="true">person_remove</span>
+                  Remover
                 </button>
               </div>
             </div>
@@ -104,12 +104,28 @@
         </article>
       </div>
     </div>
+
+    <!-- Modal de Confirmação de Remoção de Usuário -->
+    <ModalConfirmacao
+      :aberto="modal_exclusao_aberto"
+      titulo="Remover Usuário"
+      mensagem="Tem certeza que deseja revogar o acesso deste usuário ao blog?"
+      :item_nome="usuario_para_excluir?.name || ''"
+      aviso_extra="O usuário não poderá mais realizar login. Os posts publicados e comentários criados por ele permanecerão salvos no blog sob o nome de 'Usuário removido'."
+      :processando="form_excluir.processing"
+      rotulo_confirmar="Remover Usuário"
+      rotulo_cancelar="Cancelar"
+      @confirmar="confirmar_exclusao"
+      @cancelar="cancelar_exclusao"
+    />
   </AdminLayout>
 </template>
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import ModalConfirmacao from "@/Components/ModalConfirmacao.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const rotulos_papel = {
     leitor: "Leitor",
@@ -126,6 +142,7 @@ const classes_papel = {
 export default {
     components: {
         AdminLayout,
+        ModalConfirmacao,
     },
     props: {
         usuarios: { type: Array, default: () => [] },
@@ -134,6 +151,8 @@ export default {
         const page = usePage();
         const form_papel = useForm({});
         const form_excluir = useForm({});
+        const modal_exclusao_aberto = ref(false);
+        const usuario_para_excluir = ref(null);
 
         const eh_eu = (usuario) => usuario.id === page.props.auth?.user?.id;
         // Admin não gerencia a si mesmo nem outros admins (evita lockout)
@@ -147,18 +166,39 @@ export default {
             form_papel.put(route("users.update_role", { user: usuario.id }), { role: papel });
         }
 
-        function excluir(usuario) {
-            if (
-                !window.confirm(
-                    `Remover o usuário "${usuario.name}"? Ele deixará de acessar o blog (conteúdo e comentários são preservados).`
-                )
-            ) {
-                return;
-            }
-            form_excluir.delete(route("users.destroy", { user: usuario.id }));
+        function abrir_modal_exclusao(usuario) {
+            usuario_para_excluir.value = usuario;
+            modal_exclusao_aberto.value = true;
         }
 
-        return { eh_eu, pode_gerenciar, inicial, alterar_papel, excluir };
+        function cancelar_exclusao() {
+            modal_exclusao_aberto.value = false;
+            usuario_para_excluir.value = null;
+        }
+
+        function confirmar_exclusao() {
+            if (!usuario_para_excluir.value) return;
+
+            form_excluir.delete(route("users.destroy", { user: usuario_para_excluir.value.id }), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    cancelar_exclusao();
+                },
+            });
+        }
+
+        return {
+            eh_eu,
+            pode_gerenciar,
+            inicial,
+            alterar_papel,
+            modal_exclusao_aberto,
+            usuario_para_excluir,
+            form_excluir,
+            abrir_modal_exclusao,
+            cancelar_exclusao,
+            confirmar_exclusao,
+        };
     },
     computed: {
         success_message() {

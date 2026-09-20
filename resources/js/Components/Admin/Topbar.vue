@@ -15,7 +15,9 @@
         TechPulse Admin
       </h2>
       <span class="hidden text-on-surface-variant md:inline">/</span>
-      <span class="hidden border-b-2 border-primary pb-1 font-bold whitespace-nowrap text-primary md:inline">
+      <span
+        class="hidden border-b-2 border-primary pb-1 font-bold whitespace-nowrap text-primary md:inline"
+      >
         {{ breadcrumb }}
       </span>
     </div>
@@ -25,7 +27,8 @@
         <span
           class="material-symbols-outlined absolute top-1/2 left-3 -translate-y-1/2 text-sm text-on-surface-variant"
           aria-hidden="true"
-        >search</span>
+          >search</span
+        >
         <input
           v-model="termo_busca"
           type="search"
@@ -34,7 +37,9 @@
           class="w-64 rounded-full border border-outline-variant/20 bg-surface-container-high py-2 pr-4 pl-10 text-sm text-on-surface transition-colors placeholder:text-on-surface-variant/60 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
       </div>
-      <div class="flex items-center gap-3 border-l border-outline-variant/20 pl-3 md:gap-4 md:pl-6">
+      <div
+        class="flex items-center gap-3 border-l border-outline-variant/20 pl-3 md:gap-4 md:pl-6"
+      >
         <button
           type="button"
           :aria-label="label_tema"
@@ -70,46 +75,46 @@ import { use_theme } from "@/Composables/use_theme";
 import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 export default {
-    name: "Topbar",
-    props: {
-        breadcrumb: { type: String, default: "Admin" },
-    },
-    emits: ["toggle-sidebar"],
-    setup() {
-        const page = usePage();
-        const { tema_atual, alternar_tema, inicializar_tema } = use_theme();
-        const { termo_busca } = use_admin_busca();
+  name: "Topbar",
+  props: {
+    breadcrumb: { type: String, default: "Admin" },
+  },
+  emits: ["toggle-sidebar"],
+  setup() {
+    const page = usePage();
+    const { tema_atual, alternar_tema, inicializar_tema } = use_theme();
+    const { termo_busca } = use_admin_busca();
 
-        onMounted(() => {
-            inicializar_tema();
-        });
+    onMounted(() => {
+      inicializar_tema();
+    });
 
-        const placeholder_busca = computed(() => {
-            if (page.component === "Admin/Posts/PostsIndex") {
-                return "Buscar posts...";
-            }
-            if (page.component === "Admin/Categories/CategoriesIndex") {
-                return "Buscar categorias...";
-            }
-            return "Buscar...";
-        });
+    const placeholder_busca = computed(() => {
+      if (page.component === "Admin/Posts/PostsIndex") {
+        return "Buscar posts...";
+      }
+      if (page.component === "Admin/Categories/CategoriesIndex") {
+        return "Buscar categorias...";
+      }
+      return "Buscar...";
+    });
 
-        const icone_tema = computed(() => {
-            return tema_atual.value === "dark" ? "light_mode" : "dark_mode";
-        });
+    const icone_tema = computed(() => {
+      return tema_atual.value === "dark" ? "light_mode" : "dark_mode";
+    });
 
-        const label_tema = computed(() => {
-            return tema_atual.value === "dark" ? "Ativar modo claro" : "Ativar modo escuro";
-        });
+    const label_tema = computed(() => {
+      return tema_atual.value === "dark" ? "Ativar modo claro" : "Ativar modo escuro";
+    });
 
-        return {
-            tema_atual,
-            alternar_tema,
-            icone_tema,
-            label_tema,
-            termo_busca,
-            placeholder_busca,
-        };
-    },
+    return {
+      tema_atual,
+      alternar_tema,
+      icone_tema,
+      label_tema,
+      termo_busca,
+      placeholder_busca,
+    };
+  },
 };
 </script>
