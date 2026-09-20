@@ -52,15 +52,31 @@
         v-for="comentario in comentarios_raiz"
         :key="comentario.id"
         :comentario="comentario"
+        @solicitar_exclusao="abrir_modal_exclusao"
       />
     </div>
+
+    <!-- Modal de Confirmação de Exclusão de Comentário -->
+    <ModalConfirmacao
+      :aberto="modal_exclusao_aberto"
+      titulo="Excluir Comentário"
+      mensagem="Tem certeza que deseja excluir este comentário? Essa ação não pode ser desfeita."
+      :item_nome="preview_texto_comentario"
+      :aviso_extra="comentario_para_excluir?.children?.length ? 'Atenção: Este comentário possui respostas aninhadas na discussão que também poderão ser afetadas.' : ''"
+      :processando="form_excluir.processing"
+      rotulo_confirmar="Sim, excluir"
+      rotulo_cancelar="Cancelar"
+      @confirmar="confirmar_exclusao"
+      @cancelar="cancelar_exclusao"
+    />
   </section>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import CommentThread from "@/Components/CommentThread.vue";
+import ModalConfirmacao from "@/Components/ModalConfirmacao.vue";
 
 const props = defineProps({
   comments: {
@@ -79,6 +95,37 @@ const form = useForm({
   content: "",
   post_id: props.post_id,
 });
+
+const form_excluir = useForm({});
+const modal_exclusao_aberto = ref(false);
+const comentario_para_excluir = ref(null);
+
+const preview_texto_comentario = computed(() => {
+  if (!comentario_para_excluir.value?.content) return "";
+  const texto = comentario_para_excluir.value.content;
+  return texto.length > 80 ? `"${texto.slice(0, 80)}..."` : `"${texto}"`;
+});
+
+const abrir_modal_exclusao = (comentario) => {
+  comentario_para_excluir.value = comentario;
+  modal_exclusao_aberto.value = true;
+};
+
+const cancelar_exclusao = () => {
+  modal_exclusao_aberto.value = false;
+  comentario_para_excluir.value = null;
+};
+
+const confirmar_exclusao = () => {
+  if (!comentario_para_excluir.value) return;
+
+  form_excluir.delete(route("comments.destroy", { comment: comentario_para_excluir.value.id }), {
+    preserveScroll: true,
+    onSuccess: () => {
+      cancelar_exclusao();
+    },
+  });
+};
 
 const novo_comentario = computed({
   get: () => form.content,

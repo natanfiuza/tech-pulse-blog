@@ -87,8 +87,8 @@
               </Link>
               <button
                 type="button"
-                class="inline-flex items-center gap-1.5 rounded-lg border border-error/30 bg-error/10 px-3 py-2 text-sm font-medium text-error transition-colors hover:bg-error/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60"
-                @click="excluir(category)"
+                class="inline-flex items-center gap-1.5 rounded-lg border border-error/30 bg-error/10 px-3 py-2 text-sm font-medium text-error transition-colors hover:bg-error/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60 cursor-pointer"
+                @click="abrir_modal_exclusao(category)"
               >
                 <span class="material-symbols-outlined text-base" aria-hidden="true">delete</span>
                 Excluir
@@ -98,40 +98,77 @@
         </article>
       </div>
     </div>
+
+    <!-- Modal de Confirmação de Exclusão de Categoria -->
+    <ModalConfirmacao
+      :aberto="modal_exclusao_aberto"
+      titulo="Excluir Categoria"
+      mensagem="Tem certeza que deseja excluir esta categoria permanentemente? Essa ação não pode ser desfeita."
+      :item_nome="categoria_para_excluir?.name || ''"
+      aviso_extra="Atenção: Os posts associados a esta categoria e eventuais subcategorias filhas terão suas vinculações desfeitas automaticamente."
+      :processando="form_excluir.processing"
+      rotulo_confirmar="Sim, excluir"
+      rotulo_cancelar="Cancelar"
+      @confirmar="confirmar_exclusao"
+      @cancelar="cancelar_exclusao"
+    />
   </AdminLayout>
 </template>
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import ModalConfirmacao from "@/Components/ModalConfirmacao.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 export default {
     components: {
         AdminLayout,
+        ModalConfirmacao,
         Link,
     },
     props: {
         categories: { type: Array, default: () => [] },
     },
     setup(props) {
-        const form = useForm({});
+        const form_excluir = useForm({});
+        const modal_exclusao_aberto = ref(false);
+        const categoria_para_excluir = ref(null);
         const { termo_busca, filtrar_categorias } = use_admin_busca();
 
         const categories_filtradas = computed(() => {
             return filtrar_categorias(props.categories);
         });
 
-        function excluir(category) {
-            if (!window.confirm(`Excluir a categoria "${category.name}"? Essa ação não pode ser desfeita.`)) {
-                return;
-            }
-            form.delete(route("categories.destroy", { category: category.id }));
+        function abrir_modal_exclusao(category) {
+            categoria_para_excluir.value = category;
+            modal_exclusao_aberto.value = true;
+        }
+
+        function cancelar_exclusao() {
+            modal_exclusao_aberto.value = false;
+            categoria_para_excluir.value = null;
+        }
+
+        function confirmar_exclusao() {
+            if (!categoria_para_excluir.value) return;
+
+            form_excluir.delete(route("categories.destroy", { category: categoria_para_excluir.value.id }), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    cancelar_exclusao();
+                },
+            });
         }
 
         return {
-            excluir,
+            modal_exclusao_aberto,
+            categoria_para_excluir,
+            form_excluir,
+            abrir_modal_exclusao,
+            cancelar_exclusao,
+            confirmar_exclusao,
             termo_busca,
             categories_filtradas,
         };

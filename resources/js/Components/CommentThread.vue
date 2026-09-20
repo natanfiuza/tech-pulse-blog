@@ -58,10 +58,9 @@
         <button
           v-if="eh_dono"
           type="button"
-          class="flex items-center gap-1 hover:text-error transition-colors"
+          class="flex items-center gap-1 hover:text-error transition-colors cursor-pointer"
           title="Excluir comentário"
-          :disabled="form_excluir.processing"
-          @click="excluir_comentario"
+          @click="solicitar_exclusao"
         >
           <span class="material-symbols-outlined text-[16px]">delete</span>
           Excluir
@@ -100,6 +99,7 @@
           v-for="filho in comentario.children"
           :key="filho.id"
           :comentario="filho"
+          @solicitar_exclusao="$emit('solicitar_exclusao', $event)"
         />
       </div>
     </div>
@@ -117,6 +117,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(["solicitar_exclusao"]);
 
 const usuario = computed(() => usePage().props.auth?.user ?? null);
 
@@ -148,13 +150,8 @@ const alternar_voto = () => {
   });
 };
 
-const form_excluir = useForm({});
-const excluir_comentario = () => {
-  if (confirm("Excluir este comentário?")) {
-    form_excluir.delete(route("comments.destroy", { comment: props.comentario.id }), {
-      preserveScroll: true,
-    });
-  }
+const solicitar_exclusao = () => {
+  emit("solicitar_exclusao", props.comentario);
 };
 
 const respondendo = ref(false);

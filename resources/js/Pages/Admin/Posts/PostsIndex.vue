@@ -125,8 +125,8 @@
               </Link>
               <button
                 type="button"
-                class="inline-flex items-center gap-1.5 rounded-lg border border-error/30 bg-error/10 px-3 py-2 text-sm font-medium text-error transition-colors hover:bg-error/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60"
-                @click="excluir(post)"
+                class="inline-flex items-center gap-1.5 rounded-lg border border-error/30 bg-error/10 px-3 py-2 text-sm font-medium text-error transition-colors hover:bg-error/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error/60 cursor-pointer"
+                @click="abrir_modal_exclusao(post)"
               >
                 <span class="material-symbols-outlined text-base" aria-hidden="true">delete</span>
                 Excluir
@@ -136,13 +136,27 @@
         </article>
       </div>
     </div>
+
+    <!-- Modal de Confirmação de Exclusão de Post -->
+    <ModalConfirmacao
+      :aberto="modal_exclusao_aberto"
+      titulo="Excluir Post"
+      mensagem="Tem certeza que deseja excluir este post? Essa ação não pode ser desfeita e todas as imagens vinculadas ao post serão removidas."
+      :item_nome="post_para_excluir?.title || ''"
+      :processando="form_excluir.processing"
+      rotulo_confirmar="Sim, excluir"
+      rotulo_cancelar="Cancelar"
+      @confirmar="confirmar_exclusao"
+      @cancelar="cancelar_exclusao"
+    />
   </AdminLayout>
 </template>
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import ModalConfirmacao from "@/Components/ModalConfirmacao.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { use_admin_busca } from "@/Composables/use_admin_busca";
 
 const rotulos_status = {
@@ -160,6 +174,7 @@ const classes_status = {
 export default {
     components: {
         AdminLayout,
+        ModalConfirmacao,
         Link,
     },
     props: {
@@ -172,22 +187,43 @@ export default {
         };
     },
     setup(props) {
-        const form = useForm({});
+        const form_excluir = useForm({});
+        const modal_exclusao_aberto = ref(false);
+        const post_para_excluir = ref(null);
         const { termo_busca, filtrar_posts } = use_admin_busca();
 
         const posts_filtrados = computed(() => {
             return filtrar_posts(props.posts);
         });
 
-        function excluir(post) {
-            if (!window.confirm(`Excluir o post "${post.title}"? Essa ação não pode ser desfeita.`)) {
-                return;
-            }
-            form.delete(route("posts.destroy", { uuid: post.uuid }));
+        function abrir_modal_exclusao(post) {
+            post_para_excluir.value = post;
+            modal_exclusao_aberto.value = true;
+        }
+
+        function cancelar_exclusao() {
+            modal_exclusao_aberto.value = false;
+            post_para_excluir.value = null;
+        }
+
+        function confirmar_exclusao() {
+            if (!post_para_excluir.value) return;
+
+            form_excluir.delete(route("posts.destroy", { uuid: post_para_excluir.value.uuid }), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    cancelar_exclusao();
+                },
+            });
         }
 
         return {
-            excluir,
+            modal_exclusao_aberto,
+            post_para_excluir,
+            form_excluir,
+            abrir_modal_exclusao,
+            cancelar_exclusao,
+            confirmar_exclusao,
             termo_busca,
             posts_filtrados,
         };
