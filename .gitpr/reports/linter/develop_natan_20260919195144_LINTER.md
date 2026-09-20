@@ -1,0 +1,43 @@
+# 🚨 Relatório do Linter GitPR
+
+## ⚠️ Avisos
+
+- 👀 Lembrete: Você criou/modificou a função na linha 15 de app/Http/Controllers/PublicProfileController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 45 de app/Http/Controllers/UserProfileController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 50 de app/Http/Controllers/UserProfileController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 63 de app/Http/Controllers/UserProfileController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 76 de app/Http/Controllers/UserProfileController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 145 de app/Http/Controllers/UserProfileController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 13 de app/Http/Controllers/UserProfileImageController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 20 de app/Http/Controllers/UserProfileImageController.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 78 de app/Models/User.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 107 de app/Models/User.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 115 de app/Models/User.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 149 de app/Models/User.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 52 de app/Models/UserProfile.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 44 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 52 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 60 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 81 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 95 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 115 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 129 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 147 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 173 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 181 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 189 de app/Services/AvatarService.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 14 de database/migrations/2026_09_19_000001_add_uuid_to_users_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 32 de database/migrations/2026_09_19_000001_add_uuid_to_users_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 12 de database/migrations/2026_09_19_000002_create_user_profiles_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 31 de database/migrations/2026_09_19_000002_create_user_profiles_table.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 17 de tests/Feature/PublicProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 69 de tests/Feature/PublicProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 83 de tests/Feature/PublicProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 90 de tests/Feature/PublicProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 111 de tests/Feature/PublicProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 17 de tests/Feature/UserProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 37 de tests/Feature/UserProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 50 de tests/Feature/UserProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 65 de tests/Feature/UserProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 97 de tests/Feature/UserProfileTest.php. Garantiu que o DocBlock está atualizado?
+- 👀 Lembrete: Você criou/modificou a função na linha 111 de tests/Feature/UserProfileTest.php. Garantiu que o DocBlock está atualizado?

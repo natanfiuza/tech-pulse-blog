@@ -39,6 +39,16 @@
   - `resources/js/Pages/Post.vue`: cabeçalho de autor dinâmico e integração do `AuthorBox`.
   - `resources/js/Pages/Reader/Dashboard.vue`: inclusão do botão "Editar Perfil" e avatar atualizado.
 
+### Correções Complementares (Tema Claro e Cache de Avatares)
+- **Persistência e Invalidação de Cache do Avatar:**
+  - Inclusão de controle de cache `no-cache, private, must-revalidate` em `UserProfileImageController`.
+  - Atualização do accessor `getAvatarUrlAttribute()` com parâmetro de versão `?v=timestamp` e chamada `$user->touch()` para invalidar cache de imagem imediatamente no navegador após upload ou restauração das iniciais.
+  - Sincronização reativa de exibição do avatar em `ProfileMasterDetails.vue`.
+- **Tema Claro (Light Mode) na Tela de Perfil (`ProfileMasterDetails.vue`):**
+  - Ajuste de fundo para branco puro (`bg-white`) no menu lateral de configurações, no box de seleção de foto, nos boxes e inputs de redes sociais e no box com as opções de privacidade.
+- **Tema Claro no Cabeçalho do Post (`Post.vue`):**
+  - Ajuste na cor do nome do autor no topo do artigo de `text-white` para `text-slate-900 dark:text-white`, garantindo visibilidade nítida no tema claro e preservando o contraste no tema escuro.
+
 ---
 
 ## 2. Testes e Validação
@@ -48,4 +58,5 @@
 - `php artisan test tests/Feature/ImagensDeConteudoTest.php`: 10 testes aprovados (sem regressão).
 - `npm run build`: build Vite concluído sem erros.
 - `.\vendor\bin\pint`: conformidade de estilo PHP Laravel garantida.
+
 

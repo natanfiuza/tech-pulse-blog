@@ -153,7 +153,9 @@ class User extends Authenticatable
             return '';
         }
 
-        return route('user.avatar', ['uuid' => $this->uuid]);
+        $versao = $this->updated_at ? $this->updated_at->timestamp : time();
+
+        return route('user.avatar', ['uuid' => $this->uuid]).'?v='.$versao;
     }
 
     /**
