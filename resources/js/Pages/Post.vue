@@ -68,15 +68,15 @@
                 <Link
                   v-if="url_perfil_autor"
                   :href="url_perfil_autor"
-                  class="text-white font-bold hover:text-primary transition-colors"
+                  class="text-slate-900 dark:text-white font-bold hover:text-primary transition-colors"
                 >
                   {{ nome_autor }}
                 </Link>
-                <span v-else class="text-white font-bold">{{ nome_autor }}</span>
-                <span>Autor</span>
+                <span v-else class="text-slate-900 dark:text-white font-bold">{{ nome_autor }}</span>
+                <span class="text-slate-500 dark:text-on-surface-variant">Autor</span>
               </div>
             </div>
-            <div class="h-8 w-px bg-outline-variant"></div>
+            <div class="h-8 w-px bg-slate-300 dark:bg-outline-variant"></div>
             <div class="flex flex-col">
               <span>{{ data_formatada }}</span>
               <span class="flex items-center gap-1">
@@ -140,7 +140,7 @@
               type="email"
               required
               placeholder="seu@email.com"
-              class="w-full bg-surface border border-outline-variant/50 rounded-lg px-4 py-2 text-sm text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-on-surface-variant/50"
+              class="w-full bg-white dark:bg-surface border border-slate-300 dark:border-outline-variant/50 rounded-lg px-4 py-2 text-sm text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-on-surface-variant/50"
             />
             <button
               type="submit"

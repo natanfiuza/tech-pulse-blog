@@ -64,4 +64,3 @@ class PublicProfileController extends Controller
         ]);
     }
 }
-

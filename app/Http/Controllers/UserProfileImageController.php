@@ -29,7 +29,11 @@ class UserProfileImageController extends Controller
                 abort(404, 'Avatar não encontrado.');
             }
 
-            $this->avatar_service->gerar_e_salvar_avatar_padrao($user);
+            if (! empty($user->avatar) && str_starts_with($user->avatar, 'http')) {
+                $this->avatar_service->salvar_avatar_google($user, $user->avatar);
+            } else {
+                $this->avatar_service->gerar_e_salvar_avatar_padrao($user);
+            }
         }
 
         $caminho_absoluto = $this->avatar_service->caminho_absoluto($uuid);
@@ -45,8 +49,7 @@ class UserProfileImageController extends Controller
 
         return response()->file($caminho_absoluto, [
             'Content-Type' => $mime,
-            'Cache-Control' => 'public, max-age=86400',
+            'Cache-Control' => 'no-cache, private, must-revalidate',
         ]);
     }
 }
-

@@ -118,10 +118,12 @@ class UserProfileController extends Controller
         if ($request->boolean('reset_avatar')) {
             $this->avatar_service->gerar_e_salvar_avatar_padrao($user);
             $user->avatar = null;
+            $user->touch();
             $user->save();
         } elseif ($request->hasFile('avatar')) {
             $this->avatar_service->salvar_upload($user, $request->file('avatar'));
             $user->avatar = $user->uuid;
+            $user->touch();
             $user->save();
         }
 
@@ -167,4 +169,3 @@ class UserProfileController extends Controller
         ];
     }
 }
-
