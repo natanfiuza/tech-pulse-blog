@@ -27,7 +27,10 @@
 ### 1.3 Atualização dos Links Globais (`Footer.vue`, `Navbar.vue` e `ziggy.js`)
 - `Footer.vue`: O link "Newsletter" aponta diretamente para `href="/newsletter"`.
 - `Navbar.vue`: O botão de ação "Inscrever-se" aponta para `href="/newsletter"`.
-- `ziggy.js`: Rotas de newsletter adicionadas ao dicionário estático para evitar exceções em tempo de renderização do Ziggy.
+### 1.4 Suporte e Contraste no Tema Claro / Day Light
+- `NewsletterPage.vue`: O box do formulário foi configurado com `bg-white dark:bg-surface-dim/70` e borda `border-slate-200 dark:border-outline-variant/30`, garantindo fundo 100% branco e limpo no tema claro. Títulos dos benefícios receberam `text-slate-900 dark:text-slate-200`.
+- `NewsletterBox.vue`: Estados de alerta (`sent`, `cancel_link_sent`, `already_confirmed`) e campo de entrada atualizados para `text-slate-800 dark:text-slate-200` e cores adaptadas para contraste ideal em ambos os temas.
+- `tailwind.css`: Adicionadas regras no seletor `html:not(.dark)` para classes com opacidade `[class*="bg-surface-dim/"]` e `.text-slate-200`, garantindo que não permaneçam acinzentadas no tema claro.
 
 ---
 
@@ -37,7 +40,7 @@
   - `tests/Feature/NewsletterSubscribeTest.php`: Adicionados testes para validar carregamento de `GET /newsletter` com Inertia, categorias e tradução (7 testes, 44 asserções - OK).
   - `tests/Feature/NewsletterConfirmTest.php`: 6 testes, 49 asserções - OK.
 - **Pint:** `php vendor/bin/pint tests/Feature/NewsletterSubscribeTest.php app/Http/Controllers/NewsletterController.php routes/web.php --test` validado com sucesso (3 arquivos, 0 violações).
-- **Frontend Build:** `npm run build` executado com sucesso gerando o chunk `NewsletterPage-Ci8vpvRl.js`.
+- **Frontend Build:** `npm run build` executado com sucesso gerando os novos bundles de CSS e JS.
 
 ---
 
@@ -46,7 +49,11 @@
 - `routes/web.php`
 - `app/Http/Controllers/NewsletterController.php`
 - `resources/js/Pages/NewsletterPage.vue` (novo)
+- `resources/js/Components/NewsletterBox.vue`
 - `resources/js/Components/Footer.vue`
 - `resources/js/Components/Navbar.vue`
+- `resources/js/ziggy.js`
+- `resources/css/tailwind.css`
 - `tests/Feature/NewsletterSubscribeTest.php`
+
 

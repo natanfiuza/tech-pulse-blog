@@ -203,7 +203,8 @@ html:not(.dark) .text-on-surface {
     color: #0f172a !important;
 }
 
-html:not(.dark) .text-slate-100 {
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200 {
     color: #0f172a !important;
 }
 
@@ -229,6 +230,7 @@ html:not(.dark) [class*="bg-surface-container-highest/"] {
 html:not(.dark) .bg-surface-container,
 html:not(.dark) .bg-surface-container-low,
 html:not(.dark) .bg-surface-dim,
+html:not(.dark) [class*="bg-surface-dim/"],
 html:not(.dark) .bg-surface-container-lowest,
 html:not(.dark) .bg-surface {
     background-color: #ffffff !important;

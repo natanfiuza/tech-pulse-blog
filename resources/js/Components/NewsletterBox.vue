@@ -3,7 +3,7 @@
     <!-- Estado: Confirmação enviada -->
     <div
       v-if="flash_status === 'sent'"
-      class="p-4 rounded-lg bg-primary/10 border border-primary/30 text-slate-200"
+      class="p-4 rounded-lg bg-primary/10 border border-primary/30 text-slate-800 dark:text-slate-200"
     >
       <div class="flex items-center gap-2 text-primary font-bold mb-1">
         <span class="material-symbols-outlined text-xl">mark_email_read</span>
@@ -17,7 +17,7 @@
     <!-- Estado: Link de cancelamento enviado -->
     <div
       v-else-if="flash_status === 'cancel_link_sent'"
-      class="p-4 rounded-lg bg-primary/10 border border-primary/30 text-slate-200"
+      class="p-4 rounded-lg bg-primary/10 border border-primary/30 text-slate-800 dark:text-slate-200"
     >
       <div class="flex items-center gap-2 text-primary font-bold mb-1">
         <span class="material-symbols-outlined text-xl">mail</span>
@@ -31,7 +31,7 @@
     <!-- Estado: E-mail já inscrito -->
     <div
       v-else-if="flash_status === 'already_confirmed'"
-      class="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 text-slate-200 space-y-3"
+      class="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 text-slate-800 dark:text-slate-200 space-y-3"
     >
       <div class="flex items-center gap-2 text-amber-400 font-bold">
         <span class="material-symbols-outlined text-xl">info</span>
@@ -43,7 +43,7 @@
       <button
         type="button"
         :disabled="cancel_link_sending"
-        class="w-full text-xs text-amber-300 hover:text-amber-200 font-semibold underline disabled:opacity-50 text-left transition-colors cursor-pointer"
+        class="w-full text-xs text-amber-600 dark:text-amber-300 hover:text-amber-700 dark:hover:text-amber-200 font-semibold underline disabled:opacity-50 text-left transition-colors cursor-pointer"
         @click="send_cancel_link"
       >
         {{ cancel_link_sending ? "Enviando..." : (ui_strings.ui_subscribe_send_cancel || "Enviar link de cancelamento") }}
@@ -64,7 +64,7 @@
             type="email"
             required
             :placeholder="ui_strings.ui_subscribe_placeholder || 'seu@email.com'"
-            class="w-full bg-surface-dim border border-outline-variant/30 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-on-surface-variant/50 text-slate-100"
+            class="w-full bg-surface-dim border border-outline-variant/30 rounded-lg px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-on-surface-variant/50 text-slate-900 dark:text-slate-100"
           />
           <InputError class="mt-1" :message="form.errors.email" />
         </div>

@@ -24,7 +24,7 @@
           <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">terminal</span>
             <div>
-              <p class="text-xs font-bold text-slate-200">Conteúdo Técnico Semanal</p>
+              <p class="text-xs font-bold text-slate-900 dark:text-slate-200">Conteúdo Técnico Semanal</p>
               <p class="text-[11px] text-on-surface-variant leading-relaxed">
                 Artigos práticos sobre desenvolvimento, arquitetura de sistemas e novas ferramentas.
               </p>
@@ -33,7 +33,7 @@
           <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">auto_awesome</span>
             <div>
-              <p class="text-xs font-bold text-slate-200">Inovações em IA & Tecnologia</p>
+              <p class="text-xs font-bold text-slate-900 dark:text-slate-200">Inovações em IA & Tecnologia</p>
               <p class="text-[11px] text-on-surface-variant leading-relaxed">
                 Análises aprofundadas sobre avanços em inteligência artificial e tendências do mercado.
               </p>
@@ -42,7 +42,7 @@
           <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">verified_user</span>
             <div>
-              <p class="text-xs font-bold text-slate-200">Zero Spam & Privacidade Garantida</p>
+              <p class="text-xs font-bold text-slate-900 dark:text-slate-200">Zero Spam & Privacidade Garantida</p>
               <p class="text-[11px] text-on-surface-variant leading-relaxed">
                 Seu e-mail está seguro. Desinscreva-se a qualquer momento com apenas um clique.
               </p>
@@ -51,7 +51,7 @@
         </div>
 
         <!-- Box de Inscrição com a mesma funcionalidade -->
-        <div class="bg-surface-dim/70 border border-outline-variant/30 rounded-xl p-5 sm:p-6 shadow-inner">
+        <div class="bg-white dark:bg-surface-dim/70 border border-slate-200 dark:border-outline-variant/30 rounded-xl p-5 sm:p-6 shadow-sm dark:shadow-inner">
           <NewsletterBox :current_lang="current_lang" :ui_strings="ui_strings" />
         </div>
 
@@ -59,7 +59,7 @@
         <div class="text-center pt-2">
           <Link
             href="/"
-            class="inline-flex items-center gap-2 text-xs font-semibold text-on-surface-variant hover:text-white transition-colors no-underline"
+            class="inline-flex items-center gap-2 text-xs font-semibold text-on-surface-variant hover:text-primary dark:hover:text-white transition-colors no-underline"
           >
             <span class="material-symbols-outlined text-sm">arrow_back</span>
             <span>{{ ui_strings.ui_back_to_home || "Voltar para o Início" }}</span>
