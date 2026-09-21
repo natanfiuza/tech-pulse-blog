@@ -129,26 +129,7 @@
         </SidebarPanel>
 
         <SidebarPanel id="newsletter" titulo="Boletim Informativo">
-          <p class="text-xs text-on-surface-variant mb-4 leading-relaxed">
-            Receba as últimas tendências de tecnologia diretamente no seu e-mail.
-          </p>
-          <form class="space-y-3" @submit.prevent="inscrever_newsletter">
-            <label for="newsletter_email" class="sr-only">Seu e-mail</label>
-            <input
-              id="newsletter_email"
-              v-model="email_newsletter"
-              type="email"
-              required
-              placeholder="seu@email.com"
-              class="w-full bg-white dark:bg-surface border border-slate-300 dark:border-outline-variant/50 rounded-lg px-4 py-2 text-sm text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-on-surface-variant/50"
-            />
-            <button
-              type="submit"
-              class="w-full bg-primary text-white py-2 rounded-lg font-bold text-sm glow-hover transition-all"
-            >
-              {{ inscrito ? "Inscrito!" : "Inscrever" }}
-            </button>
-          </form>
+          <NewsletterBox current_lang="pt_br" />
         </SidebarPanel>
       </aside>
     </main>
@@ -173,6 +154,7 @@ import HashtagChip from "@/Components/HashtagChip.vue";
 import SidebarPanel from "@/Components/SidebarPanel.vue";
 import CommentSection from "@/Components/CommentSection.vue";
 import AuthorBox from "@/Components/AuthorBox.vue";
+import NewsletterBox from "@/Components/NewsletterBox.vue";
 
 const props = defineProps({
   post: {
@@ -268,14 +250,6 @@ const data_formatada = computed(() => {
 });
 
 const imagem_url = computed(() => url_da_imagem(props.post));
-
-// --- Newsletter (estado local; backend na Fase 4) ---
-const email_newsletter = ref("");
-const inscrito = ref(false);
-
-const inscrever_newsletter = () => {
-  inscrito.value = true;
-};
 
 // --- Renderização do conteúdo ---
 const postContentContainer = ref(null);

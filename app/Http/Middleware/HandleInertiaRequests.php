@@ -47,6 +47,11 @@ class HandleInertiaRequests extends Middleware
             // frontend precisa dele para trocar a origem pela do navegador na
             // renderização — ver normalizar_origem_conteudo() em helpers.js.
             'techpulse_url_publica' => config('techpulse.url_publica'),
+            'flash' => [
+                'newsletter' => fn () => $request->session()->get('newsletter'),
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
+            ],
             'auth' => [
                 'user' => $request->user() ? [ // Passa informações do usuário logado
                     'id' => $request->user()->id,
