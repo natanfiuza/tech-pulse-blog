@@ -9,7 +9,8 @@
 
     <Navbar />
 
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 lg:grid lg:grid-cols-12 lg:gap-12">
+    <!-- pt-32 = 80px da barra fixa + 48px de respiro, como no protótipo tela_artigo -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-8 pt-32 pb-12 lg:grid lg:grid-cols-12 lg:gap-12">
       <div class="lg:col-span-8 min-w-0">
         <!-- Cabeçalho do artigo -->
         <header class="mb-10 relative">
