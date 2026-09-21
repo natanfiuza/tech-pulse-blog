@@ -22,7 +22,7 @@
           Início
         </Link>
         <Link
-          href="/#newsletter"
+          :href="route('newsletter.page')"
           class="text-slate-500 hover:text-white transition-colors no-underline"
         >
           Newsletter

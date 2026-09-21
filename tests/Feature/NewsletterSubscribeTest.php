@@ -3,11 +3,13 @@
 namespace Tests\Feature;
 
 use App\Mail\ConfirmationMail;
+use App\Models\Category;
 use App\Models\NewsletterConfirmation;
 use App\Models\NewsletterSubscriber;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class NewsletterSubscribeTest extends TestCase
@@ -113,5 +115,34 @@ class NewsletterSubscribeTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('email');
+    }
+
+    public function test_pagina_de_newsletter_carrega_com_sucesso(): void
+    {
+        Category::create([
+            'name' => 'Inteligência Artificial',
+            'slug' => 'inteligencia-artificial',
+        ]);
+
+        $response = $this->get(route('newsletter.page'));
+
+        $response->assertOk();
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('NewsletterPage')
+            ->has('categorias', 1)
+            ->has('ui_strings')
+            ->where('current_lang', 'pt_br')
+        );
+    }
+
+    public function test_pagina_de_newsletter_com_idioma_personalizado(): void
+    {
+        $response = $this->get(route('newsletter.page', ['lang' => 'en']));
+
+        $response->assertOk();
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('NewsletterPage')
+            ->where('current_lang', 'en')
+        );
     }
 }
