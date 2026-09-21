@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-background text-on-background font-body flex flex-col">
     <Navbar />
 
-    <main class="flex-grow w-full max-w-md mx-auto px-4 sm:px-8 py-12 flex items-start justify-center">
+    <main class="flex-grow w-full max-w-md mx-auto px-4 sm:px-8 pt-28 md:pt-32 pb-12 flex items-start justify-center">
       <div
         class="w-full bg-surface-container-low rounded-xl border border-outline-variant/20 p-8 shadow-2xl relative overflow-hidden"
       >
