@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\CancelLinkMail;
 use App\Mail\ConfirmationMail;
+use App\Models\Category;
 use App\Models\NewsletterConfirmation;
 use App\Models\NewsletterSubscriber;
 use App\Support\NewsletterTranslations;
@@ -16,6 +17,25 @@ use Inertia\Response;
 
 class NewsletterController extends Controller
 {
+    /**
+     * Exibe a página pública de cadastro na newsletter.
+     */
+    public function page(Request $request): Response
+    {
+        $lang = NewsletterTranslations::normalize($request->query('lang', 'pt_br'));
+        $strings = NewsletterTranslations::for($lang);
+
+        $categorias = Category::whereNull('parent_id')
+            ->select('id', 'name', 'slug')
+            ->get();
+
+        return Inertia::render('NewsletterPage', [
+            'current_lang' => $lang,
+            'ui_strings' => $strings,
+            'categorias' => $categorias,
+        ]);
+    }
+
     /**
      * Inicia o fluxo de inscrição via Double Opt-in.
      */

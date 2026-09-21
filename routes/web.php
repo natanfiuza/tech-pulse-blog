@@ -49,6 +49,7 @@ Route::get('/login/google', [SocialiteController::class, 'redirect_to_google'])-
 Route::get('/login/google/callback', [SocialiteController::class, 'handle_google_callback']);
 
 // Newsletter
+Route::get('/newsletter', [NewsletterController::class, 'page'])->name('newsletter.page');
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::post('/newsletter/send-cancel-link', [NewsletterController::class, 'send_cancel_link'])->name('newsletter.send-cancel-link');
 Route::get('/newsletter/confirm/{uuid}', [NewsletterController::class, 'confirm'])->name('newsletter.confirm');

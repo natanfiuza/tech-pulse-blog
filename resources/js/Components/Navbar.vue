@@ -47,7 +47,7 @@
           <span v-else class="material-symbols-outlined">account_circle</span>
         </Link>
         <Link
-          href="/#newsletter"
+          :href="route('newsletter.page')"
           class="bg-primary text-white px-4 sm:px-6 py-2.5 rounded-lg font-bold text-sm tracking-wide glow-hover transition-all scale-95 active:scale-90 no-underline"
         >
           Inscrever-se
