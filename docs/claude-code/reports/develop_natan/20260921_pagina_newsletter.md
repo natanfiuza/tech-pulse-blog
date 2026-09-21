@@ -24,9 +24,10 @@
   - Inclusão do componente `NewsletterBox` para manter 100% da funcionalidade de double opt-in, validação e feedbacks visuais (`sent`, `already_confirmed`, `cancel_link_sent`).
   - Link de retorno para a página inicial com suporte a traduções.
 
-### 1.3 Atualização dos Links Globais (`Footer.vue` e `Navbar.vue`)
-- `Footer.vue`: O link "Newsletter" agora aponta para `:href="route('newsletter.page')"` em vez de `/#newsletter`.
-- `Navbar.vue`: O botão de ação "Inscrever-se" agora aponta para `:href="route('newsletter.page')"` em vez de `/#newsletter`.
+### 1.3 Atualização dos Links Globais (`Footer.vue`, `Navbar.vue` e `ziggy.js`)
+- `Footer.vue`: O link "Newsletter" aponta diretamente para `href="/newsletter"`.
+- `Navbar.vue`: O botão de ação "Inscrever-se" aponta para `href="/newsletter"`.
+- `ziggy.js`: Rotas de newsletter adicionadas ao dicionário estático para evitar exceções em tempo de renderização do Ziggy.
 
 ---
 
