@@ -287,3 +287,44 @@ html:not(.dark) .article-content td {
     border-color: #cbd5e1;
 }
 
+/* EasyMDE / CodeMirror no tema claro */
+html:not(.dark) .EasyMDEContainer .CodeMirror {
+    color: #0f172a !important;
+}
+
+html:not(.dark) .CodeMirror pre.CodeMirror-line,
+html:not(.dark) .CodeMirror pre.CodeMirror-line-like {
+    color: #0f172a !important;
+}
+
+html:not(.dark) .CodeMirror .CodeMirror-placeholder {
+    color: #94a3b8 !important;
+}
+
+html:not(.dark) .EasyMDEContainer .editor-toolbar {
+    background-color: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+html:not(.dark) .EasyMDEContainer .editor-toolbar button {
+    color: #475569 !important;
+}
+
+html:not(.dark) .EasyMDEContainer .editor-toolbar button:hover,
+html:not(.dark) .EasyMDEContainer .editor-toolbar button.active {
+    background-color: rgba(43, 82, 238, 0.08) !important;
+    color: #2b52ee !important;
+}
+
+html:not(.dark) .EasyMDEContainer .editor-toolbar i.separator {
+    border-left: 1px solid #e2e8f0 !important;
+}
+
+html:not(.dark) .EasyMDEContainer .editor-preview,
+html:not(.dark) .EasyMDEContainer .editor-preview-side {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #e2e8f0 !important;
+}
+
+
