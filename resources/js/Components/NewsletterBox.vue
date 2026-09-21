@@ -113,6 +113,9 @@ const submit_newsletter = () => {
   form.lang = props.current_lang;
   form.post(route("newsletter.subscribe"), {
     preserveScroll: true,
+    onSuccess: () => {
+      form.reset("email");
+    },
   });
 };
 
