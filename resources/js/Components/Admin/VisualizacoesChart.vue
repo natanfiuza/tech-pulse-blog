@@ -13,11 +13,11 @@
 
       <!-- Resumo rápido -->
       <div class="flex items-center gap-4">
-        <div class="rounded-lg bg-surface-container-high/70 border border-outline-variant/20 px-3.5 py-1.5 text-right">
+        <div class="rounded-lg bg-white dark:bg-surface-container-high/70 border border-outline-variant/20 px-3.5 py-1.5 text-right shadow-sm dark:shadow-none">
           <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold block">Total no período</span>
           <span class="font-mono text-base font-bold text-primary">{{ total_periodo }}</span>
         </div>
-        <div class="rounded-lg bg-surface-container-high/70 border border-outline-variant/20 px-3.5 py-1.5 text-right">
+        <div class="rounded-lg bg-white dark:bg-surface-container-high/70 border border-outline-variant/20 px-3.5 py-1.5 text-right shadow-sm dark:shadow-none">
           <span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold block">Média diária</span>
           <span class="font-mono text-base font-bold text-on-surface">{{ media_diaria }}</span>
         </div>

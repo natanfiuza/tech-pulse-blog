@@ -11,8 +11,10 @@
       >
         <span class="material-symbols-outlined">menu</span>
       </button>
-      <h2 class="font-headline text-lg font-extrabold whitespace-nowrap text-on-surface md:text-xl">
-        TechPulse Admin
+      <h2
+        class="font-headline text-lg font-extrabold whitespace-nowrap text-on-surface md:text-xl"
+      >
+        Admin
       </h2>
       <span class="hidden text-on-surface-variant md:inline">/</span>
       <span

@@ -219,7 +219,9 @@ html:not(.dark) .glass-header {
 
 html:not(.dark) .bg-surface-container-high,
 html:not(.dark) .bg-surface-container-highest,
-html:not(.dark) .bg-surface-variant {
+html:not(.dark) .bg-surface-variant,
+html:not(.dark) [class*="bg-surface-container-high/"],
+html:not(.dark) [class*="bg-surface-container-highest/"] {
     background-color: #ffffff !important;
     border-color: rgba(203, 213, 225, 0.7) !important;
 }
