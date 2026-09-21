@@ -49,6 +49,11 @@
 - O leitor agora pode gerenciar e excluir seus próprios comentários diretamente da página `/minha-conta`.
 - Integração com `ModalConfirmacao.vue` para confirmação segura antes da exclusão.
 
+### 1.7 Ajustes de Legibilidade no Tema Claro
+- Atualizados os cards de resumo do gráfico ("Total no período" e "Média diária" em `VisualizacoesChart.vue`) para fundo branco no modo claro (`bg-white dark:bg-surface-container-high/70`).
+- Atualizados os itens de "Status de Publicação", "Ações Rápidas" e "Posts Mais Vistos" em `AdminHome.vue` para fundo branco com sombra sutil no modo claro (`bg-white dark:bg-surface-container-highest/40`).
+- Reforçada regra global em `tailwind.css` para seletores de container com opacidade em tema claro.
+
 ---
 
 ## 2. Testes e Validações

@@ -63,7 +63,7 @@
                 v-for="status in statuses"
                 :key="status.label"
                 :href="status.href"
-                class="flex items-center justify-between rounded-lg border border-outline-variant/20 bg-surface-container-highest/40 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-surface-container-high"
+                class="flex items-center justify-between rounded-lg border border-outline-variant/20 bg-white dark:bg-surface-container-highest/40 px-4 py-3 shadow-sm dark:shadow-none transition-colors hover:border-primary/40 hover:bg-slate-50 dark:hover:bg-surface-container-high"
               >
                 <div class="flex items-center gap-3">
                   <span class="h-2 w-2 rounded-full animate-pulse" :class="status.dot_class" aria-hidden="true"></span>
@@ -84,7 +84,7 @@
               <div
                 v-for="post in posts_mais_vistos"
                 :key="post.id"
-                class="flex items-center justify-between gap-3 rounded-lg border border-outline-variant/15 bg-surface-container-highest/30 px-3 py-2 text-xs"
+                class="flex items-center justify-between gap-3 rounded-lg border border-outline-variant/15 bg-white dark:bg-surface-container-highest/30 px-3 py-2 text-xs shadow-sm dark:shadow-none"
               >
                 <Link
                   :href="`/post/show/${post.slug}`"
@@ -112,7 +112,7 @@
               v-for="acao in acoes"
               :key="acao.href"
               :href="acao.href"
-              class="flex items-center gap-3 rounded-lg border border-outline-variant/20 bg-surface-container-highest/40 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+              class="flex items-center gap-3 rounded-lg border border-outline-variant/20 bg-white dark:bg-surface-container-highest/40 px-4 py-3 shadow-sm dark:shadow-none transition-colors hover:border-primary/40 hover:bg-slate-50 dark:hover:bg-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
             >
               <span class="material-symbols-outlined text-primary" aria-hidden="true">{{ acao.icon }}</span>
               <span class="text-sm font-medium text-on-surface">{{ acao.label }}</span>
