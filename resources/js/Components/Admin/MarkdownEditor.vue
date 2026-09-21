@@ -386,7 +386,9 @@ export default {
 </script>
 
 <style scoped>
-/* EasyMDE no tema dark "Midnight Pulse" */
+/* ==========================================================================
+   EasyMDE - Tema Dark (Midnight Pulse)
+   ========================================================================== */
 .md-editor-wrapper {
     position: relative;
 }
@@ -484,7 +486,7 @@ export default {
 
 :deep(.editor-preview),
 :deep(.editor-preview-side) {
-    background: transparent;
+    background: #000b2b;
     color: #f6f6f8;
     font-family: "Inter", sans-serif;
 }
@@ -508,5 +510,65 @@ export default {
 
 .md-editor-aviso-erro {
     color: #ff5f56; /* error */
+}
+
+/* ==========================================================================
+   EasyMDE - Adaptação para Tema Claro (html:not(.dark))
+   ========================================================================== */
+:global(html:not(.dark)) :deep(.EasyMDEContainer .CodeMirror) {
+    color: #0f172a;
+}
+
+:global(html:not(.dark)) :deep(.CodeMirror pre.CodeMirror-line),
+:global(html:not(.dark)) :deep(.CodeMirror pre.CodeMirror-line-like) {
+    color: #0f172a;
+}
+
+:global(html:not(.dark)) :deep(.CodeMirror .CodeMirror-placeholder) {
+    color: #94a3b8;
+}
+
+:global(html:not(.dark)) :deep(.CodeMirror-selected) {
+    background: rgba(43, 82, 238, 0.12) !important;
+}
+
+:global(html:not(.dark)) :deep(.editor-toolbar) {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+:global(html:not(.dark)) :deep(.editor-toolbar button) {
+    color: #475569;
+}
+
+:global(html:not(.dark)) :deep(.editor-toolbar button:hover),
+:global(html:not(.dark)) :deep(.editor-toolbar button.active) {
+    background: rgba(43, 82, 238, 0.08);
+    border-color: transparent;
+    color: #2b52ee;
+}
+
+:global(html:not(.dark)) :deep(.editor-toolbar i.separator) {
+    border-left: 1px solid #e2e8f0;
+}
+
+:global(html:not(.dark)) :deep(.editor-toolbar.fullscreen),
+:global(html:not(.dark)) :deep(.editor-toolbar.no-fullscreen) {
+    background: #f8fafc;
+}
+
+:global(html:not(.dark)) :deep(.editor-preview),
+:global(html:not(.dark)) :deep(.editor-preview-side) {
+    background: #ffffff;
+    color: #0f172a;
+    border-color: #e2e8f0;
+}
+
+:global(html:not(.dark)) :deep(.EasyMDEContainer .CodeMirror-fullscreen) {
+    background: #ffffff;
+}
+
+:global(html:not(.dark)) .md-editor-aviso {
+    color: #64748b;
 }
 </style>
