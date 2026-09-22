@@ -19,7 +19,7 @@
       <!-- Cards de estatísticas (Clicáveis) -->
       <div
         class="grid grid-cols-1 gap-6 sm:grid-cols-2"
-        :class="eh_admin ? 'xl:grid-cols-4' : 'xl:grid-cols-3'"
+        :class="eh_admin ? 'xl:grid-cols-5' : 'xl:grid-cols-3'"
       >
         <Link
           v-for="stat in stats"
@@ -187,6 +187,14 @@ export default {
                     icon: "category",
                     href: "/admin/categories",
                 });
+
+                itens.push({
+                    label: "Solicitações de Autor",
+                    value: String(this.metricas?.solicitacoes_pendentes ?? 0),
+                    chip: "Pendentes",
+                    icon: "how_to_reg",
+                    href: "/admin/solicitacoes-autor",
+                });
             }
 
             return itens;
@@ -224,6 +232,11 @@ export default {
                     label: "Gerenciar categorias",
                     icon: "category",
                     href: "/admin/categories",
+                });
+                lista.push({
+                    label: "Solicitações de autor",
+                    icon: "how_to_reg",
+                    href: "/admin/solicitacoes-autor",
                 });
             }
 

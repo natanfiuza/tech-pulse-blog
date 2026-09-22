@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostView;
+use App\Models\SolicitacaoAutor;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -99,15 +100,16 @@ class AdminController extends Controller
 
         return Inertia::render('Admin/AdminHome', [
             'metricas' => [
-                'posts_publicados' => $posts_publicados,
-                'rascunhos' => $rascunhos,
-                'agendados' => $agendados,
-                'categorias' => $categorias_count,
-                'total_visualizacoes' => $total_visualizacoes,
-                'is_admin' => $is_admin,
+                'posts_publicados'       => $posts_publicados,
+                'rascunhos'              => $rascunhos,
+                'agendados'              => $agendados,
+                'categorias'             => $categorias_count,
+                'total_visualizacoes'    => $total_visualizacoes,
+                'is_admin'               => $is_admin,
+                'solicitacoes_pendentes' => $is_admin ? SolicitacaoAutor::pendente()->count() : 0,
             ],
             'grafico_visualizacoes' => array_values($dias),
-            'posts_mais_vistos' => $posts_mais_vistos,
+            'posts_mais_vistos'     => $posts_mais_vistos,
         ]);
     }
 }
