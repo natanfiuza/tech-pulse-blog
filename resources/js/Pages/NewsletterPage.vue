@@ -24,8 +24,8 @@
           <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">terminal</span>
             <div>
-              <p class="text-xs font-bold text-slate-900 dark:text-slate-200">Conteúdo Técnico Semanal</p>
-              <p class="text-[11px] text-on-surface-variant leading-relaxed">
+              <p class="text-xs font-bold text-slate-800 dark:text-slate-200">Conteúdo Técnico Semanal</p>
+              <p class="text-[11px] text-slate-600 dark:text-on-surface-variant leading-relaxed">
                 Artigos práticos sobre desenvolvimento, arquitetura de sistemas e novas ferramentas.
               </p>
             </div>
@@ -33,8 +33,8 @@
           <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">auto_awesome</span>
             <div>
-              <p class="text-xs font-bold text-slate-900 dark:text-slate-200">Inovações em IA & Tecnologia</p>
-              <p class="text-[11px] text-on-surface-variant leading-relaxed">
+              <p class="text-xs font-bold text-slate-800 dark:text-slate-200">Inovações em IA & Tecnologia</p>
+              <p class="text-[11px] text-slate-600 dark:text-on-surface-variant leading-relaxed">
                 Análises aprofundadas sobre avanços em inteligência artificial e tendências do mercado.
               </p>
             </div>
@@ -42,8 +42,8 @@
           <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-primary text-lg mt-0.5">verified_user</span>
             <div>
-              <p class="text-xs font-bold text-slate-900 dark:text-slate-200">Zero Spam & Privacidade Garantida</p>
-              <p class="text-[11px] text-on-surface-variant leading-relaxed">
+              <p class="text-xs font-bold text-slate-800 dark:text-slate-200">Zero Spam & Privacidade Garantida</p>
+              <p class="text-[11px] text-slate-600 dark:text-on-surface-variant leading-relaxed">
                 Seu e-mail está seguro. Desinscreva-se a qualquer momento com apenas um clique.
               </p>
             </div>
