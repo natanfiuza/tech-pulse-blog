@@ -35,6 +35,7 @@ class PostController extends Controller
         return Inertia::render('Admin/Posts/PostsIndex', [
             'posts' => $posts,
             'status_filtro' => $request->query('status'),
+            'categorias' => $this->categorias_para_select(),
         ]);
     }
 

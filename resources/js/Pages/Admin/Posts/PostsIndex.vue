@@ -16,6 +16,14 @@
           <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
           Novo Post
         </Link>
+        <button
+          type="button"
+          @click="modal_categorias_aberto = true"
+          class="glow-hover inline-flex items-center gap-2 rounded-lg bg-surface-container-low px-4 py-2.5 text-sm font-medium text-on-surface transition-all duration-300 hover:bg-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        >
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+          Categorias
+        </button>
       </div>
 
       <!-- Filtros de Status -->
@@ -178,12 +186,14 @@
       @confirmar="confirmar_exclusao"
       @cancelar="cancelar_exclusao"
     />
+    <ModalCategoriasGuia :aberto="modal_categorias_aberto" @fechar="modal_categorias_aberto = false" :categorias="categorias" />
   </AdminLayout>
 </template>
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import ModalConfirmacao from "@/Components/ModalConfirmacao.vue";
+import ModalCategoriasGuia from "@/Components/Admin/ModalCategoriasGuia.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import { computed, onMounted, ref, watch } from "vue";
 import { use_admin_busca } from "@/Composables/use_admin_busca";
@@ -203,12 +213,14 @@ const classes_status = {
 export default {
     components: {
         AdminLayout,
+        ModalCategoriasGuia,
         ModalConfirmacao,
         Link,
     },
     props: {
         posts: { type: Array, default: () => [] },
         status_filtro: { type: String, default: null },
+        categorias: { type: Array, default: () => [] },
     },
     data() {
         return {
@@ -304,8 +316,11 @@ export default {
             });
         }
 
+        const modal_categorias_aberto = ref(false);
+
         return {
             modal_exclusao_aberto,
+            modal_categorias_aberto,
             post_para_excluir,
             form_excluir,
             abrir_modal_exclusao,
