@@ -112,7 +112,7 @@
 
           <!-- Autor -->
           <div
-            class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 to-surface-container-high p-6 md:p-8 border border-primary/20"
+            class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 to-white dark:to-surface-container-high p-6 md:p-8 border border-primary/20"
           >
             <div class="relative z-10">
               <h4 class="text-xl font-bold mb-4 leading-tight">
@@ -121,13 +121,13 @@
               <p class="text-sm text-on-surface-variant mb-6">
                 Compartilhe seu conhecimento com desenvolvedores de todo o Brasil.
               </p>
-              <a
-                href="mailto:contato@natanfiuza.dev.br"
+              <Link
+                href="/tornar-se-autor"
                 class="inline-flex items-center gap-2 text-primary text-sm font-black uppercase tracking-widest hover:translate-x-1 transition-transform no-underline"
               >
                 Saiba como participar
                 <span class="material-symbols-outlined text-lg">arrow_right_alt</span>
-              </a>
+              </Link>
             </div>
             <span
               class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl text-primary/10 rotate-12"

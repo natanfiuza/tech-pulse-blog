@@ -14,6 +14,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\SolicitacaoAutorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserProfileImageController;
@@ -41,6 +42,10 @@ Route::get('/logout', [LoginController::class, 'destroy'])->name('logout'); // I
 // Cadastro self-service (novos usuários nascem como 'leitor')
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
+
+// Torne-se um Autor (pública para exibir; POST requer auth)
+Route::get('/tornar-se-autor', [SolicitacaoAutorController::class, 'show'])->name('tornar-se-autor.show');
+Route::post('/tornar-se-autor', [SolicitacaoAutorController::class, 'store'])->middleware('auth')->name('tornar-se-autor.store');
 
 // Rota socialite Google
 // Rota para redirecionar para o Google
@@ -121,6 +126,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('', [UserController::class, 'index'])->name('users.index');
         Route::put('/{user}/role', [UserController::class, 'update_role'])->name('users.update_role');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
+
+    // Admin: revisão de solicitações de autor
+    Route::prefix('/solicitacoes-autor')->group(function () {
+        Route::get('', [SolicitacaoAutorController::class, 'index'])->name('solicitacoes-autor.index');
+        Route::put('/{solicitacao}', [SolicitacaoAutorController::class, 'update'])->name('solicitacoes-autor.update');
     });
 });
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
