@@ -92,8 +92,10 @@
                   v-for="categoria in categorias_planas"
                   :key="categoria.id"
                   :value="categoria.id"
+                  :style="{ fontWeight: categoria.nivel === 0 ? 'bold' : 'normal', paddingLeft: categoria.nivel === 0 ? '0' : '1rem' }"
                 >
                   {{ "  ".repeat(categoria.nivel) }}{{ categoria.name }}
+                  {{ categoria.name }}
                 </option>
               </select>
               <p v-if="form.errors.category_id" class="mt-1 text-sm text-error" role="alert">
