@@ -31,8 +31,13 @@
             class="w-full appearance-none rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
           >
             <option :value="null">-- Nenhuma --</option>
-            <option v-for="category in categories" :key="category.id" :value="category.id">
-              {{ category.name }}
+            <option
+              v-for="cat in categorias_planas"
+              :key="cat.id"
+              :value="cat.id"
+              :style="{ fontWeight: cat.nivel === 0 ? 'bold' : 'normal' }"
+            >
+              {{ '\u00a0\u00a0\u00a0\u00a0'.repeat(cat.nivel) }}{{ cat.name }}
             </option>
           </select>
           <p v-if="form.errors.parent_id" class="mt-1 text-sm text-error" role="alert">
@@ -121,10 +126,26 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 // Lista de todas as categorias para o select de pai
 const props = defineProps({
     categories: { type: Array, default: () => [] },
+});
+
+// Achata a árvore hierárquica para o select com recuo por nível
+const categorias_planas = computed(() => {
+    const resultado = [];
+    for (const raiz of props.categories) {
+        resultado.push({ id: raiz.id, name: raiz.name, nivel: 0 });
+        for (const filho of raiz.children ?? []) {
+            resultado.push({ id: filho.id, name: filho.name, nivel: 1 });
+            for (const neto of filho.children ?? []) {
+                resultado.push({ id: neto.id, name: neto.name, nivel: 2 });
+            }
+        }
+    }
+    return resultado;
 });
 
 const form = useForm({

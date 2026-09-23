@@ -45,9 +45,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        // Busca todas as categorias para o dropdown de seleção de pai
-        // Apenas ID e Nome são necessários
-        $categories = Category::orderBy('name')->get(['id', 'name']);
+        // Busca categorias raiz com seus filhos para o dropdown hierárquico
+        $categories = Category::whereNull('parent_id')
+            ->with('children.children')
+            ->orderBy('name')
+            ->get();
 
         return Inertia::render('Admin/Categories/CategoriesCreate', [
             'categories' => $categories,
@@ -94,15 +96,22 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        // Busca todas as categorias EXCETO a própria categoria sendo editada
-        // para evitar que uma categoria seja pai de si mesma.
-        $available_parents = Category::where('id', '!=', $category->id)
+        // Busca categorias raiz com seus filhos para o dropdown hierárquico
+        // Exclui a própria categoria para evitar que seja pai de si mesma
+        $available_parents = Category::whereNull('parent_id')
+            ->where('id', '!=', $category->id)
+            ->with(['children' => function ($q) use ($category) {
+                $q->where('id', '!=', $category->id)
+                  ->with(['children' => function ($q2) use ($category) {
+                      $q2->where('id', '!=', $category->id);
+                  }]);
+            }])
             ->orderBy('name')
-            ->get(['id', 'name']);
+            ->get();
 
         return Inertia::render('Admin/Categories/CategoriesEdit', [
-            'category' => $category, // Passa a categoria atual
-            'categories' => $available_parents, // Passa os pais disponíveis
+            'category' => $category,
+            'categories' => $available_parents,
         ]);
     }
 
