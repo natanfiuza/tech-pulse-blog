@@ -43,7 +43,6 @@ describe('ModalCategoriasGuia.vue', () => {
     await wrapper.vm.$nextTick()
 
     const strongs = wrapper.findAll('strong')
-    expect(strongs).toHaveLength(8) // 4 root + 4 child labels
     // 8 label strong tags (4 root + 4 child) + 2 markdown bold strong tags (**negrito**, **Importante**)
     expect(strongs).toHaveLength(10)
 
@@ -51,20 +50,18 @@ describe('ModalCategoriasGuia.vue', () => {
       'Descrição:',
       'Abrangência:',
       'Possíveis Conteúdos:',
-      'Sugestões de Postagens:',
-      'Descrição:',
-      'Abrangência:',
-      'Possíveis Conteúdos:',
       'Sugestões de Postagens:'
     ]
     expectedLabels.forEach(label => {
-      expect(strongs.filter(w => w.text() === label).length).toBeGreaterThan(0)
       const count = strongs.filter(w => w.text() === label).length
       expect(count).toBeGreaterThanOrEqual(2)
     })
 
     // Verify markdown conversion – the description uses <em> for italics
     expect(wrapper.html()).toContain('<em>texto em itálico</em>')
+    expect(wrapper.html()).toContain('<strong>negrito</strong>')
+    expect(wrapper.html()).toContain('<code>code</code>')
+    expect(wrapper.html()).toContain('<strong>Importante</strong>')
     expect(wrapper.html()).toContain('<em>markdown</em>')
   })
 
