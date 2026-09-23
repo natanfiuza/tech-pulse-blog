@@ -44,6 +44,9 @@ describe('ModalCategoriasGuia.vue', () => {
 
     const strongs = wrapper.findAll('strong')
     expect(strongs).toHaveLength(8) // 4 root + 4 child labels
+    // 8 label strong tags (4 root + 4 child) + 2 markdown bold strong tags (**negrito**, **Importante**)
+    expect(strongs).toHaveLength(10)
+
     const expectedLabels = [
       'Descrição:',
       'Abrangência:',
@@ -56,6 +59,8 @@ describe('ModalCategoriasGuia.vue', () => {
     ]
     expectedLabels.forEach(label => {
       expect(strongs.filter(w => w.text() === label).length).toBeGreaterThan(0)
+      const count = strongs.filter(w => w.text() === label).length
+      expect(count).toBeGreaterThanOrEqual(2)
     })
 
     // Verify markdown conversion – the description uses <em> for italics
