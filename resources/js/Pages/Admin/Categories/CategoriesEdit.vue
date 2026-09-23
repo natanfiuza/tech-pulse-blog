@@ -32,8 +32,6 @@
             class="w-full appearance-none rounded-lg border border-outline-variant/30 bg-surface-container-highest px-3 py-2.5 text-sm text-on-surface transition-colors focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
           >
             <option :value="null">-- Nenhuma --</option>
-            <option v-for="parent in categories" :key="parent.id" :value="parent.id">
-              {{ parent.name }}
             <option
               v-for="cat in categorias_planas"
               :key="cat.id"
