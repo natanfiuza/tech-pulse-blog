@@ -34,10 +34,10 @@
                       {{ abertoIds.includes(raiz.id) ? 'expand_less' : 'expand_more' }}
                     </span>
                   </div>
-                  <div v-if="raiz.description" class="text-sm text-gray-600 dark:text-on-surface-variant mt-1">Descrição: {{ raiz.description }}</div>
-                  <div v-if="raiz.scope" class="text-sm text-gray-600 dark:text-on-surface-variant">Abrangência: {{ raiz.scope }}</div>
-                  <div v-if="raiz.possible_contents" class="text-sm text-gray-600 dark:text-on-surface-variant">Possíveis Conteúdos: {{ raiz.possible_contents }}</div>
-                  <div v-if="raiz.post_suggestions" class="text-sm text-gray-600 dark:text-on-surface-variant">Sugestões de Postagens: {{ raiz.post_suggestions }}</div>
+                  <div v-if="raiz.description" class="text-sm text-gray-600 dark:text-on-surface-variant mt-1"><strong>Descrição:</strong> <span v-html="renderMarkdown(raiz.description)"></span></div>
+                  <div v-if="raiz.scope" class="text-sm text-gray-600 dark:text-on-surface-variant"><strong>Abrangência:</strong> <span v-html="renderMarkdown(raiz.scope)"></span></div>
+                  <div v-if="raiz.possible_contents" class="text-sm text-gray-600 dark:text-on-surface-variant"><strong>Possíveis Conteúdos:</strong> <span v-html="renderMarkdown(raiz.possible_contents)"></span></div>
+                  <div v-if="raiz.post_suggestions" class="text-sm text-gray-600 dark:text-on-surface-variant"><strong>Sugestões de Postagens:</strong> <span v-html="renderMarkdown(raiz.post_suggestions)"></span></div>
                   <div v-if="raiz.children && raiz.children.length && abertoIds.includes(raiz.id)" class="ml-4 mt-2 space-y-2">
                     <template v-for="filho in raiz.children" :key="filho.id">
                       <div class="border-l pl-2">
@@ -47,19 +47,19 @@
                             {{ abertoIds.includes(filho.id) ? 'expand_less' : 'expand_more' }}
                           </span>
                         </div>
-                        <div v-if="filho.description" class="text-xs text-gray-600 dark:text-on-surface-variant mt-1">Descrição: {{ filho.description }}</div>
-                        <div v-if="filho.scope" class="text-xs text-gray-600 dark:text-on-surface-variant">Abrangência: {{ filho.scope }}</div>
-                        <div v-if="filho.possible_contents" class="text-xs text-gray-600 dark:text-on-surface-variant">Possíveis Conteúdos: {{ filho.possible_contents }}</div>
-                        <div v-if="filho.post_suggestions" class="text-xs text-gray-600 dark:text-on-surface-variant">Sugestões: {{ filho.post_suggestions }}</div>
+                        <div v-if="filho.description" class="text-xs text-gray-600 dark:text-on-surface-variant mt-1"><strong>Descrição:</strong> <span v-html="renderMarkdown(filho.description)"></span></div>
+                        <div v-if="filho.scope" class="text-xs text-gray-600 dark:text-on-surface-variant"><strong>Abrangência:</strong> <span v-html="renderMarkdown(filho.scope)"></span></div>
+                        <div v-if="filho.possible_contents" class="text-xs text-gray-600 dark:text-on-surface-variant"><strong>Possíveis Conteúdos:</strong> <span v-html="renderMarkdown(filho.possible_contents)"></span></div>
+                        <div v-if="filho.post_suggestions" class="text-xs text-gray-600 dark:text-on-surface-variant"><strong>Sugestões de Postagens:</strong> <span v-html="renderMarkdown(filho.post_suggestions)"></span></div>
                         <!-- Neto level (optional) -->
                         <div v-if="filho.children && filho.children.length && abertoIds.includes(filho.id)" class="ml-4 mt-2 space-y-1">
                           <template v-for="neto in filho.children" :key="neto.id">
                             <div class="border-l pl-2">
                               <div class="font-medium text-gray-600 dark:text-on-surface">{{ neto.name }}</div>
-                              <div v-if="neto.description" class="text-xs text-gray-600 dark:text-on-surface-variant mt-1">Descrição: {{ neto.description }}</div>
-                              <div v-if="neto.scope" class="text-xs text-gray-600 dark:text-on-surface-variant">Abrangência: {{ neto.scope }}</div>
-                              <div v-if="neto.possible_contents" class="text-xs text-gray-600 dark:text-on-surface-variant">Possíveis Conteúdos: {{ neto.possible_contents }}</div>
-                              <div v-if="neto.post_suggestions" class="text-xs text-gray-600 dark:text-on-surface-variant">Sugestões: {{ neto.post_suggestions }}</div>
+                              <div v-if="neto.description" class="text-xs text-gray-600 dark:text-on-surface-variant mt-1"><strong>Descrição:</strong> <span v-html="renderMarkdown(neto.description)"></span></div>
+                              <div v-if="neto.scope" class="text-xs text-gray-600 dark:text-on-surface-variant"><strong>Abrangência:</strong> <span v-html="renderMarkdown(neto.scope)"></span></div>
+                              <div v-if="neto.possible_contents" class="text-xs text-gray-600 dark:text-on-surface-variant"><strong>Possíveis Conteúdos:</strong> <span v-html="renderMarkdown(neto.possible_contents)"></span></div>
+                              <div v-if="neto.post_suggestions" class="text-xs text-gray-600 dark:text-on-surface-variant"><strong>Sugestões de Postagens:</strong> <span v-html="renderMarkdown(neto.post_suggestions)"></span></div>
                             </div>
                           </template>
                         </div>
@@ -78,6 +78,9 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
+import MarkdownIt from 'markdown-it';
+const md = new MarkdownIt();
+const renderMarkdown = (text) => text ? md.render(text) : '';
 
 const props = defineProps({
   aberto: { type: Boolean, default: false },
