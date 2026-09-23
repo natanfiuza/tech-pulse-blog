@@ -34,6 +34,13 @@
             <option :value="null">-- Nenhuma --</option>
             <option v-for="parent in categories" :key="parent.id" :value="parent.id">
               {{ parent.name }}
+            <option
+              v-for="cat in categorias_planas"
+              :key="cat.id"
+              :value="cat.id"
+              :style="{ fontWeight: cat.nivel === 0 ? 'bold' : 'normal' }"
+            >
+              {{ '\u00a0\u00a0\u00a0\u00a0'.repeat(cat.nivel) }}{{ cat.name }}
             </option>
           </select>
           <p v-if="form.errors.parent_id" class="mt-1 text-sm text-error" role="alert">
@@ -122,11 +129,27 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 // A categoria sendo editada e os pais disponíveis
 const props = defineProps({
     category: { type: Object, required: true },
     categories: { type: Array, default: () => [] },
+});
+
+// Achata a árvore hierárquica para o select com recuo por nível
+const categorias_planas = computed(() => {
+    const resultado = [];
+    for (const raiz of props.categories) {
+        resultado.push({ id: raiz.id, name: raiz.name, nivel: 0 });
+        for (const filho of raiz.children ?? []) {
+            resultado.push({ id: filho.id, name: filho.name, nivel: 1 });
+            for (const neto of filho.children ?? []) {
+                resultado.push({ id: neto.id, name: neto.name, nivel: 2 });
+            }
+        }
+    }
+    return resultado;
 });
 
 const form = useForm({
