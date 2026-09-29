@@ -16,6 +16,7 @@
             :src="imagem_do_post(featured_post)"
             :alt="featured_post.title"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 block"
+            @load="ao_carregar_imagem_destaque"
           />
           <div
             v-else
@@ -23,7 +24,10 @@
           >
             <span class="material-symbols-outlined text-8xl text-primary/40">code</span>
           </div>
-          <div class="absolute inset-0 bg-gradient-to-t from-surface-dim via-surface-dim/40 to-transparent"></div>
+          <div
+            class="absolute inset-0 transition-colors duration-500"
+            :class="overlay_gradiente_classe"
+          ></div>
           <div class="absolute bottom-0 left-0 p-6 md:p-12 max-w-4xl">
             <span
               class="bg-primary px-3 py-1 rounded text-[10px] font-black tracking-widest uppercase mb-4 inline-block text-white"
@@ -31,12 +35,14 @@
               Destaque
             </span>
             <h1
-              class="text-3xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tight mb-4 md:mb-6"
+              :class="titulo_destaque_classe"
+              class="text-3xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tight mb-4 md:mb-6 transition-all duration-300"
             >
               {{ featured_post.title }}
             </h1>
             <p
-              class="text-white text-base md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed line-clamp-3 [text-shadow:0_1px_6px_rgba(0,0,0,0.8)]"
+              :class="resumo_destaque_classe"
+              class="text-base md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed line-clamp-3 transition-all duration-300"
             >
               {{ featured_post.excerpt }}
             </p>
@@ -47,7 +53,10 @@
                 Ler Reportagem Completa
                 <span class="material-symbols-outlined">arrow_forward</span>
               </span>
-              <span class="text-sm text-on-surface-variant font-mono">
+              <span
+                :class="tempo_leitura_classe"
+                class="text-sm font-mono transition-colors duration-300"
+              >
                 {{ tempo_leitura_do_post(featured_post) }} min de leitura
               </span>
             </div>
@@ -144,9 +153,9 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { Link } from "@inertiajs/vue3";
-import { tempo_leitura, url_da_imagem } from "@/helpers";
+import { tempo_leitura, url_da_imagem, analisar_contraste_imagem } from "@/helpers";
 import Navbar from "@/Components/Navbar.vue";
 import Footer from "@/Components/Footer.vue";
 import PostCard from "@/Components/PostCard.vue";
@@ -169,13 +178,64 @@ const props = defineProps({
   },
 });
 
-const featured_post = computed(() =>
-  props.posts.find((post) => post.featured_post)
+const featured_post = computed(() => props.posts.find((post) => post.featured_post));
+
+const destaque_eh_escuro = ref(true);
+
+const atualizar_contraste_destaque = async (url) => {
+  if (!url) {
+    destaque_eh_escuro.value = true;
+    return;
+  }
+  const resultado = await analisar_contraste_imagem(url, { amostra_inicio_y: 0.35 });
+  destaque_eh_escuro.value = resultado.eh_escura;
+};
+
+const ao_carregar_imagem_destaque = (evento) => {
+  if (evento?.target) {
+    analisar_contraste_imagem(evento.target, { amostra_inicio_y: 0.35 }).then(
+      (resultado) => {
+        destaque_eh_escuro.value = resultado.eh_escura;
+      }
+    );
+  }
+};
+
+watch(
+  () => (featured_post.value ? imagem_do_post(featured_post.value) : null),
+  (nova_url) => {
+    if (nova_url) {
+      atualizar_contraste_destaque(nova_url);
+    }
+  },
+  { immediate: true }
 );
 
-const posts_grade = computed(() =>
-  props.posts.filter((post) => !post.featured_post)
-);
+const titulo_destaque_classe = computed(() => {
+  return destaque_eh_escuro.value
+    ? "text-white [text-shadow:0_2px_10px_rgba(0,0,0,0.85)]"
+    : "text-zinc-950 [text-shadow:0_2px_8px_rgba(255,255,255,0.9)]";
+});
+
+const resumo_destaque_classe = computed(() => {
+  return destaque_eh_escuro.value
+    ? "text-zinc-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.8)]"
+    : "text-zinc-800 [text-shadow:0_1px_6px_rgba(255,255,255,0.8)]";
+});
+
+const tempo_leitura_classe = computed(() => {
+  return destaque_eh_escuro.value
+    ? "text-zinc-300 [text-shadow:0_1px_4px_rgba(0,0,0,0.8)]"
+    : "text-zinc-700 [text-shadow:0_1px_4px_rgba(255,255,255,0.8)]";
+});
+
+const overlay_gradiente_classe = computed(() => {
+  return destaque_eh_escuro.value
+    ? "bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+    : "bg-gradient-to-t from-white/80 via-white/40 to-transparent";
+});
+
+const posts_grade = computed(() => props.posts.filter((post) => !post.featured_post));
 
 const tags_populares = computed(() => {
   const mapa = new Map();
@@ -188,9 +248,7 @@ const tags_populares = computed(() => {
       });
     });
   });
-  return [...mapa.values()]
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 10);
+  return [...mapa.values()].sort((a, b) => b.count - a.count).slice(0, 10);
 });
 
 const chip_classe = (ativa) => {

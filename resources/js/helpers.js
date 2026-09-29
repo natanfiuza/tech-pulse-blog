@@ -119,3 +119,91 @@ export function normalizar_texto(texto) {
         .trim();
 }
 
+/**
+ * Analisa uma imagem através de um elemento Canvas para determinar
+ * o nível de brilho/luminância da área onde o texto fica sobreposto.
+ *
+ * @param {HTMLImageElement|string} imagem_origem - Elemento de imagem ou URL.
+ * @param {Object} [opcoes] - Opções de análise.
+ * @param {number} [opcoes.amostra_inicio_y=0.4] - Posição Y inicial relativa (0 a 1) para a área de amostra.
+ *
+ * @returns {Promise<{ eh_escura: boolean, luminancia: number, r: number, g: number, b: number }>}
+ */
+export async function analisar_contraste_imagem(imagem_origem, opcoes = {}) {
+    const amostra_inicio_y = opcoes.amostra_inicio_y ?? 0.4;
+
+    return new Promise((resolve) => {
+        const fallback = { eh_escura: true, luminancia: 0, r: 0, g: 0, b: 0 };
+
+        if (!imagem_origem || typeof window === "undefined") {
+            return resolve(fallback);
+        }
+
+        const processar_imagem = (img) => {
+            try {
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d", { willReadFrequently: true });
+                if (!ctx) {
+                    return resolve(fallback);
+                }
+
+                // Redimensiona para uma escala de análise rápida e leve (100x100)
+                const largura = 100;
+                const altura = 100;
+                canvas.width = largura;
+                canvas.height = altura;
+
+                ctx.drawImage(img, 0, 0, largura, altura);
+
+                // Analisa a região inferior onde o texto é renderizado
+                const inicio_y = Math.floor(altura * amostra_inicio_y);
+                const altura_regiao = altura - inicio_y;
+
+                const dados_imagem = ctx.getImageData(0, inicio_y, largura, altura_regiao).data;
+
+                let soma_r = 0;
+                let soma_g = 0;
+                let soma_b = 0;
+                let total_pixels = 0;
+
+                // Lê pixels amostrados para desempenho ideal
+                for (let i = 0; i < dados_imagem.length; i += 16) {
+                    soma_r += dados_imagem[i];
+                    soma_g += dados_imagem[i + 1];
+                    soma_b += dados_imagem[i + 2];
+                    total_pixels++;
+                }
+
+                if (total_pixels === 0) {
+                    return resolve(fallback);
+                }
+
+                const r = Math.round(soma_r / total_pixels);
+                const g = Math.round(soma_g / total_pixels);
+                const b = Math.round(soma_b / total_pixels);
+
+                // Fórmula padrão de luminância perceptiva (ITU-R BT.601)
+                const luminancia = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+                const eh_escura = luminancia < 128;
+
+                resolve({ eh_escura, luminancia, r, g, b });
+            } catch (erro) {
+                resolve(fallback);
+            }
+        };
+
+        if (typeof imagem_origem === "string") {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => processar_imagem(img);
+            img.onerror = () => resolve(fallback);
+            img.src = imagem_origem;
+        } else if (imagem_origem.complete && imagem_origem.naturalWidth > 0) {
+            processar_imagem(imagem_origem);
+        } else {
+            imagem_origem.addEventListener("load", () => processar_imagem(imagem_origem), { once: true });
+            imagem_origem.addEventListener("error", () => resolve(fallback), { once: true });
+        }
+    });
+}
+
