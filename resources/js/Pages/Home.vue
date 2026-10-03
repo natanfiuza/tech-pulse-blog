@@ -219,8 +219,8 @@ const titulo_destaque_classe = computed(() => {
 
 const resumo_destaque_classe = computed(() => {
   return destaque_eh_escuro.value
-    ? "text-zinc-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.8)]"
-    : "text-zinc-800 [text-shadow:0_1px_6px_rgba(255,255,255,0.8)]";
+    ? "text-zinc-200 [text-shadow:0_2px_10px_rgba(0,0,0,0.85)]"
+    : "text-zinc-800 [text-shadow:0_2px_8px_rgba(255,255,255,0.9)]";
 });
 
 const tempo_leitura_classe = computed(() => {
