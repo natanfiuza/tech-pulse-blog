@@ -16,13 +16,13 @@
 - O resumo/excerpt (`resumo_destaque_classe`) estava com uma sombra mais sutil (`[text-shadow:0_1px_6px_rgba(0,0,0,0.8)]` / `[text-shadow:0_1px_6px_rgba(255,255,255,0.8)]`), o que prejudicava o destaque e legibilidade sobre certas imagens de fundo com variações de luminância.
 
 ### 1.2 Ajustes
-- Foi atualizada a propriedade computada `resumo_destaque_classe` em [resources/js/Pages/Home.vue](../../../../resources/js/Pages/Home.vue) para alinhar a sombra de texto com a mesma especificação do título:
-  - Fundo escuro: `[text-shadow:0_2px_10px_rgba(0,0,0,0.85)]`
-  - Fundo claro: `[text-shadow:0_2px_8px_rgba(255,255,255,0.9)]`
+- Foi atualizada a propriedade computada `resumo_destaque_classe` em [resources/js/Pages/Home.vue](../../../../resources/js/Pages/Home.vue) para aplicar uma sombra esfumaçada em camadas difusas com cor oposta à fonte:
+  - Fundo escuro (fonte clara `text-zinc-200`): `[text-shadow:0_0_12px_rgba(0,0,0,0.9),0_2px_8px_rgba(0,0,0,0.8)]`
+  - Fundo claro (fonte escura `text-zinc-800`): `[text-shadow:0_0_12px_rgba(255,255,255,0.95),0_2px_8px_rgba(255,255,255,0.85)]`
 
 | Arquivo | Antes | Depois |
 |---|---|---|
-| [Home.vue](../../../../resources/js/Pages/Home.vue) | `text-zinc-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.8)]` / `text-zinc-800 [text-shadow:0_1px_6px_rgba(255,255,255,0.8)]` | `text-zinc-200 [text-shadow:0_2px_10px_rgba(0,0,0,0.85)]` / `text-zinc-800 [text-shadow:0_2px_8px_rgba(255,255,255,0.9)]` |
+| [Home.vue](../../../../resources/js/Pages/Home.vue) | `text-zinc-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.8)]` / `text-zinc-800 [text-shadow:0_1px_6px_rgba(255,255,255,0.8)]` | `text-zinc-200 [text-shadow:0_0_12px_rgba(0,0,0,0.9),0_2px_8px_rgba(0,0,0,0.8)]` / `text-zinc-800 [text-shadow:0_0_12px_rgba(255,255,255,0.95),0_2px_8px_rgba(255,255,255,0.85)]` |
 
 ---
 
