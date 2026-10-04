@@ -53,6 +53,7 @@ class NewsletterMail extends Mailable
                 'edition' => $this->edition,
                 'unsubscribeUrl' => $this->unsubscribeUrl,
                 'strings' => $this->strings,
+                'lang' => $this->lang,
             ],
         );
     }

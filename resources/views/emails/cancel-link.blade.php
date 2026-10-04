@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ str_replace('_', '-', $lang) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
                                     Tech<span style="color:#38bdf8;">Pulse</span>
                                 </div>
                                 <div style="color:#94a3b8;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-weight:600;">
-                                    O Pulsar da Tecnologia
+                                    {{ $strings['mail_newsletter_tagline'] ?? 'O Pulsar da Tecnologia' }}
                                 </div>
                             </td>
                         </tr>
@@ -39,7 +39,7 @@
                                     </tr>
                                 </table>
                                 <p style="font-size:12px;color:#64748b;line-height:1.5;margin:0;border-top:1px solid #334155;padding-top:16px;">
-                                    Se você não solicitou este cancelamento, pode ignorar esta mensagem com segurança.
+                                    {{ $strings['mail_cancel_footer_note'] ?? 'Se você não solicitou este cancelamento, pode ignorar esta mensagem com segurança.' }}
                                 </p>
                             </td>
                         </tr>

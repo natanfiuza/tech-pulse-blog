@@ -8,7 +8,6 @@ use App\Support\NewsletterContent;
 use App\Support\NewsletterTranslations;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use RuntimeException;
 use Throwable;
 
 class NewsletterSendCommand extends Command
@@ -42,11 +41,9 @@ class NewsletterSendCommand extends Command
             return self::SUCCESS;
         }
 
-        // Fail-fast: valida se o arquivo Markdown existe antes de iterar sobre os inscritos
-        try {
-            NewsletterContent::body_markdown($edition, 'pt_br');
-        } catch (RuntimeException $e) {
-            $this->error($e->getMessage());
+        // Fail-fast: valida se a edição possui corpo em algum idioma antes de iterar sobre os inscritos
+        if (! NewsletterContent::edition_exists($edition)) {
+            $this->error("Corpo da newsletter não encontrado para a edição {$edition}.");
 
             return self::FAILURE;
         }
@@ -57,6 +54,17 @@ class NewsletterSendCommand extends Command
             $this->info('Nenhum assinante ativo encontrado.');
 
             return self::SUCCESS;
+        }
+
+        // Avisa quais idiomas vão cair no fallback pt-BR por não terem tradução própria
+        $langs_com_assinantes = $subscribers
+            ->map(fn (NewsletterSubscriber $subscriber) => NewsletterTranslations::normalize($subscriber->lang))
+            ->unique();
+
+        foreach ($langs_com_assinantes as $lang_assinante) {
+            if ($lang_assinante !== 'pt_br' && ! NewsletterContent::body_exists($edition, $lang_assinante)) {
+                $this->warn("Sem tradução própria para o idioma {$lang_assinante}: os assinantes receberão o corpo em pt_br.");
+            }
         }
 
         $interval = (int) $this->option('interval');
@@ -75,18 +83,20 @@ class NewsletterSendCommand extends Command
         $bar = $this->output->createProgressBar($subscribers->count());
 
         foreach ($subscribers as $subscriber) {
+            $lang = NewsletterTranslations::normalize($subscriber->lang);
+
             try {
-                $html = NewsletterContent::body_html($edition, $subscriber->lang);
+                $html = NewsletterContent::body_html($edition, $lang);
 
                 Mail::to($subscriber->email)->send(new NewsletterMail(
                     htmlBody: $html,
                     edition: $edition,
                     unsubscribeUrl: route('newsletter.cancel', [
                         'uuid' => $subscriber->uuid,
-                        'lang' => $subscriber->lang,
+                        'lang' => $lang,
                     ]),
-                    strings: NewsletterTranslations::for($subscriber->lang),
-                    lang: $subscriber->lang,
+                    strings: NewsletterTranslations::for($lang),
+                    lang: $lang,
                 ));
             } catch (Throwable $e) {
                 // Falha em um assinante individual não interrompe o lote
