@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ str_replace('_', '-', $lang) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,12 +21,12 @@
                                                 Tech<span style="color:#38bdf8;">Pulse</span>
                                             </div>
                                             <div style="color:#94a3b8;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;font-weight:600;">
-                                                O Pulsar da Tecnologia
+                                                {{ $strings['mail_newsletter_tagline'] ?? 'O Pulsar da Tecnologia' }}
                                             </div>
                                         </td>
                                         <td align="right" style="vertical-align:bottom;">
                                             <span style="background-color:#1e3a8a;color:#bfdbfe;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:1px;">
-                                                Edição #{{ $edition }}
+                                                {{ strtr($strings['mail_newsletter_edition_badge'] ?? 'Edição #{edition}', ['{edition}' => $edition]) }}
                                             </span>
                                         </td>
                                     </tr>
@@ -47,7 +47,7 @@
                         <tr>
                             <td style="background-color:#f8fafc;padding:24px 28px;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
                                 <p style="margin:0 0 8px;">
-                                    Você recebeu este e-mail porque está inscrito na Newsletter do <strong>TechPulse</strong>.
+                                    {{ $strings['mail_newsletter_footer_reason'] ?? 'Você recebeu este e-mail porque está inscrito na Newsletter do TechPulse.' }}
                                 </p>
                                 <p style="margin:0;">
                                     <a href="{{ $unsubscribeUrl }}" style="color:#2563eb;text-decoration:underline;">

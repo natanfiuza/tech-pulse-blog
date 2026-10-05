@@ -31,11 +31,12 @@ Com essa única linha, o Laravel lança uma exceção imediata ao tentar fazer l
 
 ## 📝 Do blog TechPulse
 
-Confira o que saiu no blog recentemente:
+Confira o que saiu no blog nas últimas semanas:
 
-- **Inteligência Artificial: Revolução Tecnológica** — Descubra como a IA está transformando diversos setores e como preparar suas aplicações para essa nova era. [Leia o artigo completo](https://tech-pulse.natanfiuza.dev.br/post/show/inteligncia-artificial-revolu-tecnolgica)
-- **Machine Learning: Fundamentos** — Desvende os princípios fundamentais do machine learning e prepare o terreno para aplicações práticas no seu stack. [Leia o artigo completo](https://tech-pulse.natanfiuza.dev.br/post/show/machine-learning-fundamentos)
-- **Ética na Inteligência Artificial** — Uma reflexão profunda sobre os dilemas morais, responsabilidade algorítmica e impactos sociais da tecnologia. [Leia o artigo completo](https://tech-pulse.natanfiuza.dev.br/post/show/tica-na-inteligncia-artificial)
+- **O PostgreSQL 19 Não Aposentou o pgvector** — O PostgreSQL 19 não trouxe tipos vetoriais nem índices HNSW para o core. A manchete real da versão é o REPACK — e ele muda a vida de quem guarda embeddings no Postgres. [Leia o artigo completo](https://tech-pulse.natanfiuza.dev.br/post/show/postgresql-19-nao-aposentou-pgvector)
+- **O PHP Tem Duas Datas de Morte, Não Uma** — Em 31 de dezembro de 2026, o PHP 8.2 chega ao fim de tudo e o PHP 8.4 sai do suporte ativo. Duas fronteiras na mesma data, e só uma delas é um abismo de verdade. [Leia o artigo completo](https://tech-pulse.natanfiuza.dev.br/post/show/php-tem-duas-datas-morte-nao)
+- **O Domínio de Exemplo que Ninguém Comprou Ainda** — Quem escreve example.com usa um nome que a RFC 2606 reservou em 1999; quem escreve yoursite.com usa um nome que qualquer pessoa pode comprar hoje. Cerca de 359 mil arquivos no GitHub escolheram a segunda opção. [Leia o artigo completo](https://tech-pulse.natanfiuza.dev.br/post/show/dominio-exemplo-que-ninguem-comprou-ainda)
+- **Autorregulação da IA: Quem É Auditado Escreve a Auditoria** — Três concorrentes vão criar juntas o órgão que decide se o produto delas é seguro. O modelo citado é a FINRA — mas as duas coisas que dão dentes a ela ficaram de fora do desenho. [Leia o artigo completo](https://tech-pulse.natanfiuza.dev.br/post/show/autorregulacao-ia-quem-e-auditado-escreve-auditoria)
 
 > Ainda não segue o blog? Acompanhe as novas publicações e tutoriais técnicos direto em [tech-pulse.natanfiuza.dev.br](https://tech-pulse.natanfiuza.dev.br).
 
@@ -61,22 +62,9 @@ A solução foi separar o identificador público da entidade de sua representaç
 
 ---
 
-## 🧰 Spotlight de ferramenta
-
-**Laravel Pint**
-
-Um formatador de código PHP opinativo e construído sobre o PHP-CS-Fixer. Ele garante que toda a base de código siga os padrões da comunidade PSR-12 com zero esforço de configuração.
-
-```bash
-composer require laravel/pint --dev
-./vendor/bin/pint
-```
-
----
-
 ## 💬 Sua vez
 
-Qual stack você está utilizando no seu projeto principal hoje — e qual é o maior gargalo técnico que você tem enfrentado?
+Você usa IA no seu dia a dia de desenvolvimento — e em que momento você desconfia dela?
 
 Responda diretamente a este e-mail. Leio todas as respostas pessoalmente e os melhores temas viram artigos no blog e pauta para a próxima edição!
 
@@ -91,4 +79,3 @@ Nos vemos na próxima segunda-feira!
 — **Nataniel Fiuza**  
 *Desenvolvedor de Software e Arquiteto de Soluções*  
 [tech-pulse.natanfiuza.dev.br](https://tech-pulse.natanfiuza.dev.br)
-

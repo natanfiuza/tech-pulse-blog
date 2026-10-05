@@ -37,6 +37,7 @@ class ConfirmationMail extends Mailable
             with: [
                 'url' => $this->url,
                 'strings' => $this->strings,
+                'lang' => $this->lang,
             ],
         );
     }

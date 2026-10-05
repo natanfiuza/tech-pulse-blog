@@ -72,6 +72,28 @@ final class NewsletterContent
     }
 
     /**
+     * Verifica se a edição possui algum arquivo de corpo, em qualquer idioma.
+     */
+    public static function edition_exists(string $edition): bool
+    {
+        $directory = public_path("content/newsletter/{$edition}");
+
+        return File::isDirectory($directory)
+            && ! empty(File::glob("{$directory}/newsletter_body*.md"));
+    }
+
+    /**
+     * Verifica se a edição possui um arquivo de corpo dedicado ao idioma,
+     * sem considerar o fallback para o arquivo base.
+     */
+    public static function body_exists(string $edition, string $lang = 'pt_br'): bool
+    {
+        $normalized_lang = NewsletterTranslations::normalize($lang);
+
+        return File::exists(public_path("content/newsletter/{$edition}/newsletter_body.{$normalized_lang}.md"));
+    }
+
+    /**
      * Retorna a última edição enviada gravada no arquivo marcador.
      */
     public static function last_sent_edition(): ?string
