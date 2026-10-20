@@ -8,6 +8,8 @@ import { ZiggyVue } from "ziggy-js";
 import { Ziggy } from './ziggy'; // Importe o arquivo ziggy.js gerado
 import "../css/tailwind.css"; // Tailwind v3 (Midnight Pulse)
 import "./helpers";
+import AnalyticsScript from "@/Components/AnalyticsScript.vue";
+import ConsentBanner from "@/Components/ConsentBanner.vue";
 
 createInertiaApp({
     resolve: (name) =>
@@ -16,9 +18,19 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         ),
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
+        createApp({
+            render() {
+                const eh_admin = props.initialPage.component.startsWith('Admin/');
+
+                return h('div', { class: 'techpulse-app-root' }, [
+                    h(App, props),
+                    !eh_admin ? h(AnalyticsScript) : null,
+                    !eh_admin ? h(ConsentBanner) : null,
+                ]);
+            },
+        })
             .use(plugin)
-            .use(ZiggyVue,Ziggy)
+            .use(ZiggyVue, Ziggy)
             .mount(el);
     },
 });
