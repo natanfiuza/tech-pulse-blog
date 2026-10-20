@@ -45,6 +45,14 @@ _Avoid_: discussão, mensagem, reply
 Voto de aprovação de um usuário logado sobre um comentário. Alternável: votar de novo remove o voto; um usuário pode ter no máximo um voto por comentário.
 _Avoid_: like, curtida, avaliação
 
+**Consentimento**:
+Decisão explícita do visitante sobre a utilização de cookies de medição, podendo ser concedida (`granted`) ou recusada (`denied`). Sem resposta do visitante, o estado é considerado não decidido e nenhuma tag externa é carregada.
+_Avoid_: permissão de cookies, autorização, aceitação
+
+**Medição**:
+Registro anônimo e agregado de acessos e visualizações de posts do blog via Google Analytics (GA4), desprovido de dados pessoais e de sinais publicitários, ativado exclusivamente sob consentimento prévio.
+_Avoid_: rastreamento, tracking, analytics
+
 ### Publicação
 
 **Rascunho**:

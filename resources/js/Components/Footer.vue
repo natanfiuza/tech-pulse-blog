@@ -39,6 +39,13 @@
         >
           Contato
         </a>
+        <button
+          type="button"
+          class="text-slate-500 hover:text-white transition-colors bg-transparent border-0 cursor-pointer p-0 text-xs uppercase tracking-widest font-bold"
+          @click="reabrir_consentimento"
+        >
+          Cookies
+        </button>
       </nav>
       <p class="text-slate-600 text-[10px] tracking-widest uppercase">
         © {{ ano }} TechPulse - O Pulsar da Tecnologia.
@@ -50,10 +57,16 @@
 <script setup>
 import { computed } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
+import { use_consent } from "@/Composables/use_consent";
 
+const { reabrir } = use_consent();
 const page = usePage();
 const usuario = computed(() => page.props.auth?.user ?? null);
 const conta_link = computed(() => (usuario.value ? route("admin.home") : route("login")));
 const conta_label = computed(() => (usuario.value ? "Painel" : "Login"));
 const ano = new Date().getFullYear();
+
+function reabrir_consentimento() {
+    reabrir();
+}
 </script>

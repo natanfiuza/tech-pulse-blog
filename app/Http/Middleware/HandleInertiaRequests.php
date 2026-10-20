@@ -47,6 +47,12 @@ class HandleInertiaRequests extends Middleware
             // frontend precisa dele para trocar a origem pela do navegador na
             // renderização — ver normalizar_origem_conteudo() em helpers.js.
             'techpulse_url_publica' => config('techpulse.url_publica'),
+            'analytics' => [
+                'ga4Id' => \App\Support\Analytics::ga4Id(),
+                'consent' => \App\Support\Consent::fromRequest($request),
+                'cookie' => \App\Support\Consent::cookie(),
+                'days' => \App\Support\Consent::days(),
+            ],
             'flash' => [
                 'newsletter' => fn () => $request->session()->get('newsletter'),
                 'success' => fn () => $request->session()->get('success'),
